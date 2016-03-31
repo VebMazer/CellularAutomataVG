@@ -1,4 +1,6 @@
 # EmergenceVG
 Small platform for generating visual effect shows.(Javalabra2016-4 course project)
 
-Documentation
+Documentaatio
+[](dokumentointi/aiheenKuvausJaMääritelmä.md)
+[](dokumentointi/)
