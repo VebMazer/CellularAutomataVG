@@ -6,3 +6,5 @@ Dokumentaatio:
 [aihemäärittely](dokumentointi/aiheenKuvausJaRakenne.md)
 
 [tuntikirjanpito](dokumentointi/tuntikirjanpito.md)
+
+[MäärittelytasonLuokkakaavio](dokumentointi/MäärittelytasonLuokkakaavio.jpg)
