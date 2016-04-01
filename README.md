@@ -2,5 +2,5 @@
 Small platform for generating visual effect shows.(Javalabra2016-4 course project)
 
 Documentaatio
-[](dokumentointi/aiheenKuvausJaMääritelmä.md)
-[](dokumentointi/)
+[-aihemäärittely](dokumentointi/aiheenKuvausJaMääritelmä.md)
+[-tuntikirjanpito](dokumentointi/tuntikirjanpito.md)
