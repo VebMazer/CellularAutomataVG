@@ -8,3 +8,8 @@ Dokumentaatio:
 [tuntikirjanpito](dokumentointi/tuntikirjanpito.md)
 
 [MäärittelytasonLuokkakaavio](dokumentointi/MäärittelytasonLuokkakaavio.jpg)
+
+[pitRaportit](dokumentointi/pit)
+
+[CheckstyleRaportit](dokumentointi/Checkstyle)
+
