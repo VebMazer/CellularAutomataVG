@@ -8,8 +8,8 @@ public class MouseController {
     int y;
     int lastX;
     int lastY;
-    int pKey;
-    ArrayList<int[]> spotsPressed;
+    public int pKey;
+    public ArrayList<int[]> spotsPressed;
 
     GenerativeSpace space;
 

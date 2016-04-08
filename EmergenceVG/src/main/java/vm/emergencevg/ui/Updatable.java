@@ -1,6 +1,6 @@
 package vm.emergencevg.ui;
 
-public interface Updateable {
+public interface Updatable {
 
     void update();
 }

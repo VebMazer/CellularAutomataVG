@@ -1,12 +1,13 @@
 package vm.emergencevg.logic;
 
+import java.util.ArrayList;
 import vm.emergencevg.domain.*;
 
 import java.util.HashMap;
 import java.util.Arrays;
-import vm.emergencevg.ui.Updateable;
+import vm.emergencevg.ui.Updatable;
 
-public class GenerativeSpace {
+public class GenerativeSpace implements Runnable {
 
     public int xlength;
     public int ylength;
@@ -17,7 +18,7 @@ public class GenerativeSpace {
 
     public ControlFunctions functions;
     public MouseController mController;
-    Updateable uiDrawBoard;
+    Updatable uiDrawBoard;
 
     private double speedDivider;
     boolean running;
@@ -56,6 +57,13 @@ public class GenerativeSpace {
                 delta--;
             }
             cycles++;
+
+            if (System.currentTimeMillis() - timer > 1000) {
+                timer += 1000;
+                System.out.println("CyclesPS: " + cycles + " TICKS: " + updates);
+                cycles = 0;
+                updates = 0;
+            }
         }
     }
 
@@ -124,9 +132,12 @@ public class GenerativeSpace {
     //Asettaa uuden partikkelin jos data täyttää halutut ehdot.
     public void particleProcess(int x, int y, int spotKey, int neighbors, int[] neighborTypes) {
         if (spotKey == 0) {
-            ParticleType type = particleTypes.get(mostCommonKey(neighborTypes));
-            if (type.generate(neighbors)) {
-                resultField[x][y] = type.key;
+            int mostCommonKey = mostCommonKey(neighborTypes);
+            if (mostCommonKey != 0) {
+                ParticleType type = particleTypes.get(mostCommonKey);
+                if (type.generate(neighbors)) {
+                    resultField[x][y] = type.key;
+                }
             }
         } else if (!particleTypes.get(spotKey).live(neighbors)) {
             resultField[x][y] = 0;
@@ -160,7 +171,26 @@ public class GenerativeSpace {
         resultField[i][j] = pKey;
     }
 
-    public void setUiDrawBoard(Updateable uiDrawBoard) {
+    public void setUiDrawBoard(Updatable uiDrawBoard) {
         this.uiDrawBoard = uiDrawBoard;
     }
+
+    public void initialTestSetup() {
+        ArrayList<Integer> forNew = new ArrayList<Integer>();
+        forNew.add(3);
+        ArrayList<Integer> toLive = new ArrayList<Integer>();
+        toLive.add(2);
+        toLive.add(3);
+        functions.addParticleType("life", forNew, toLive);
+
+        forNew = new ArrayList<Integer>();
+        forNew.add(3);
+        forNew.add(4);
+        forNew.add(5);
+        toLive = new ArrayList<Integer>();
+        toLive.add(3);
+        functions.addParticleType("remenant", forNew, toLive);
+
+    }
+
 }

@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import vm.emergencevg.domain.ParticleType;
 
 import vm.emergencevg.logic.ControlFunctions;
 import vm.emergencevg.logic.GenerativeSpace;
@@ -18,7 +19,7 @@ public class ControlFunctionsTest {
 
     public ControlFunctionsTest() {
         space = new GenerativeSpace(100, 100);
-        functions = space.functions;
+        this.functions = space.functions;
     }
 
     @BeforeClass
@@ -50,4 +51,18 @@ public class ControlFunctionsTest {
         assertEquals(testInt, 3);
     }
 
+    @Test
+    public void testParsingIntegersToList() {
+        ArrayList<Integer> integers = new ArrayList<Integer>();
+        functions.addIntegersToList(0, "5 6, 7,", integers);
+        assertEquals(true, (integers.get(0) == 5 && integers.get(1) == 6 && integers.size() == 2));
+    }
+
+    @Test
+    public void testStringProcessing() {
+        functions.processStringToParticleType("name, 3, 2 1");
+        ParticleType pType = space.particleTypes.get(1);
+
+        assertEquals(true, (pType.name.equals("name") && pType.amountsForNew.get(0) == 3 && pType.amountsToLive.get(0) == 2 && pType.amountsToLive.get(1) == 1));
+    }
 }
