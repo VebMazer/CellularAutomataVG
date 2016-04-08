@@ -9,7 +9,6 @@ Dokumentaatio:
 
 [MäärittelytasonLuokkakaavio](dokumentointi/MäärittelytasonLuokkakaavio.jpg)
 
-[pitRaportit](dokumentointi/pit)
+[pitRaportti](https://htmlpreview.github.io/?https://github.com/VebMazer/EmergenceVG/blob/master/dokumentointi/pit/201604080810/index.html)
 
-[CheckstyleRaportit](dokumentointi/Checkstyle)
-
+[CheckstyleRaportti](https://htmlpreview.github.io/?https://github.com/VebMazer/EmergenceVG/blob/master/dokumentointi/Checkstyle/08.04.16/site/checkstyle.html)
