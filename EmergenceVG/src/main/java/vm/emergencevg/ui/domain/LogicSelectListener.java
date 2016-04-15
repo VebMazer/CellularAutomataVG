@@ -8,6 +8,9 @@ import javax.swing.JTextField;
 import vm.emergencevg.domain.ParticleType;
 import vm.emergencevg.logic.GenerativeSpace;
 
+/**
+ * Logiikka valinta laatikon kuuntelija.
+ */
 public class LogicSelectListener implements ActionListener {
 
     JFrame frame;
@@ -32,22 +35,12 @@ public class LogicSelectListener implements ActionListener {
         frame.requestFocus();
     }
 
-    public int findLatestKey() {
-        int lastKey = 1;
-        for (int key : space.particleTypes.keySet()) {
-            if (key > lastKey) {
-                lastKey = key;
-            }
-        }
-        return lastKey;
-    }
-
     public void update() {
 //        box.removeAllItems();
 //        for (ParticleType particleType : space.particleTypes.values()) {
 //            box.addItem(particleType);
 //        }
-        box.addItem(space.particleTypes.get(findLatestKey()));
+        box.addItem(space.particleTypes.get(space.uFunctions.findLatestKey()));
     }
 
     public void initialize() {

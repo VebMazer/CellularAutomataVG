@@ -5,6 +5,9 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import vm.emergencevg.logic.ControlFunctions;
 
+/**
+ * Clear nappulan kuuntelija.
+ */
 public class ClearListener implements ActionListener {
 
     JFrame frame;

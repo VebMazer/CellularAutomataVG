@@ -4,6 +4,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import vm.emergencevg.logic.MouseController;
 
+/**
+ * Hiiri syötteen kuuntelija, joka lukee dataa piirtoalustaan suhteessa ja
+ * lähettää sen sitten hiiren kontrolleri luokalle.
+ */
 public class MouseListen extends MouseAdapter {
 
     MouseController controller;

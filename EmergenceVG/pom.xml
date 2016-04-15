@@ -40,8 +40,7 @@
                         <param>vm.emergencevg.domain.*</param>
                     </targetClasses>
                     <targetTests>
-                        <param>vm.emergencevg.logic.*</param>
-                        <param>vm.emergencevg.domain.*</param>
+                        <param>Tests.*</param>
                     </targetTests>
                 </configuration>
             </plugin>

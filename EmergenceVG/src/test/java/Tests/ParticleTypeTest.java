@@ -22,7 +22,9 @@ public class ParticleTypeTest {
         forNew.add(6);
         toLive.add(3);
 
-        type = new ParticleType("life", 2, forNew, toLive);
+        type = new ParticleType("something", 2, forNew, toLive);
+        
+        
     }
 
     @BeforeClass
@@ -49,5 +51,15 @@ public class ParticleTypeTest {
     @Test
     public void liveTest() {
         assertEquals(type.live(3), true);
+    }
+    
+    @Test
+    public void testForFalsePositives() {
+        ArrayList<Integer> forNew = new ArrayList<Integer>();
+        ArrayList<Integer> toLive = new ArrayList<Integer>();
+        forNew.add(6);
+        //toLive.add(3);
+        ParticleType particle = new ParticleType("somethingElse", 3, forNew, toLive);
+        assertEquals(particle.live(3) || particle.generate(7), false);
     }
 }

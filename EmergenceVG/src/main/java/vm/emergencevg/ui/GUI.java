@@ -18,11 +18,16 @@ import vm.emergencevg.domain.ParticleType;
 import vm.emergencevg.logic.ControlFunctions;
 import vm.emergencevg.logic.GenerativeSpace;
 import vm.emergencevg.ui.domain.ClearListener;
+import vm.emergencevg.ui.domain.ColorListener;
+import vm.emergencevg.ui.domain.FormListener;
 import vm.emergencevg.ui.domain.LogicInputListener;
 import vm.emergencevg.ui.domain.LogicSelectListener;
 import vm.emergencevg.ui.domain.StartListener;
 import vm.emergencevg.ui.domain.StopListener;
 
+/**
+ * Ohjelman graafinen käyttöliittymä.
+ */
 public class GUI implements Runnable {
 
     public JFrame frame;
@@ -32,12 +37,24 @@ public class GUI implements Runnable {
     JPanel sidePanel;
     int sideLength;
 
+    /**
+     *
+     * @param space Ohjelman taustalooppi.
+     * @param sidelength Muuttuja, joka määrittää piirtoalustalle piirrettävien
+     * objektien oikeat mittasuhteet.
+     */
     public GUI(GenerativeSpace space, int sidelength) {
         this.space = space;
         functions = space.functions;
         this.sideLength = sidelength;
     }
 
+    /**
+     * Käynnistää käyttöliittymän. Luodaa ensin Jframe olio pohjaksi.
+     * Määritetään käyttöliittymän koko ja sulku operaatio. Kutsutaan
+     * käyttöliittymä oliot luovaa metodia, pakataan JFrame ja asetetaan se
+     * näkyväksi.
+     */
     @Override
     public void run() {
         frame = new JFrame("EmergenceVG");
@@ -53,6 +70,11 @@ public class GUI implements Runnable {
         frame.setVisible(true);
     }
 
+    /**
+     * Luo käyttöliittymän Komponentit. Luo ensin sivupaneelin ja piirtoalustan.
+     * Määrittää piirtoalustan kuuntelijat ja kutsuu metodia, joka luo
+     * sivupaneelin oliot.
+     */
     public void createComponents(Container container) {
         sidePanel = new JPanel(new GridBagLayout());
         sidePanel.setBackground(Color.CYAN);
@@ -69,13 +91,22 @@ public class GUI implements Runnable {
         createPanelComponents();
     }
 
+    /**
+     * Luo käyttöliittymän sivupaneelin oliot ja asettaa ne haluttuihin
+     * sijainteihin.
+     */
     public void createPanelComponents() {
         JLabel label0 = new JLabel("Describe the particle logic:");
         JLabel label1 = new JLabel("Format: name, ForNew, ToLive");
         JLabel label2 = new JLabel("Example: name, 2 7, 5");
         JLabel label3 = new JLabel("<------ Draw something!");
+        JLabel label4 = new JLabel("Choose the logic to draw:");
 
         JTextField tField1 = new JTextField(15);
+
+        JComboBox<String> colorList = new JComboBox<String>();
+        JComboBox<String> formList = new JComboBox<String>();
+
         JComboBox<ParticleType> particleList = new JComboBox<ParticleType>();
 
         JButton button1 = new JButton("Start");
@@ -86,11 +117,17 @@ public class GUI implements Runnable {
         button2.addActionListener(new StopListener(frame, functions));
         button3.addActionListener(new ClearListener(frame, functions));
 
+        ColorListener cListener = new ColorListener(frame, colorList);
+        FormListener fListener = new FormListener(frame, formList);
+
+        colorList.addActionListener(cListener);
+        formList.addActionListener(fListener);
+
         LogicSelectListener listener = new LogicSelectListener(frame, space, particleList);
         particleList.addActionListener(listener);
         listener.initialize();
 
-        tField1.addActionListener(new LogicInputListener(frame, functions, listener, tField1));
+        tField1.addActionListener(new LogicInputListener(frame, space, listener, cListener, fListener, tField1));
 
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.insets = new Insets(10, 10, 10, 10);
@@ -109,18 +146,30 @@ public class GUI implements Runnable {
         sidePanel.add(tField1, constraints);
 
         constraints.gridy = 4;
-        sidePanel.add(particleList, constraints);
+        sidePanel.add(colorList, constraints);
 
         constraints.gridy = 5;
-        sidePanel.add(button1, constraints);
+        sidePanel.add(formList, constraints);
 
         constraints.gridy = 6;
-        sidePanel.add(button2, constraints);
+        sidePanel.add(formList, constraints);
 
-        constraints.gridy = 7;
-        sidePanel.add(button3, constraints);
+        constraints.gridy = 8;
+        sidePanel.add(label4, constraints);
 
         constraints.gridy = 9;
+        sidePanel.add(particleList, constraints);
+
+        constraints.gridy = 10;
+        sidePanel.add(button1, constraints);
+
+        constraints.gridy = 11;
+        sidePanel.add(button2, constraints);
+
+        constraints.gridy = 12;
+        sidePanel.add(button3, constraints);
+
+        constraints.gridy = 13;
         sidePanel.add(label3, constraints);
     }
 

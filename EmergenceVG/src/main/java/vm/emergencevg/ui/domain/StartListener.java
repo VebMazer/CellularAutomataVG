@@ -5,6 +5,9 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import vm.emergencevg.logic.ControlFunctions;
 
+/**
+ * Start nappulan kuuntelija.
+ */
 public class StartListener implements ActionListener {
 
     JFrame frame;

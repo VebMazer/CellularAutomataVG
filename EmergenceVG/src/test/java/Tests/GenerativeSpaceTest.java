@@ -66,11 +66,22 @@ public class GenerativeSpaceTest {
         int[] array = {0, 0, 2, 5, 0, 5, 5, 0};
         assertEquals(space.mostCommonKey(array), 5);
     }
-
+    
+    @Test
+    public void testMostCommonKey3() {
+        int[] array = {0, 0, 0, 0, 1, 0, 0, 0};
+        assertEquals(space.mostCommonKey(array), 1);
+    }
+    
+    @Test
+    public void testMostCommonKey4() {
+        int[] array = {0, 0, 0, 0, 0, 0, 0, 0};
+        assertEquals(space.mostCommonKey(array), 0);
+    }
+    
     @Test
     public void testParticlePlacement() {
         space.placeParticle(3, 6, 7);
-        space.updateField();
         assertEquals(space.field[6][7], space.resultField[6][7]);
     }
 
