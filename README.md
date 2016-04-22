@@ -13,4 +13,4 @@ Dokumentaatio:
 
 [pitRaportti](https://htmlpreview.github.io/?https://github.com/VebMazer/EmergenceVG/blob/master/dokumentointi/pit/201604222115/index.html)
 
-[CheckstyleRaportti](https://htmlpreview.github.io/?https://github.com/VebMazer/EmergenceVG/blob/master/dokumentointi/Checkstyle/15.04.2016/site/checkstyle.html)
+[CheckstyleRaportti](https://htmlpreview.github.io/?https://github.com/VebMazer/EmergenceVG/blob/master/dokumentointi/Checkstyle/22.04.2016/site/checkstyle.html)
