@@ -6,6 +6,8 @@ Toiminnot:
 
 Partikkelityyppien lisääminen:
 
+![Alt text](Sekvenssikaavio1.png "Sekvenssikaavio1")
+
 - Käyttäjä syöttää tekstikenttään partikkelityyppejä muodossa(nimi, lukujoukko1, lukujoukko2).
 - Lukujoukot viittaavat partikkelia ympäröivien partikkelien määriin.
 - Ensimmäinen lukujoukko listaa määrät joilla syntyy uusi partikkeli, kun taas toinen
@@ -21,6 +23,9 @@ olisivat kentässä merkityksettömiä.
 tarkoitetuista laatikoista määrittelykentän alapuolella.
 
 Esityksen luominen:
+
+- Valittuja partikkeleita voi sijoittaa alustalle painamalla sitä hiirellä.
+![Alt text](Sekvenssikaavio2.png "Sekvenssikaavio2")
 
 - Kun alustan suoritus on päällä, tallentuvat pelaajan interaktiot alustan kanssa muistiin.
 - interaktiot voidaan siis uudelleen suorittaa, kun määrätään iterations muuttujan arvo
