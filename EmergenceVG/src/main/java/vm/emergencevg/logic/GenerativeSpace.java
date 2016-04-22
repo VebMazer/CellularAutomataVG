@@ -1,5 +1,6 @@
 package vm.emergencevg.logic;
 
+import java.util.ArrayList;
 import vm.emergencevg.domain.*;
 import java.util.HashMap;
 import java.util.Arrays;
@@ -20,9 +21,10 @@ public class GenerativeSpace implements Runnable {
     public ControlFunctions functions;
     public MouseController mController;
     public UtilityFunctions uFunctions;
-    Updatable uiDrawBoard;
+    public CommandRecordRunner coReRunner;
 
-    private double speedDivider;
+    Updatable uiDrawBoard;
+    public double speedModifier;
     boolean running;
 
     public GenerativeSpace(int x, int y) {
@@ -30,14 +32,15 @@ public class GenerativeSpace implements Runnable {
         ylength = y;
         field = new int[x][y];
         resultField = new int[x][y];
-
         this.particleTypes = new HashMap<Integer, ParticleType>();
-        running = false;
-        speedDivider = 5.0;
 
+        running = false;
+        speedModifier = 0.20;
+
+        coReRunner = new CommandRecordRunner(this);
+        uFunctions = new UtilityFunctions(this);
         functions = new ControlFunctions(this);
         mController = new MouseController(this);
-        uFunctions = new UtilityFunctions(this);
     }
 
     /**
@@ -52,10 +55,10 @@ public class GenerativeSpace implements Runnable {
         long timer = System.currentTimeMillis();
         int updates = 0;
         int cycles = 0;
-
         while (true) {
             long now = System.nanoTime();
-            delta += (now - lastTime) / (ns * speedDivider);
+            //delta += (now - lastTime) / (ns * speedModifier);
+            delta += (now - lastTime) * speedModifier / ns;
             lastTime = now;
             while (delta >= 1) {
                 iterate();
@@ -71,6 +74,13 @@ public class GenerativeSpace implements Runnable {
                 cycles = 0;
                 updates = 0;
             }
+            if (speedModifier < 1000) {
+                try {
+                    Thread.sleep(1);
+                } catch (Exception e) {
+                    System.out.println("Error in delaying the loop.");
+                }
+            }
         }
     }
 
@@ -81,7 +91,11 @@ public class GenerativeSpace implements Runnable {
     public void iterate() {
         if (running) {
             nextIteration();
+            coReRunner.runCommands();
+            coReRunner.iterations++;
+            coReRunner.uiIterationDisplayer.update();
         }
+
     }
 
     /**
@@ -152,7 +166,7 @@ public class GenerativeSpace implements Runnable {
      */
     public void particleProcess(int x, int y, int spotKey, int neighbors, int[] neighborTypes) {
         if (spotKey == 0) {
-            int mostCommonKey = mostCommonKey(neighborTypes);
+            int mostCommonKey = uFunctions.mostCommonKey(neighborTypes);
             if (mostCommonKey != 0) {
                 if (particleTypes.get(mostCommonKey).generate(neighbors)) {
                     resultField[x][y] = mostCommonKey;
@@ -170,59 +184,12 @@ public class GenerativeSpace implements Runnable {
     }
 
     /**
-     * Laskee ympäröivistä partikkeleistä yleisimmän ja palauttaa sen avaimen.
-     * Palauttaa 0 jos yhtäkään partikkelia ei löydy.
-     */
-    public int mostCommonKey(int[] keys) {
-        Arrays.sort(keys);
-        int mostRep = 0;
-        int reps = 0;
-        int index = 0;
-        boolean grew = false;
-        for (int i = 0; i < keys.length; i++) {
-            if (keys[i] != 0) {
-                if (reps < 1) {
-                    reps = 1;
-                }
-                if (i + 1 < keys.length && keys[i] == keys[i + 1]) {
-                    reps++;
-                    grew = true;
-                } else {
-                    grew = false;
-                }
-                if (reps > mostRep) {
-                    mostRep = reps;
-                    index = i;
-                }
-                if (!grew) {
-                    reps = 0;
-                }
-            }
-        }
-        return keys[index];
-    }
-
-    /**
      * Korvaa logiikka-avaruuden(field muuttuja) sen seuraavalla iteraatiolla
      * (resultField) ja alustaa resultField muuttujan uusiksi.
      */
     public void updateField() {
         field = resultField;
         resultField = new int[xlength][ylength];
-    }
-
-    /**
-     * Asettaa uuden partikkelin.
-     */
-    public void placeParticle(int pKey, int i, int j) {
-        if (i >= 0 && j >= 0 && i < xlength && j < ylength) {
-            if (field[i][j] != 0) {
-                resultField[i][j] = 0;
-            } else {
-                field[i][j] = pKey;
-                resultField[i][j] = pKey;
-            }
-        }
     }
 
     public void setUiDrawBoard(Updatable uiDrawBoard) {

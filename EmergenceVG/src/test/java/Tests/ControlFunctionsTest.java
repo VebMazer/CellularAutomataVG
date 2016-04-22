@@ -65,4 +65,10 @@ public class ControlFunctionsTest {
 
         assertEquals(true, (pType.name.equals("name") && pType.amountsForNew.get(0) == 3 && pType.amountsToLive.get(0) == 2 && pType.amountsToLive.get(1) == 1));
     }
+    
+    @Test
+    public void testParticlePlacement() {
+        functions.placeParticle(3, 6, 7);
+        assertEquals(space.field[6][7], space.resultField[6][7]);
+    }
 }

@@ -39,7 +39,33 @@ public class UtilityFunctionsTest {
     public void tearDown() {
     }
 
+    //Testataan mostCommonKey metodin toimivuutta.
+    //Metodin kuulu palauttaa yleisin kokonaisluku, joka ei ole nolla.
+    @Test
+    public void testMostCommonKey1() {
+        int[] array = {5, 2, 0, 1, 8, 2, 0, 0};
+        assertEquals(uFunctions.mostCommonKey(array), 2);
+    }
 
+    //Testataan mostCommonKey metodin toimivuutta.
+    @Test
+    public void testMostCommonKey2() {
+        int[] array = {0, 0, 2, 5, 0, 5, 5, 0};
+        assertEquals(uFunctions.mostCommonKey(array), 5);
+    }
+    
+    @Test
+    public void testMostCommonKey3() {
+        int[] array = {0, 0, 0, 0, 1, 0, 0, 0};
+        assertEquals(uFunctions.mostCommonKey(array), 1);
+    }
+    
+    @Test
+    public void testMostCommonKey4() {
+        int[] array = {0, 0, 0, 0, 0, 0, 0, 0};
+        assertEquals(uFunctions.mostCommonKey(array), 0);
+    }
+    
     @Test
     public void testFindLatestKey() {
         ArrayList<Integer> forNew = new ArrayList<Integer>();

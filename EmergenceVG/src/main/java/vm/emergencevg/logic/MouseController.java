@@ -55,8 +55,13 @@ public class MouseController {
      */
     public void cast() {
         for (int[] spot : spotsPressed) {
-            space.placeParticle(pKey, spot[0], spot[1]);
+            space.functions.placeParticle(pKey, spot[0], spot[1]);
+            addPlacementCommand(pKey, spot[0], spot[1]);
         }
         spotsPressed = new ArrayList<int[]>();
+    }
+
+    public void addPlacementCommand(int key, int x, int y) {
+        space.uFunctions.addCommand("(" + key + "," + x + "," + y + ")");
     }
 }

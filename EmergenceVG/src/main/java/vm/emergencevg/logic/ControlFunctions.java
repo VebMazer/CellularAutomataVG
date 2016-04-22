@@ -1,6 +1,7 @@
 package vm.emergencevg.logic;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import vm.emergencevg.domain.ParticleType;
 
 /**
@@ -10,9 +11,15 @@ import vm.emergencevg.domain.ParticleType;
 public class ControlFunctions {
 
     public GenerativeSpace space;
+    public CommandRecordRunner coReRunner;
+    public UtilityFunctions uFunctions;
+    public FileIO fileIo;
 
     public ControlFunctions(GenerativeSpace space) {
         this.space = space;
+        this.coReRunner = space.coReRunner;
+        this.uFunctions = space.uFunctions;
+        this.fileIo = new FileIO(space);
     }
 
     /**
@@ -20,6 +27,7 @@ public class ControlFunctions {
      * olion haluamaan malliin.
      */
     public void processStringToParticleType(String input) {
+        coReRunner.presetsToBeAdded.add("l(" + input + ")");
         String name = "";
         ArrayList<Integer> amountsForNew = new ArrayList<Integer>();
         ArrayList<Integer> amountsToLive = new ArrayList<Integer>();
@@ -42,16 +50,12 @@ public class ControlFunctions {
      */
     public int addIntegersToList(int index, String input, ArrayList<Integer> list) {
         while (index < input.length() && input.charAt(index) != ',') {
-            if (checkIfNumber(input.charAt(index))) {
+            if (uFunctions.checkIfNumber(input.charAt(index))) {
                 list.add(Integer.parseInt(input.substring(index, index + 1)));
             }
             index++;
         }
         return index;
-    }
-
-    public boolean checkIfNumber(char c) {
-        return (c >= '0' && c <= '9');
     }
 
     /**
@@ -73,8 +77,40 @@ public class ControlFunctions {
 
     }
 
-    public void readParticleTypesFromMemory() {
+    public void setIterations(String iterations) {
+        try {
+            coReRunner.iterations = Integer.parseInt(iterations);
+        } catch (Exception e) {
+            System.out.println("Bad input to iterations field!");
+        }
+    }
 
+    public void clearParticleTypes() {
+        stop();
+        space.particleTypes = new HashMap<Integer, ParticleType>();
+        coReRunner.presets = new ArrayList<String>();
+    }
+
+    public void clearRecord() {
+        stop();
+        coReRunner.commands = new HashMap<Integer, ArrayList<String>>();
+        coReRunner.iterations = 0;
+        coReRunner.uiIterationDisplayer.update();
+    }
+
+    public void save(String filename) {
+        fileIo.save(filename);
+    }
+
+    public void loadPresentation(String filename) {
+        clearRecord();
+        fileIo.load(filename);
+        coReRunner.runPresets();
+    }
+
+    public void addPresets(String filename) {
+        fileIo.addPresets(filename);
+        coReRunner.runPresets();
     }
 
     public void start() {
@@ -83,13 +119,24 @@ public class ControlFunctions {
 
     public void stop() {
         space.running = false;
+        uFunctions.uniteCommandMaps();
+        uFunctions.unitePresetLists();
     }
 
     public void pause() {
         if (space.running = false) {
-            space.running = true;
+            start();
         } else {
-            space.running = false;
+            stop();
+        }
+    }
+
+    public void setSpeed(String speed) {
+        try {
+            space.speedModifier = Double.parseDouble(speed);
+            uFunctions.addCommand("speed(" + speed + ")");
+        } catch (Exception e) {
+            System.out.println("Bad input!!");
         }
     }
 
@@ -99,74 +146,21 @@ public class ControlFunctions {
     public void clear() {
         space.field = new int[space.xlength][space.ylength];
         space.resultField = new int[space.xlength][space.ylength];
+        uFunctions.addCommand("clear");
     }
 
     /**
-     * Valmiita valinnaisia alkuasetuksia tuova metodi.
+     * Asettaa uuden partikkelin.
      */
-    public void initialTestSetup() {
-        ArrayList<Integer> forNew = new ArrayList<Integer>();
-        forNew.add(3);
-        ArrayList<Integer> toLive = new ArrayList<Integer>();
-        toLive.add(2);
-        toLive.add(3);
-        addParticleType("life", forNew, toLive);
-        ParticleType p = space.particleTypes.get(space.uFunctions.findLatestKey());
-        p.displayAttributes.set(0, 3);
-        p.displayAttributes.set(1, 1);
-
-        forNew = new ArrayList<Integer>();
-        forNew.add(2);
-        toLive = new ArrayList<Integer>();
-        addParticleType("seed", forNew, toLive);
-        p = space.particleTypes.get(space.uFunctions.findLatestKey());
-        p.displayAttributes.set(0, 2);
-        p.displayAttributes.set(1, 1);
-
-        forNew = new ArrayList<Integer>();
-        forNew.add(3);
-        forNew.add(4);
-        forNew.add(5);
-        toLive = new ArrayList<Integer>();
-        toLive.add(3);
-        addParticleType("remenant", forNew, toLive);
-        p = space.particleTypes.get(space.uFunctions.findLatestKey());
-        p.displayAttributes.set(0, 4);
-        p.displayAttributes.set(1, 1);
-
-        forNew = new ArrayList<Integer>();
-        forNew.add(1);
-        forNew.add(3);
-        toLive = new ArrayList<Integer>();
-        toLive.add(2);
-        toLive.add(4);
-        addParticleType("mobile", forNew, toLive);
-        p = space.particleTypes.get(space.uFunctions.findLatestKey());
-        p.displayAttributes.set(0, 5);
-        p.displayAttributes.set(1, 1);
-
-        forNew = new ArrayList<Integer>();
-        forNew.add(3);
-        toLive = new ArrayList<Integer>();
-        toLive.add(1);
-        toLive.add(2);
-        toLive.add(4);
-        addParticleType("forming", forNew, toLive);
-        p = space.particleTypes.get(space.uFunctions.findLatestKey());
-        p.displayAttributes.set(0, 6);
-        p.displayAttributes.set(1, 1);
-
-        forNew = new ArrayList<Integer>();
-        forNew.add(1);
-        forNew.add(2);
-        forNew.add(3);
-        forNew.add(4);
-        forNew.add(5);
-        forNew.add(6);
-        toLive = new ArrayList<Integer>();
-        addParticleType("filler", forNew, toLive);
-        p = space.particleTypes.get(space.uFunctions.findLatestKey());
-        p.displayAttributes.set(0, 1);
-        p.displayAttributes.set(1, 1);
+    public void placeParticle(int pKey, int i, int j) {
+        if (i >= 0 && j >= 0 && i < space.xlength && j < space.ylength) {
+            if (space.field[i][j] != 0) {
+                space.field[i][j] = 0;
+                space.resultField[i][j] = 0;
+            } else {
+                space.field[i][j] = pKey;
+                space.resultField[i][j] = pKey;
+            }
+        }
     }
 }

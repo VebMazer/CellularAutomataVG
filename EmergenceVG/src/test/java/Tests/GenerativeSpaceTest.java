@@ -51,40 +51,7 @@ public class GenerativeSpaceTest {
 
         assertEquals(space.field[0].length, space.resultField[0].length);
     }
-
-    //Testataan mostCommonKey metodin toimivuutta.
-    //Metodin kuulu palauttaa yleisin kokonaisluku, joka ei ole nolla.
-    @Test
-    public void testMostCommonKey1() {
-        int[] array = {5, 2, 0, 1, 8, 2, 0, 0};
-        assertEquals(space.mostCommonKey(array), 2);
-    }
-
-    //Testataan mostCommonKey metodin toimivuutta.
-    @Test
-    public void testMostCommonKey2() {
-        int[] array = {0, 0, 2, 5, 0, 5, 5, 0};
-        assertEquals(space.mostCommonKey(array), 5);
-    }
     
-    @Test
-    public void testMostCommonKey3() {
-        int[] array = {0, 0, 0, 0, 1, 0, 0, 0};
-        assertEquals(space.mostCommonKey(array), 1);
-    }
-    
-    @Test
-    public void testMostCommonKey4() {
-        int[] array = {0, 0, 0, 0, 0, 0, 0, 0};
-        assertEquals(space.mostCommonKey(array), 0);
-    }
-    
-    @Test
-    public void testParticlePlacement() {
-        space.placeParticle(3, 6, 7);
-        assertEquals(space.field[6][7], space.resultField[6][7]);
-    }
-
     public void particleTestInitialization() {
         ArrayList<Integer> forNew = new ArrayList<Integer>();
         forNew.add(3);

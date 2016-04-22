@@ -15,6 +15,7 @@ public class FormListener implements ActionListener {
     public int formKey;
 
     public FormListener(JFrame frame, JComboBox<String> box) {
+        formKey = 1;
         this.box = box;
         this.frame = frame;
         box.addItem("3dRectangle");

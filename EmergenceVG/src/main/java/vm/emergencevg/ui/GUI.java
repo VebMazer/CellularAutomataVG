@@ -18,10 +18,17 @@ import vm.emergencevg.domain.ParticleType;
 import vm.emergencevg.logic.ControlFunctions;
 import vm.emergencevg.logic.GenerativeSpace;
 import vm.emergencevg.ui.domain.ClearListener;
+import vm.emergencevg.ui.domain.ClearParticleTypesListener;
+import vm.emergencevg.ui.domain.ClearRecordListener;
 import vm.emergencevg.ui.domain.ColorListener;
 import vm.emergencevg.ui.domain.FormListener;
+import vm.emergencevg.ui.domain.IterationsListener;
+import vm.emergencevg.ui.domain.LoadParticleTypesListener;
+import vm.emergencevg.ui.domain.LoadPresentationListener;
 import vm.emergencevg.ui.domain.LogicInputListener;
 import vm.emergencevg.ui.domain.LogicSelectListener;
+import vm.emergencevg.ui.domain.SaveListener;
+import vm.emergencevg.ui.domain.SpeedInputListener;
 import vm.emergencevg.ui.domain.StartListener;
 import vm.emergencevg.ui.domain.StopListener;
 
@@ -34,6 +41,7 @@ public class GUI implements Runnable {
     GenerativeSpace space;
     ControlFunctions functions;
     public DrawBoard drawboard;
+    public IterationsListener itTracker;
     JPanel sidePanel;
     int sideLength;
 
@@ -101,18 +109,31 @@ public class GUI implements Runnable {
         JLabel label2 = new JLabel("Example: name, 2 7, 5");
         JLabel label3 = new JLabel("<------ Draw something!");
         JLabel label4 = new JLabel("Choose the logic to draw:");
+        JLabel label5 = new JLabel("Speed:");
+        JLabel fileNameLab = new JLabel("Filename:");
+        JLabel iterationsLabel = new JLabel("Iteration:");
 
         JTextField tField1 = new JTextField(15);
+        JTextField tField2 = new JTextField(5);
+        tField2.setText("" + space.speedModifier);
+        JTextField fileNameTField = new JTextField(15);
+        JTextField iterationField = new JTextField(5);
 
         JComboBox<String> colorList = new JComboBox<String>();
         JComboBox<String> formList = new JComboBox<String>();
 
         JComboBox<ParticleType> particleList = new JComboBox<ParticleType>();
 
+        JButton saveButton = new JButton("Save");
+        JButton loadPresentationButton = new JButton("LoadPresentation");
+        JButton loadParticleTypesButton = new JButton("LoadParticleTypes");
         JButton button1 = new JButton("Start");
         JButton button2 = new JButton("Stop");
         JButton button3 = new JButton("Clear");
+        JButton clearRecordButton = new JButton("clearRecord");
+        JButton clearParticleTypesButton = new JButton("clearParticleTypes");
 
+        clearRecordButton.addActionListener(new ClearRecordListener(space, frame));
         button1.addActionListener(new StartListener(frame, functions));
         button2.addActionListener(new StopListener(frame, functions));
         button3.addActionListener(new ClearListener(frame, functions));
@@ -127,50 +148,87 @@ public class GUI implements Runnable {
         particleList.addActionListener(listener);
         listener.initialize();
 
+        clearParticleTypesButton.addActionListener(new ClearParticleTypesListener(space, frame, listener));
+        saveButton.addActionListener(new SaveListener(space, frame, fileNameTField));
+        loadPresentationButton.addActionListener(new LoadPresentationListener(space, frame, fileNameTField, listener));
+        loadParticleTypesButton.addActionListener(new LoadParticleTypesListener(space, frame, fileNameTField, listener));
+
+        itTracker = new IterationsListener(space, frame, iterationField);
+        iterationField.addActionListener(itTracker);
         tField1.addActionListener(new LogicInputListener(frame, space, listener, cListener, fListener, tField1));
+        tField2.addActionListener(new SpeedInputListener(frame, space, tField2));
 
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.insets = new Insets(10, 10, 10, 10);
 
         constraints.gridx = 0;
         constraints.gridy = 0;
-        sidePanel.add(label0, constraints);
+        sidePanel.add(fileNameLab, constraints);
 
         constraints.gridy = 1;
-        sidePanel.add(label1, constraints);
+        sidePanel.add(fileNameTField, constraints);
 
         constraints.gridy = 2;
-        sidePanel.add(label2, constraints);
+        sidePanel.add(saveButton, constraints);
 
         constraints.gridy = 3;
-        sidePanel.add(tField1, constraints);
+        sidePanel.add(loadPresentationButton, constraints);
 
         constraints.gridy = 4;
-        sidePanel.add(colorList, constraints);
+        sidePanel.add(loadParticleTypesButton, constraints);
 
         constraints.gridy = 5;
-        sidePanel.add(formList, constraints);
+        sidePanel.add(label0, constraints);
 
         constraints.gridy = 6;
-        sidePanel.add(formList, constraints);
+        sidePanel.add(label1, constraints);
+
+        constraints.gridy = 7;
+        sidePanel.add(label2, constraints);
 
         constraints.gridy = 8;
-        sidePanel.add(label4, constraints);
+        sidePanel.add(tField1, constraints);
 
         constraints.gridy = 9;
-        sidePanel.add(particleList, constraints);
+        sidePanel.add(colorList, constraints);
 
         constraints.gridy = 10;
-        sidePanel.add(button1, constraints);
+        sidePanel.add(formList, constraints);
 
         constraints.gridy = 11;
-        sidePanel.add(button2, constraints);
+        sidePanel.add(label4, constraints);
 
         constraints.gridy = 12;
-        sidePanel.add(button3, constraints);
+        sidePanel.add(particleList, constraints);
 
         constraints.gridy = 13;
-        sidePanel.add(label3, constraints);
-    }
+        sidePanel.add(clearParticleTypesButton, constraints);
 
+        constraints.gridy = 14;
+        sidePanel.add(button1, constraints);
+
+        constraints.gridy = 15;
+        sidePanel.add(button2, constraints);
+
+        constraints.gridy = 16;
+        sidePanel.add(button3, constraints);
+
+        constraints.gridy = 17;
+        sidePanel.add(label3, constraints);
+
+        constraints.gridy = 18;
+        sidePanel.add(label5, constraints);
+
+        constraints.gridy = 19;
+        sidePanel.add(tField2, constraints);
+
+        constraints.gridy = 20;
+        sidePanel.add(iterationsLabel, constraints);
+
+        constraints.gridy = 21;
+        sidePanel.add(iterationField, constraints);
+
+        constraints.gridy = 22;
+        sidePanel.add(clearRecordButton, constraints);
+    }
 }

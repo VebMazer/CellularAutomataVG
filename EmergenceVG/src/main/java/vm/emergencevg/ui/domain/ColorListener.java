@@ -15,6 +15,7 @@ public class ColorListener implements ActionListener {
     public int colorKey;
 
     public ColorListener(JFrame frame, JComboBox<String> box) {
+        colorKey = 1;
         this.box = box;
         this.frame = frame;
         box.addItem("Red");

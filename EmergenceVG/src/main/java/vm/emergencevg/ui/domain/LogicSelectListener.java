@@ -43,6 +43,10 @@ public class LogicSelectListener implements ActionListener {
         box.addItem(space.particleTypes.get(space.uFunctions.findLatestKey()));
     }
 
+    public void empty() {
+        box.removeAllItems();
+    }
+
     public void initialize() {
 //        box.removeAllItems();
         for (ParticleType particleType : space.particleTypes.values()) {

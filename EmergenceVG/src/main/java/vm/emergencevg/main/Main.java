@@ -13,12 +13,13 @@ public class Main {
 
     public static void main(String[] args) {
         GenerativeSpace space = new GenerativeSpace(100, 100);
-        space.functions.initialTestSetup();
-        space.functions.start();
+        Presets presets = new Presets(space);
+        presets.initialTestSetup();
+        //space.functions.start();
         GUI ui = new GUI(space, 10);
         SwingUtilities.invokeLater(ui);
 
-        while (ui.drawboard == null) {
+        while (ui.drawboard == null || ui.itTracker == null) {
             try {
                 Thread.sleep(100);
             } catch (Exception e) {
@@ -26,6 +27,7 @@ public class Main {
             }
         }
 
+        space.coReRunner.setIterationDisplayer(ui.itTracker);
         space.setUiDrawBoard(ui.drawboard);
         space.run();
 
