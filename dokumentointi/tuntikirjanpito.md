@@ -12,6 +12,6 @@ Päivä | Tunnit | Kuvaus
 10.4.2016 | 3h | Koodaamista, suunnittelua ja bugien korjaamista.
 14.4.2016 | 3h | Koodaamista.
 15.4.2016 | 4h | Koodaamista, javadoc, testaamista, chekstyle, pit, readme.md ja palautus.
-20.4.2016 | 3h | Koodaamista.
-21.4.2016 | 5h | Koodaamista, koodin tiivistämistä.
+20.4.2016 | 4h | Koodaamista.
+21.4.2016 | 5h | Koodaamista, koodin tiivistämistä ja jakamista uusiin luokkiin.
 22.4.2016 | 4h | Javadoc, Luokka-kaavion päivitys, aihemäärittelyn päivitys, sekvenssikaaviot, Checkstyle, pit ja palautus.
