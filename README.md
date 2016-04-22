@@ -11,6 +11,6 @@ Dokumentaatio:
 
 [Luokkakaavio](dokumentointi/Luokkakaavio.png)
 
-[pitRaportti](https://htmlpreview.github.io/?https://github.com/VebMazer/EmergenceVG/blob/master/dokumentointi/pit/201604080810/index.html)
+[pitRaportti](https://htmlpreview.github.io/?https://github.com/VebMazer/EmergenceVG/blob/master/dokumentointi/pit/201604222115/index.html)
 
-[CheckstyleRaportti](https://htmlpreview.github.io/?https://github.com/VebMazer/EmergenceVG/blob/master/dokumentointi/Checkstyle/08.04.16/site/checkstyle.html)
+[CheckstyleRaportti](https://htmlpreview.github.io/?https://github.com/VebMazer/EmergenceVG/blob/master/dokumentointi/Checkstyle/22.04.2016/site/checkstyle.html)

@@ -1,18 +1,50 @@
-
 EmergenceVG: (EmergenceVisualGenerator)
 
-Aihe: Visuaalinen generaatio alusta jolle voi syöttää erillaisia sääntöjoukkoihin sidottuja 
-objekteja, jotka visuaalialustan taustaloopin käynnistyessä etenevät määritellyllä tavalla. 
-
-Sidenote: Ohjelma voisi esim. generoida visuaali esitystä musiikin tahdissa ja/tai nuottien 
-perusteella.(audio visualizer)
+Visuaali efektejä generoiva alusta visuaali esitysten luomiseen.
 
 Toiminnot:
-- käyttäjä syöttää teksti kenttään määrittely ehtoja objekteille
-- Käyttäjä voi halutessan asettaa määriteltyjä objekteja eri paikkoihin piirtoalustan kautta hiirellään.
-- Generoinnin nopeuden voi määrittää tekstiboksissa
-- Generoinnin tahtia voi myös säätää(jos aika riittää voisi tämän yrittää sitoa esim. audioon jotain kautta)
-- generointi loopin käynnistyessä objektit alkavat progressoitua piirtoalustalla havaittavasti niille 
-ominaisten määrittely ehtojen mukaan. (Esim. )
-- Objektien alkuasetelmia voi myös tallentaa tekstitiedostoihin koodattuina ja lukea myöhemmin
-uutta esitystä varten.
+
+Partikkelityyppien lisääminen:
+
+![Alt text](Sekvenssikaavio1.png "Sekvenssikaavio1")
+
+- Käyttäjä syöttää tekstikenttään partikkelityyppejä muodossa(nimi, lukujoukko1, lukujoukko2).
+- Lukujoukot viittaavat partikkelia ympäröivien partikkelien määriin.
+- Ensimmäinen lukujoukko listaa määrät joilla syntyy uusi partikkeli, kun taas toinen
+ne määrät joilla partikkeli selviää seuraavaan vuoroon. Esim. Game of life: (life, 3, 2 3) Sulut jätetään pois
+ohjelmaan kirjoitettaessa.
+- Luku joukkoihin saa lisätä haluamansa määrän lukuja. Tosin vain luvuilla 1-8 on merkitystä, koska 8 
+on maksimi määrä naapureita.
+- Jos kenttään kirjoittaa esim. luvun 24, rekisteröi ohjelma sen lukuina 2 ja 4, koska 8 suuremmat luvut
+olisivat kentässä merkityksettömiä.
+- Kun käyttäjä on kirjoittanut määrittelyn kenttään tulee hänen painaa Enter nappulaa.
+
+- Halutessaan käyttäjä voi myös ennen määrittelyä, valita partikkelille haluamansa värin ja muodon niille
+tarkoitetuista laatikoista määrittelykentän alapuolella.
+
+Esityksen luominen:
+
+- Valittuja partikkeleita voi sijoittaa alustalle painamalla sitä hiirellä.
+![Alt text](Sekvenssikaavio2.png "Sekvenssikaavio2")
+
+- Kun alustan suoritus on päällä, tallentuvat pelaajan interaktiot alustan kanssa muistiin.
+- interaktiot voidaan siis uudelleen suorittaa, kun määrätään iterations muuttujan arvo
+kohtaan jossa se oli interaktion tapahtuessa. Tämä tapahtuu syöttämällä se Iteration kenttään ja 
+painamalla Enter alustan olleessa pysähtyneessä tilassa.
+- Iterations on suorituksen alussa aina nollassa.
+
+- Iteraatioiden etenemis nopeuden voi myös määrittää speed kentässä(Kirjoita arvo ja paina Enter). 
+Myös speed muuttujan muokkaaminen tallentuu esitykseen.
+
+Tallentaminen ja lataaminen:
+
+- Luodut partikkelityypit ja käyttäjän Interaktiot(Luotu esitys) voidaan tallentaa
+tiedostoon, jonka nimi on määritelty FileName kentässä painamalla Save painiketta.
+- Vastaavasti Esitys voidaan ladata tiedostosta painamalla LoadPresentation painiketta.
+- Jos tiedostosta halutaan vain luodut partikkelityypi voidaan käyttää LoadParticleTypes
+painiketta.
+
+Ohjelmasta poistuminen:
+
+- Ohjelmasta poistutaan ohjelman käyttöliittymän oikeassa yläkulmassa sijaitsevaa 
+x painiketta painamalla.
