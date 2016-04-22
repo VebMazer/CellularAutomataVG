@@ -4,7 +4,7 @@ Visuaali efektejä generoiva alusta visuaali esitysten luomiseen.
 
 Toiminnot:
 
-Partikkelityyppien Syöttö:
+Partikkelityyppien lisääminen:
 
 - Käyttäjä syöttää tekstikenttään partikkelityyppejä muodossa(nimi, lukujoukko1, lukujoukko2).
 - Lukujoukot viittaavat partikkelia ympäröivien partikkelien määriin.
