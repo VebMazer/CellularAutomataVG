@@ -57,7 +57,6 @@ public class GenerativeSpace implements Runnable {
         int cycles = 0;
         while (true) {
             long now = System.nanoTime();
-            //delta += (now - lastTime) / (ns * speedModifier);
             delta += (now - lastTime) * speedModifier / ns;
             lastTime = now;
             while (delta >= 1) {

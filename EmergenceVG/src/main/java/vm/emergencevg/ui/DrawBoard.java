@@ -20,7 +20,7 @@ public class DrawBoard extends JPanel implements Updatable {
     public DrawBoard(GenerativeSpace space, GUI ui) {
         this.space = space;
         this.ui = ui;
-        this.sideLength = ui.sideLength;
+        this.sideLength = ui.scale;
         this.mController = space.mController;
 
     }
@@ -113,7 +113,7 @@ public class DrawBoard extends JPanel implements Updatable {
      */
     @Override
     public synchronized void update() {
-        sideLength = ui.sideLength;
+        sideLength = ui.scale;
         repaint();
     }
 }

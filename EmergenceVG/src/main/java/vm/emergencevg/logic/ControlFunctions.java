@@ -3,6 +3,7 @@ package vm.emergencevg.logic;
 import java.util.ArrayList;
 import java.util.HashMap;
 import vm.emergencevg.domain.ParticleType;
+import vm.emergencevg.ui.Updatable;
 
 /**
  * Luokka tarjoaa metodeita joita käytetään, kun halutaan määrittää ohjelman
@@ -14,12 +15,15 @@ public class ControlFunctions {
     public CommandRecordRunner coReRunner;
     public UtilityFunctions uFunctions;
     public FileIO fileIo;
+    public Updatable scaleUpdater;
+    public int scale;
 
     public ControlFunctions(GenerativeSpace space) {
         this.space = space;
         this.coReRunner = space.coReRunner;
         this.uFunctions = space.uFunctions;
         this.fileIo = new FileIO(space);
+        scale = 5;
     }
 
     /**
@@ -27,7 +31,7 @@ public class ControlFunctions {
      * olion haluamaan malliin.
      */
     public void processVariablesToParticleType(String input, ArrayList<Integer> displayAttributes) {
-        coReRunner.presetsToBeAdded.add("l(" + input + ",," + displayAttributes.get(0) + " " + displayAttributes.get(1) + ")");
+        uFunctions.addPreset("l(" + input + ",," + displayAttributes.get(0) + " " + displayAttributes.get(1) + ")");
         String name = "";
         ArrayList<Integer> amountsForNew = new ArrayList<Integer>();
         ArrayList<Integer> amountsToLive = new ArrayList<Integer>();
@@ -76,15 +80,20 @@ public class ControlFunctions {
         }
     }
 
+    public void resetFieldCommand(int x, int y) {
+        resetField(x, y);
+        uFunctions.addCommand("fieldSize(" + space.xlength + "," + space.ylength + ")");
+    }
+    
     public void resetField(int x, int y) {
         boolean wasRunning = space.running;
         if (wasRunning) {
             stop();
-        }
-        try {
-            Thread.sleep(5);
-        } catch (Exception e) {
-            System.out.println("Slowing thread did not succeed...");
+            try {
+                Thread.sleep(10);
+            } catch (Exception e) {
+                System.out.println("Slowing thread did not succeed...");
+            }
         }
         space.xlength = x;
         space.ylength = y;
@@ -115,19 +124,29 @@ public class ControlFunctions {
         coReRunner.iterations = 0;
         coReRunner.uiIterationDisplayer.update();
     }
+    
+    public void setScaleCommand(int scale) {
+        setScale(scale);
+        uFunctions.addCommand("scale("+ scale +")");
+    }
+    
+    public void setScale(int scale) {
+        this.scale = scale;
+        scaleUpdater.update();
+    }
 
     public void save(String filename) {
         stop();
-        boolean found = false;
-        for (String preset : coReRunner.presets) {
-            if(preset.length() > 9 && preset.substring(0, 10).equals("fieldSize(")) {
-                found = true;
-                break;
-            }
-        }
-        if (!found) {
-            coReRunner.presets.add("fieldSize(" + space.xlength + "," + space.ylength + ")");
-        }
+//        boolean found = false;
+//        for (String preset : coReRunner.presets) {
+//            if(preset.length() > 9 && preset.substring(0, 10).equals("fieldSize(")) {
+//                found = true;
+//                break;
+//            }
+//        }
+//        if (!found) {
+//            coReRunner.presets.add("fieldSize(" + space.xlength + "," + space.ylength + ")");
+//        }
         fileIo.save(filename);
     }
 
@@ -201,5 +220,9 @@ public class ControlFunctions {
                 space.resultField[i][j] = pKey;
             }
         }
+    }
+    
+    public void setScaleUpdater(Updatable updatable) {
+        scaleUpdater = updatable;
     }
 }

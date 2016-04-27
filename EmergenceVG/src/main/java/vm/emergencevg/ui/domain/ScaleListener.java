@@ -6,30 +6,34 @@ import java.awt.event.ActionListener;
 import javax.swing.JTextField;
 import vm.emergencevg.logic.ControlFunctions;
 import vm.emergencevg.ui.GUI;
+import vm.emergencevg.ui.Updatable;
 
-
-public class FieldSizeListener implements ActionListener{
+public class ScaleListener implements ActionListener, Updatable{
 
     GUI ui;
-    JTextField tFieldX;
-    JTextField tFieldY;
+    JTextField tField;
     ControlFunctions functions;
-
-    public FieldSizeListener(GUI ui, JTextField tFieldX, JTextField tFieldY) {
+    
+    public ScaleListener(GUI ui, JTextField tField, ControlFunctions functions) {
         this.ui = ui;
-        this.tFieldX = tFieldX;
-        this.tFieldY = tFieldY;
-        functions = ui.space.functions;
+        this.tField = tField;
+        this.functions = functions;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
-            functions.resetFieldCommand(Integer.parseInt(tFieldX.getText()), Integer.parseInt(tFieldY.getText())); 
+            ui.scale = Integer.parseInt(tField.getText());
+            functions.setScaleCommand(ui.scale);
         } catch(Exception ex) {
             System.out.println("Bad input!");
         }
         ui.frame.requestFocus();
+    }
+
+    @Override
+    public void update() {
+        ui.scale = functions.scale;
     }
     
 }

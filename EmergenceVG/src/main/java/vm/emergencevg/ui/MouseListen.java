@@ -20,11 +20,11 @@ public class MouseListen extends MouseAdapter {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        controller.updateSpot(e.getX() / ui.sideLength, e.getY() / ui.sideLength);
+        controller.updateSpot(e.getX() / ui.scale, e.getY() / ui.scale);
     }
 
     public void mouseDragged(MouseEvent e) {
-        controller.updateSpot(e.getX() / ui.sideLength, e.getY() / ui.sideLength);
+        controller.updateSpot(e.getX() / ui.scale, e.getY() / ui.scale);
     }
 
     public void mouseReleased(MouseEvent e) {

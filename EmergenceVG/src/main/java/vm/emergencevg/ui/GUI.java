@@ -32,7 +32,7 @@ import vm.emergencevg.ui.domain.SaveListener;
 import vm.emergencevg.ui.domain.SpeedInputListener;
 import vm.emergencevg.ui.domain.StartListener;
 import vm.emergencevg.ui.domain.StopListener;
-import vm.emergencevg.ui.domain.SideLengthListener;
+import vm.emergencevg.ui.domain.ScaleListener;
 
 /**
  * Ohjelman graafinen käyttöliittymä.
@@ -40,13 +40,16 @@ import vm.emergencevg.ui.domain.SideLengthListener;
 public class GUI implements Runnable {
 
     public JFrame frame;
+    public DrawBoard drawboard;
+    JPanel sidePanel;
+    
     public GenerativeSpace space;
     ControlFunctions functions;
-    public DrawBoard drawboard;
+    
     public IterationsListener itTracker;
-    JPanel sidePanel;
-    public Integer sideLength;
-
+    public ScaleListener scaleUpdater;
+    
+    public Integer scale;
     /**
      *
      * @param space Ohjelman taustalooppi.
@@ -56,7 +59,7 @@ public class GUI implements Runnable {
     public GUI(GenerativeSpace space, int sidelength) {
         this.space = space;
         functions = space.functions;
-        this.sideLength = sidelength;
+        this.scale = sidelength;
     }
 
     /**
@@ -99,7 +102,7 @@ public class GUI implements Runnable {
         MouseListen mListener = new MouseListen(space.mController, this);
         drawboard.addMouseListener(mListener);
         drawboard.addMouseMotionListener(mListener);
-
+        
         createPanelComponents();
     }
 
@@ -166,10 +169,11 @@ public class GUI implements Runnable {
         loadParticleTypesButton.addActionListener(new LoadParticleTypesListener(space, frame, fileNameTField, listener));
         
         itTracker = new IterationsListener(space, frame, iterationField);
+        scaleUpdater = new ScaleListener(this, particleScaleTField, space.functions);
         iterationField.addActionListener(itTracker);
         tField1.addActionListener(new LogicInputListener(frame, space, listener, cListener, fListener, tField1));
         speedTfield.addActionListener(new SpeedInputListener(frame, space, speedTfield));
-        particleScaleTField.addActionListener(new SideLengthListener(this, particleScaleTField));
+        particleScaleTField.addActionListener(scaleUpdater);
         
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.insets = new Insets(10, 10, 10, 10);

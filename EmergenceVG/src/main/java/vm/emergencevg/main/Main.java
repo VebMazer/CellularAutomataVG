@@ -28,6 +28,7 @@ public class Main {
         }
 
         space.coReRunner.setIterationDisplayer(ui.itTracker);
+        space.functions.setScaleUpdater(ui.scaleUpdater);
         space.setUiDrawBoard(ui.drawboard);
         space.run();
 

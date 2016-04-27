@@ -73,6 +73,10 @@ public class UtilityFunctions {
     public void addCommand(String command) {
         coReRunner.commandsToBeAdded.get(initializeCommandArrayList()).add(command);
     }
+    
+    public void addPreset(String command) {
+        coReRunner.presetsToBeAdded.add(command);
+    }
 
     /**
      * Lisää lisätyt komennot komento listaan.

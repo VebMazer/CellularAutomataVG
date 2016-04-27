@@ -103,6 +103,10 @@ public class CommandRecordRunner {
             space.functions.clear();
         } else if (command.substring(0, 5).equals("speed")) {
             space.functions.setSpeed(command.substring(6, command.length() - 1));
+        } else if(command.substring(0, 2).equals("sc")) {
+            space.functions.setScale(Integer.parseInt(command.substring(6, command.length()-1)));
+        } else if(command.charAt(0) == 'f') {
+            parseAndSetFieldSize(command);
         }
     }
 
