@@ -54,6 +54,7 @@ public class MouseController {
      * käyttäjä päästää hiiren painikkeesta irti.)
      */
     public void cast() {
+        if(!space.particleTypes.containsKey(pKey)) pKey = 0;
         for (int[] spot : spotsPressed) {
             space.functions.placeParticle(pKey, spot[0], spot[1]);
             addPlacementCommand(pKey, spot[0], spot[1]);

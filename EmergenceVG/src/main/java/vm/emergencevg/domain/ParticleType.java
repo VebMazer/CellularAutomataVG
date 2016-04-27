@@ -25,14 +25,12 @@ public class ParticleType {
      * @param amountsToLive Lista sopivista ympäröivien partikkelien määristä
      * tämän tyypin partikkelin elossa pysymiseksi.
      */
-    public ParticleType(String name, int key, ArrayList<Integer> amountsForNew, ArrayList<Integer> amountsToLive) {
+    public ParticleType(String name, int key, ArrayList<Integer> amountsForNew, ArrayList<Integer> amountsToLive, ArrayList<Integer> displayAttributes) {
         this.name = name;
         this.key = key;
         this.amountsForNew = amountsForNew;
         this.amountsToLive = amountsToLive;
-        this.displayAttributes = new ArrayList<Integer>();
-        this.displayAttributes.add(1);
-        this.displayAttributes.add(1);
+        this.displayAttributes = displayAttributes;
     }
 
     /**

@@ -35,6 +35,24 @@ public class UtilityFunctions {
     public boolean checkIfNumber(char c) {
         return (c >= '0' && c <= '9');
     }
+    
+        public int parseNextNumber(int index, String str, ArrayList<Integer> list) {
+        while (index < str.length()) {
+            if (space.uFunctions.checkIfNumber(str.charAt(index))) {
+                break;
+            }
+            index++;
+        }
+        int beginIndex = index;
+        while(index < str.length()) {
+            index++;
+            if (!space.uFunctions.checkIfNumber(str.charAt(index))) {
+                break;
+            }
+        }
+        list.add(Integer.parseInt(str.substring(beginIndex, index)));
+        return index;
+    }
 
     public int parseNumber(String str, int index) {
         int startIndex = index;
@@ -43,7 +61,7 @@ public class UtilityFunctions {
         }
         return Integer.parseInt(str.substring(startIndex, index));
     }
-
+    
     public int initializeCommandArrayList() {
         int iteration = coReRunner.iterations;
         if (!coReRunner.commandsToBeAdded.containsKey(iteration)) {

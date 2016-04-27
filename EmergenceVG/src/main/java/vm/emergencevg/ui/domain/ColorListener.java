@@ -24,6 +24,10 @@ public class ColorListener implements ActionListener {
         box.addItem("Cyan");
         box.addItem("Magenta");
         box.addItem("Yellow");
+        box.addItem("Orange");
+        box.addItem("White");
+        box.addItem("Pink");
+        box.addItem("Gray");
     }
 
     @Override
@@ -40,6 +44,14 @@ public class ColorListener implements ActionListener {
             colorKey = 5;
         } else if (box.getSelectedItem().equals("Yellow")) {
             colorKey = 6;
+        } else if (box.getSelectedItem().equals("Orange")) {
+            colorKey = 7;
+        } else if (box.getSelectedItem().equals("White")) {
+            colorKey = 8;
+        } else if (box.getSelectedItem().equals("Pink")) {
+            colorKey = 9;
+        } else if (box.getSelectedItem().equals("Gray")) {
+            colorKey = 10;
         }
         frame.requestFocus();
     }

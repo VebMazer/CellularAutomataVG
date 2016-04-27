@@ -45,7 +45,10 @@ public class ControlFunctionsTest {
         ArrayList<Integer> toLive = new ArrayList<Integer>();
         toLive.add(2);
         toLive.add(3);
-        functions.addParticleType("life", forNew, toLive);
+        ArrayList<Integer> displayAttributes = new ArrayList<Integer>();
+        displayAttributes.add(1);
+        displayAttributes.add(1);
+        functions.addParticleType("life", forNew, toLive, displayAttributes);
 
         int testInt = space.particleTypes.get(1).amountsToLive.get(1);
         assertEquals(testInt, 3);
@@ -60,7 +63,10 @@ public class ControlFunctionsTest {
 
     @Test
     public void testStringProcessing() {
-        functions.processStringToParticleType("name, 3, 2 1");
+        ArrayList<Integer> displayAttributes = new ArrayList<Integer>();
+        displayAttributes.add(1);
+        displayAttributes.add(1);
+        functions.processVariablesToParticleType("name, 3, 2 1,,", displayAttributes);
         ParticleType pType = space.particleTypes.get(1);
 
         assertEquals(true, (pType.name.equals("name") && pType.amountsForNew.get(0) == 3 && pType.amountsToLive.get(0) == 2 && pType.amountsToLive.get(1) == 1));

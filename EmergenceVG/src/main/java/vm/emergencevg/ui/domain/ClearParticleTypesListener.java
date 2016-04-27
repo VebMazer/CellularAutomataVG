@@ -22,9 +22,9 @@ public class ClearParticleTypesListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        space.functions.clearCommand();
         space.functions.clearParticleTypes();
         lsListener.empty();
-        lsListener.initialize();
         frame.requestFocus();
     }
 }

@@ -71,13 +71,14 @@ public class UtilityFunctionsTest {
         ArrayList<Integer> forNew = new ArrayList<Integer>();
         forNew.add(2);
         ArrayList<Integer> toLive = new ArrayList<Integer>();
-        cFunctions.addParticleType("ss", forNew, toLive);
+        ArrayList<Integer> displayAttributes = new ArrayList<Integer>();
+        cFunctions.addParticleType("ss", forNew, toLive, displayAttributes);
         boolean firstFound = false;
         if(uFunctions.findLatestKey() == 1) firstFound = true;
         forNew = new ArrayList<Integer>();
         forNew.add(1);
         toLive = new ArrayList<Integer>();
-        cFunctions.addParticleType("sss", forNew, toLive);
+        cFunctions.addParticleType("sss", forNew, toLive, displayAttributes);
         boolean secondFound = false;
         if(uFunctions.findLatestKey() == 2) secondFound = true;
         

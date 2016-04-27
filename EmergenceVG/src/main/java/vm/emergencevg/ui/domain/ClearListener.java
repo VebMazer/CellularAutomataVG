@@ -20,7 +20,7 @@ public class ClearListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        functions.clear();
+        functions.clearCommand();
         frame.requestFocus();
     }
 

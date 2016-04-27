@@ -2,6 +2,7 @@ package vm.emergencevg.ui.domain;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 import vm.emergencevg.domain.ParticleType;
@@ -30,10 +31,10 @@ public class LogicInputListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        space.functions.processStringToParticleType(tField.getText());
-        ParticleType p = space.particleTypes.get(space.uFunctions.findLatestKey());
-        p.displayAttributes.set(0, cListener.colorKey);
-        p.displayAttributes.set(1, fListener.formKey);
+        ArrayList<Integer> displayAttributes = new ArrayList<Integer>();
+        displayAttributes.add(cListener.colorKey);
+        displayAttributes.add(fListener.formKey);
+        space.functions.processVariablesToParticleType(tField.getText(), displayAttributes);
         listener.update();
         frame.requestFocus();
     }

@@ -22,6 +22,7 @@ public class FormListener implements ActionListener {
         box.addItem("Circle");
         box.addItem("Arc");
         box.addItem("BigRectangle");
+        box.addItem("SmallRectangle");
     }
 
     @Override
@@ -34,6 +35,8 @@ public class FormListener implements ActionListener {
             formKey = 3;
         } else if (box.getSelectedItem().equals("BigRectangle")) {
             formKey = 4;
+        } else if (box.getSelectedItem().equals("SmallRectangle")) {
+            formKey = 5;
         }
         frame.requestFocus();
     }

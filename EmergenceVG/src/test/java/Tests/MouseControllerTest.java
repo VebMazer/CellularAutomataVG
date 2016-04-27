@@ -1,5 +1,6 @@
 package Tests;
 
+import java.util.ArrayList;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -17,6 +18,10 @@ public class MouseControllerTest {
     public MouseControllerTest() {
         space = new GenerativeSpace(100, 100);
         this.mController = space.mController;
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        list.add(2);
+        list.add(1);
+        space.functions.addParticleType("testType", list, list, list);
     }
 
     @BeforeClass

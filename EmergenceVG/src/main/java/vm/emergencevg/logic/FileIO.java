@@ -30,7 +30,7 @@ public class FileIO {
      * olevat komennot tiedostoon.
      */
     public void save(String filename) {
-        space.functions.stop();
+        
         this.commands = coReRunner.commands;
         this.presets = coReRunner.presets;
         try {
@@ -105,10 +105,12 @@ public class FileIO {
     }
 
     public void replaceTimeline() {
+        coReRunner.commandsToBeAdded = new HashMap<Integer, ArrayList<String>>();
         coReRunner.commands = this.commands;
     }
 
     public void replacePresets() {
+        coReRunner.presetsToBeAdded = new ArrayList<String>();
         coReRunner.presets = presets;
     }
 
@@ -142,10 +144,24 @@ public class FileIO {
             index = findComma(index, line);
             commands.add(line.substring(startIndex, index));
             index++;
+            startIndex = index;
         }
         return commands;
     }
-
+    
+    public ArrayList<String> readLineCommandsOrig(String line) {
+        ArrayList<String> commands = new ArrayList<String>();
+        int index = 3;
+        index = findComma(index, line);
+        index++;
+        int startIndex = index;
+        while (index < line.length()) {
+            index = findComma(index, line);
+            commands.add(line.substring(startIndex, index));
+            index++;
+        }
+        return commands;
+    }
     /**
      * Palauttaa seuraavan ; merkin sijainnin rivillä.
      */

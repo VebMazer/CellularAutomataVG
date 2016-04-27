@@ -25,8 +25,9 @@ public class LoadPresentationListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        lsListener.empty();
         space.functions.loadPresentation(tField.getText());
-        lsListener.update();
+        lsListener.initialize();
         frame.requestFocus();
     }
 

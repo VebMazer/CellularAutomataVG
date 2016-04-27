@@ -26,8 +26,8 @@ public class ControlFunctions {
      * Metodi muuntaa käyttöliittymältä saatuja String olioita. ParticleType
      * olion haluamaan malliin.
      */
-    public void processStringToParticleType(String input) {
-        coReRunner.presetsToBeAdded.add("l(" + input + ")");
+    public void processVariablesToParticleType(String input, ArrayList<Integer> displayAttributes) {
+        coReRunner.presetsToBeAdded.add("l(" + input + ",," + displayAttributes.get(0) + " " + displayAttributes.get(1) + ")");
         String name = "";
         ArrayList<Integer> amountsForNew = new ArrayList<Integer>();
         ArrayList<Integer> amountsToLive = new ArrayList<Integer>();
@@ -36,11 +36,11 @@ public class ControlFunctions {
             index++;
         }
         name = input.substring(0, index);
-        index += 2;
+        index++;
         index = addIntegersToList(index, input, amountsForNew);
-        index += 2;
+        index++;
         addIntegersToList(index, input, amountsToLive);
-        addParticleType(name, amountsForNew, amountsToLive);
+        addParticleType(name, amountsForNew, amountsToLive, displayAttributes);
     }
 
     /**
@@ -63,7 +63,7 @@ public class ControlFunctions {
      * HashMapistä ja lisää uuden particleTypes olion samaan mappiin
      * löydettäväksi tällä avaimella.
      */
-    public void addParticleType(String name, ArrayList<Integer> amountsForNew, ArrayList<Integer> amountsToLive) {
+    public void addParticleType(String name, ArrayList<Integer> amountsForNew, ArrayList<Integer> amountsToLive, ArrayList<Integer> displayAttributes) {
         int key = 0;
         for (int i = 1; i < 100; i++) {
             if (space.particleTypes.get(i) == null) {
@@ -72,9 +72,27 @@ public class ControlFunctions {
             }
         }
         if (key != 0) {
-            space.particleTypes.put(key, new ParticleType(name, key, amountsForNew, amountsToLive));
+            space.particleTypes.put(key, new ParticleType(name, key, amountsForNew, amountsToLive, displayAttributes));
         }
+    }
 
+    public void resetField(int x, int y) {
+        boolean wasRunning = space.running;
+        if (wasRunning) {
+            stop();
+        }
+        try {
+            Thread.sleep(5);
+        } catch (Exception e) {
+            System.out.println("Slowing thread did not succeed...");
+        }
+        space.xlength = x;
+        space.ylength = y;
+        space.field = new int[x][y];
+        space.resultField = new int[x][y];
+        if (wasRunning) {
+            start();
+        }
     }
 
     public void setIterations(String iterations) {
@@ -88,22 +106,35 @@ public class ControlFunctions {
     public void clearParticleTypes() {
         stop();
         space.particleTypes = new HashMap<Integer, ParticleType>();
-        coReRunner.presets = new ArrayList<String>();
+        coReRunner.reInitializePresets();
     }
 
     public void clearRecord() {
         stop();
-        coReRunner.commands = new HashMap<Integer, ArrayList<String>>();
+        coReRunner.reInitializeCommands();
         coReRunner.iterations = 0;
         coReRunner.uiIterationDisplayer.update();
     }
 
     public void save(String filename) {
+        stop();
+        boolean found = false;
+        for (String preset : coReRunner.presets) {
+            if(preset.length() > 9 && preset.substring(0, 10).equals("fieldSize(")) {
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            coReRunner.presets.add("fieldSize(" + space.xlength + "," + space.ylength + ")");
+        }
         fileIo.save(filename);
     }
 
     public void loadPresentation(String filename) {
+        clearCommand();
         clearRecord();
+        clearParticleTypes();
         fileIo.load(filename);
         coReRunner.runPresets();
     }
@@ -131,22 +162,30 @@ public class ControlFunctions {
         }
     }
 
-    public void setSpeed(String speed) {
+    public void setSpeedCommand(String speed) {
         try {
-            space.speedModifier = Double.parseDouble(speed);
+            setSpeed(speed);
             uFunctions.addCommand("speed(" + speed + ")");
         } catch (Exception e) {
             System.out.println("Bad input!!");
         }
     }
+    
+    public void setSpeed(String speed) {
+        space.speedModifier = Double.parseDouble(speed);
+    }
 
     /**
      * Tyhjentää logiikka-avaruuden partikkeleista.
      */
+    public void clearCommand() {
+        clear();
+        uFunctions.addCommand("clear");
+    }
+    
     public void clear() {
         space.field = new int[space.xlength][space.ylength];
         space.resultField = new int[space.xlength][space.ylength];
-        uFunctions.addCommand("clear");
     }
 
     /**

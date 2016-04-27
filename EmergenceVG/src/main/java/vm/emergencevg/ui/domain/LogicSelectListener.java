@@ -26,10 +26,12 @@ public class LogicSelectListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         //update();
-        String selected = box.getSelectedItem().toString();
-        for (ParticleType particleType : space.particleTypes.values()) {
-            if (selected.equals(particleType.toString())) {
-                space.mController.pKey = particleType.key;
+        if(box.getSelectedItem() != null) {
+            String selected = box.getSelectedItem().toString();
+            for (ParticleType particleType : space.particleTypes.values()) {
+                if (selected.equals(particleType.toString())) {
+                    space.mController.pKey = particleType.key;
+                }
             }
         }
         frame.requestFocus();

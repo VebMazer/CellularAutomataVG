@@ -23,7 +23,7 @@ public class SpeedInputListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        space.functions.setSpeed(tField.getText());
+        space.functions.setSpeedCommand(tField.getText());
         frame.requestFocus();
     }
 

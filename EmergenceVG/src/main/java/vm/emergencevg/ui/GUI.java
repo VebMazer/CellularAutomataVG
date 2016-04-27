@@ -21,6 +21,7 @@ import vm.emergencevg.ui.domain.ClearListener;
 import vm.emergencevg.ui.domain.ClearParticleTypesListener;
 import vm.emergencevg.ui.domain.ClearRecordListener;
 import vm.emergencevg.ui.domain.ColorListener;
+import vm.emergencevg.ui.domain.FieldSizeListener;
 import vm.emergencevg.ui.domain.FormListener;
 import vm.emergencevg.ui.domain.IterationsListener;
 import vm.emergencevg.ui.domain.LoadParticleTypesListener;
@@ -31,6 +32,7 @@ import vm.emergencevg.ui.domain.SaveListener;
 import vm.emergencevg.ui.domain.SpeedInputListener;
 import vm.emergencevg.ui.domain.StartListener;
 import vm.emergencevg.ui.domain.StopListener;
+import vm.emergencevg.ui.domain.SideLengthListener;
 
 /**
  * Ohjelman graafinen käyttöliittymä.
@@ -38,12 +40,12 @@ import vm.emergencevg.ui.domain.StopListener;
 public class GUI implements Runnable {
 
     public JFrame frame;
-    GenerativeSpace space;
+    public GenerativeSpace space;
     ControlFunctions functions;
     public DrawBoard drawboard;
     public IterationsListener itTracker;
     JPanel sidePanel;
-    int sideLength;
+    public Integer sideLength;
 
     /**
      *
@@ -66,9 +68,11 @@ public class GUI implements Runnable {
     @Override
     public void run() {
         frame = new JFrame("EmergenceVG");
-        int width = (space.xlength + 1) * sideLength + 10 + 100;
-        int height = (space.ylength + 1) * sideLength + 10 + 20;
-
+//        int width = (space.xlength + 1) * sideLength + 10 + 300;
+//        int height = (space.ylength + 1) * sideLength + 10 + 200;
+        int width = 1300;
+        int height = 700;
+        
         frame.setPreferredSize(new Dimension(width, height));
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -88,11 +92,11 @@ public class GUI implements Runnable {
         sidePanel.setBackground(Color.CYAN);
         container.add(sidePanel, BorderLayout.EAST);
 
-        drawboard = new DrawBoard(space, sideLength);
+        drawboard = new DrawBoard(space, this);
         drawboard.setBackground(Color.BLACK);
         container.add(drawboard);
 
-        MouseListen mListener = new MouseListen(space.mController, sideLength);
+        MouseListen mListener = new MouseListen(space.mController, this);
         drawboard.addMouseListener(mListener);
         drawboard.addMouseMotionListener(mListener);
 
@@ -104,20 +108,26 @@ public class GUI implements Runnable {
      * sijainteihin.
      */
     public void createPanelComponents() {
-        JLabel label0 = new JLabel("Describe the particle logic:");
-        JLabel label1 = new JLabel("Format: name, ForNew, ToLive");
-        JLabel label2 = new JLabel("Example: name, 2 7, 5");
-        JLabel label3 = new JLabel("<------ Draw something!");
-        JLabel label4 = new JLabel("Choose the logic to draw:");
-        JLabel label5 = new JLabel("Speed:");
+        JLabel describeLogicLab = new JLabel("Describe particleType:");
+        JLabel formatDescriberLab = new JLabel("name, ForNew, ToLive");
+        JLabel exampleLabel = new JLabel("Example: name, 2 7, 5");
+        JLabel drawSomeLab = new JLabel("<------ Draw something!");
+        JLabel chooseparticleLab = new JLabel("Choose particle:");
+        JLabel speedLab = new JLabel("Speed(0.2):");
         JLabel fileNameLab = new JLabel("Filename:");
         JLabel iterationsLabel = new JLabel("Iteration:");
+        JLabel particleScaleLabel = new JLabel("particleScale(5):");
+        JLabel fieldXlab = new JLabel("fieldX:");
+        JLabel fieldYlab = new JLabel("fieldY:");
 
         JTextField tField1 = new JTextField(15);
-        JTextField tField2 = new JTextField(5);
-        tField2.setText("" + space.speedModifier);
+        JTextField speedTfield = new JTextField(5);
+        speedTfield.setText("" + space.speedModifier);
         JTextField fileNameTField = new JTextField(15);
         JTextField iterationField = new JTextField(5);
+        JTextField particleScaleTField = new JTextField(3);
+        JTextField spaceXtField = new JTextField(3);
+        JTextField spaceYtField = new JTextField(3);
 
         JComboBox<String> colorList = new JComboBox<String>();
         JComboBox<String> formList = new JComboBox<String>();
@@ -132,7 +142,9 @@ public class GUI implements Runnable {
         JButton button3 = new JButton("Clear");
         JButton clearRecordButton = new JButton("clearRecord");
         JButton clearParticleTypesButton = new JButton("clearParticleTypes");
-
+        JButton fieldSizeButton = new JButton("setFieldSize");
+        
+        fieldSizeButton.addActionListener(new FieldSizeListener(this, spaceXtField, spaceYtField));
         clearRecordButton.addActionListener(new ClearRecordListener(space, frame));
         button1.addActionListener(new StartListener(frame, functions));
         button2.addActionListener(new StopListener(frame, functions));
@@ -140,28 +152,51 @@ public class GUI implements Runnable {
 
         ColorListener cListener = new ColorListener(frame, colorList);
         FormListener fListener = new FormListener(frame, formList);
-
+        
         colorList.addActionListener(cListener);
         formList.addActionListener(fListener);
-
+        
         LogicSelectListener listener = new LogicSelectListener(frame, space, particleList);
         particleList.addActionListener(listener);
         listener.initialize();
-
+        
         clearParticleTypesButton.addActionListener(new ClearParticleTypesListener(space, frame, listener));
         saveButton.addActionListener(new SaveListener(space, frame, fileNameTField));
         loadPresentationButton.addActionListener(new LoadPresentationListener(space, frame, fileNameTField, listener));
         loadParticleTypesButton.addActionListener(new LoadParticleTypesListener(space, frame, fileNameTField, listener));
-
+        
         itTracker = new IterationsListener(space, frame, iterationField);
         iterationField.addActionListener(itTracker);
         tField1.addActionListener(new LogicInputListener(frame, space, listener, cListener, fListener, tField1));
-        tField2.addActionListener(new SpeedInputListener(frame, space, tField2));
-
+        speedTfield.addActionListener(new SpeedInputListener(frame, space, speedTfield));
+        particleScaleTField.addActionListener(new SideLengthListener(this, particleScaleTField));
+        
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.insets = new Insets(10, 10, 10, 10);
-
+        
         constraints.gridx = 0;
+        constraints.gridy = 0;
+        sidePanel.add(fieldXlab, constraints);
+        
+        constraints.gridy = 1;
+        sidePanel.add(spaceXtField, constraints);
+        
+        constraints.gridy = 2;
+        sidePanel.add(fieldYlab, constraints);
+        
+        constraints.gridy = 3;
+        sidePanel.add(spaceYtField, constraints);
+        
+        constraints.gridy = 4;
+        sidePanel.add(fieldSizeButton, constraints);
+        
+        constraints.gridy = 5;
+        sidePanel.add(particleScaleLabel, constraints);
+        
+        constraints.gridy = 6;
+        sidePanel.add(particleScaleTField, constraints);
+        
+        constraints.gridx = 1;
         constraints.gridy = 0;
         sidePanel.add(fileNameLab, constraints);
 
@@ -178,13 +213,13 @@ public class GUI implements Runnable {
         sidePanel.add(loadParticleTypesButton, constraints);
 
         constraints.gridy = 5;
-        sidePanel.add(label0, constraints);
+        sidePanel.add(describeLogicLab, constraints);
 
         constraints.gridy = 6;
-        sidePanel.add(label1, constraints);
+        sidePanel.add(formatDescriberLab, constraints);
 
         constraints.gridy = 7;
-        sidePanel.add(label2, constraints);
+        sidePanel.add(exampleLabel, constraints);
 
         constraints.gridy = 8;
         sidePanel.add(tField1, constraints);
@@ -196,7 +231,7 @@ public class GUI implements Runnable {
         sidePanel.add(formList, constraints);
 
         constraints.gridy = 11;
-        sidePanel.add(label4, constraints);
+        sidePanel.add(chooseparticleLab, constraints);
 
         constraints.gridy = 12;
         sidePanel.add(particleList, constraints);
@@ -204,31 +239,32 @@ public class GUI implements Runnable {
         constraints.gridy = 13;
         sidePanel.add(clearParticleTypesButton, constraints);
 
-        constraints.gridy = 14;
-        sidePanel.add(button1, constraints);
+        constraints.gridx = 0;
+        constraints.gridy = 7;
+        sidePanel.add(speedLab, constraints);
+        
+        constraints.gridy = 8;
+        sidePanel.add(speedTfield, constraints);
 
-        constraints.gridy = 15;
-        sidePanel.add(button2, constraints);
-
-        constraints.gridy = 16;
-        sidePanel.add(button3, constraints);
-
-        constraints.gridy = 17;
-        sidePanel.add(label3, constraints);
-
-        constraints.gridy = 18;
-        sidePanel.add(label5, constraints);
-
-        constraints.gridy = 19;
-        sidePanel.add(tField2, constraints);
-
-        constraints.gridy = 20;
+        constraints.gridy = 9;
         sidePanel.add(iterationsLabel, constraints);
 
-        constraints.gridy = 21;
+        constraints.gridy = 10;
         sidePanel.add(iterationField, constraints);
 
-        constraints.gridy = 22;
+        constraints.gridy = 11;
         sidePanel.add(clearRecordButton, constraints);
+        
+        constraints.gridy = 12;
+        sidePanel.add(button1, constraints);
+
+        constraints.gridy = 13;
+        sidePanel.add(button2, constraints);
+
+        constraints.gridy = 14;
+        sidePanel.add(button3, constraints);
+        
+        constraints.gridy = 15;
+        sidePanel.add(drawSomeLab, constraints);
     }
 }

@@ -58,7 +58,10 @@ public class GenerativeSpaceTest {
         ArrayList<Integer> toLive = new ArrayList<Integer>();
         toLive.add(2);
         toLive.add(3);
-        functions.addParticleType("life", forNew, toLive);
+        ArrayList<Integer> displayAttributes = new ArrayList<Integer>();
+        displayAttributes.add(1);
+        displayAttributes.add(1);
+        functions.addParticleType("life", forNew, toLive, displayAttributes);
 
         forNew = new ArrayList<Integer>();
         forNew.add(3);
@@ -66,7 +69,10 @@ public class GenerativeSpaceTest {
         forNew.add(5);
         toLive = new ArrayList<Integer>();
         toLive.add(3);
-        functions.addParticleType("remenant", forNew, toLive);
+        displayAttributes = new ArrayList<Integer>();
+        displayAttributes.add(1);
+        displayAttributes.add(1);
+        functions.addParticleType("remenant", forNew, toLive, displayAttributes);
     }
 
     //Testataan syntyykö uusi partikkeli, kun määritellyt ehdot on täytetty.

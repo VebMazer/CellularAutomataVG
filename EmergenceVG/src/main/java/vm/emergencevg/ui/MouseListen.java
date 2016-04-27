@@ -11,20 +11,20 @@ import vm.emergencevg.logic.MouseController;
 public class MouseListen extends MouseAdapter {
 
     MouseController controller;
-    int scale;
+    GUI ui;
 
-    public MouseListen(MouseController controller, int scale) {
+    public MouseListen(MouseController controller, GUI ui) {
         this.controller = controller;
-        this.scale = scale;
+        this.ui = ui;
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        controller.updateSpot(e.getX() / scale, e.getY() / scale);
+        controller.updateSpot(e.getX() / ui.sideLength, e.getY() / ui.sideLength);
     }
 
     public void mouseDragged(MouseEvent e) {
-        controller.updateSpot(e.getX() / scale, e.getY() / scale);
+        controller.updateSpot(e.getX() / ui.sideLength, e.getY() / ui.sideLength);
     }
 
     public void mouseReleased(MouseEvent e) {

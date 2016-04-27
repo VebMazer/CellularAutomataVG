@@ -16,13 +16,16 @@ public class ParticleTypeTest {
     public ParticleTypeTest() {
         ArrayList<Integer> forNew = new ArrayList<Integer>();
         ArrayList<Integer> toLive = new ArrayList<Integer>();
-
+        ArrayList<Integer> displayAttributes = new ArrayList<Integer>();
+    
         forNew.add(2);
         forNew.add(5);
         forNew.add(6);
         toLive.add(3);
-
-        type = new ParticleType("something", 2, forNew, toLive);
+        displayAttributes.add(1);
+        displayAttributes.add(1);
+        
+        type = new ParticleType("something", 2, forNew, toLive, displayAttributes);
         
         
     }
@@ -57,9 +60,10 @@ public class ParticleTypeTest {
     public void testForFalsePositives() {
         ArrayList<Integer> forNew = new ArrayList<Integer>();
         ArrayList<Integer> toLive = new ArrayList<Integer>();
+        ArrayList<Integer> displayAttributes = new ArrayList<Integer>();
         forNew.add(6);
         //toLive.add(3);
-        ParticleType particle = new ParticleType("somethingElse", 3, forNew, toLive);
+        ParticleType particle = new ParticleType("somethingElse", 3, forNew, toLive, displayAttributes);
         assertEquals(particle.live(3) || particle.generate(7), false);
     }
 }
