@@ -18,4 +18,4 @@ Päivä | Tunnit | Kuvaus
 25.4.2016 | 4h | Koodaamista ja debuggaamista.
 26.4.2016 | 4h | Koodaamista ja debuggaamista.
 27.4.2016 | 4h | Koodaamista, debuggaamista ja jar testaus laitoksen koneella.
-29.4.2016 | 4h | Javadoc,palautus.
+29.4.2016 | 4h | Javadoc ja palautus.
