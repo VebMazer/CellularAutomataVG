@@ -14,9 +14,9 @@ public class LoadParticleTypesListener implements ActionListener {
     GenerativeSpace space;
     JFrame frame;
     JTextField tField;
-    LogicSelectListener lsListener;
+    ParticleTypeSelectListener lsListener;
 
-    public LoadParticleTypesListener(GenerativeSpace space, JFrame frame, JTextField tField, LogicSelectListener lsListener) {
+    public LoadParticleTypesListener(GenerativeSpace space, JFrame frame, JTextField tField, ParticleTypeSelectListener lsListener) {
         this.space = space;
         this.frame = frame;
         this.tField = tField;

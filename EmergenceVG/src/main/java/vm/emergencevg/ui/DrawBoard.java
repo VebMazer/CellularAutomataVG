@@ -86,7 +86,7 @@ public class DrawBoard extends JPanel implements Updatable {
     }
 
     /**
-     * piirtää määritellyn objektin.
+     * Piirtää määritellyn objektin.
      */
     public void drawForm(Graphics g, int formKey, int x, int y) {
         if (formKey == 1) {

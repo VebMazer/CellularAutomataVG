@@ -18,6 +18,11 @@ public class FileIO {
     GenerativeSpace space;
     public CommandRecordRunner coReRunner;
 
+    /**
+     * Konstruktoi.
+     *
+     * @param space logiikka-avaruus ja taustalooppi
+     */
     public FileIO(GenerativeSpace space) {
         this.space = space;
         this.coReRunner = space.coReRunner;
@@ -26,11 +31,14 @@ public class FileIO {
     }
 
     /**
-     * Tallentaa ohjelmassa luodut partikkelityypi ja iteraatio aikajanalla
-     * olevat komennot tiedostoon.
+     * Tallentaa ohjelmassa luodut partikkelityypit ja iteraatio aikajanalla
+     * olevat komennot tiedostoon(presets komento lista ja commands komento
+     * mappi).
+     *
+     * @param filename Tallennettavan tiedoston nimi.
      */
     public void save(String filename) {
-        
+
         this.commands = coReRunner.commands;
         this.presets = coReRunner.presets;
         try {
@@ -41,7 +49,12 @@ public class FileIO {
     }
 
     /**
-     * Kirjoittaa tiedostoon.
+     * Kirjoittaa komennot tiedostoon. Ensimmäiselle riville kirjoitetaan preset
+     * komennot ja sen jälkeen kirjoitetaan jokaiselle komentoja sisältävälle
+     * iteraatiolle oma rivi, joka sisältää sen komennot.
+     *
+     * @param filename Kirjoitettavan tiedoston nimi.
+     * @throws IOException Virhe jos kirjoittaminen epäonnistuu.
      */
     public void writeFile(String filename) throws IOException {
         FileWriter fw = new FileWriter(filename);
@@ -52,6 +65,14 @@ public class FileIO {
         fw.close();
     }
 
+    /**
+     * Rakentaa tiedostoon kirjoitettavan rivin listasta komentoja asettamalla
+     * ';' merkin jokaisen komennon väliin.
+     *
+     * @param line Rivin alku(presets, tai it"key").
+     * @param commandList Komento lista.
+     * @return Kirjoitettava rivi String muodossa.
+     */
     public String buildLine(String line, ArrayList<String> commandList) {
         for (String command : commandList) {
             line = line.concat(";" + command);
@@ -62,6 +83,8 @@ public class FileIO {
     /**
      * Lisää partikkelityyppejä annettusta tiedostosta jo luotujen
      * partikkelityyppien lisäksi.
+     *
+     * @param filename Tiedoston nimi.
      */
     public void addPresets(String filename) {
         space.functions.stop();
@@ -86,6 +109,8 @@ public class FileIO {
     /**
      * Lataa kokonaisen esityksen tiedostosta ohjelman suoritettavaksi ja korvaa
      * sillä sen hetkisen iteraatiojanan ja partikkelityypit.
+     *
+     * @param filename Tiedoston nimi.
      */
     public void load(String filename) {
         space.functions.stop();
@@ -99,23 +124,38 @@ public class FileIO {
         }
     }
 
+    /**
+     * Uuudelleen alustaa olion komento joukot.
+     */
     public void reInitializeCommandsAndPresets() {
         presets = new ArrayList<String>();
         commands = new HashMap<Integer, ArrayList<String>>();
     }
 
+    /**
+     * Korvaa CommandRecordRunner luokan commands mapin komennot tiedostosta
+     * ladatuilla komennoilla.
+     */
     public void replaceTimeline() {
         coReRunner.commandsToBeAdded = new HashMap<Integer, ArrayList<String>>();
         coReRunner.commands = this.commands;
     }
 
+    /**
+     * Korvaa CommandRecordRunner luokan preset komennot tiedostosta ladatuilla
+     * preset komennoilla.
+     */
     public void replacePresets() {
         coReRunner.presetsToBeAdded = new ArrayList<String>();
         coReRunner.presets = presets;
     }
 
     /**
-     * Lukee tiedoston.
+     * Lukee tiedoston komennot.
+     *
+     * @param filename tiedoston nimi
+     * @throws IOException Virhe jos lukeminen epäonnistuu, tai tiedoston data on
+     * korruptoitunut.
      */
     public void readFile(String filename) throws IOException {
         File file = new File(filename);
@@ -133,6 +173,9 @@ public class FileIO {
 
     /**
      * Lukee komennot annetulta tiedoston riviltä.
+     *
+     * @param line merkkijono, joka sisältää komentoja.
+     * @return lista komentoja
      */
     public ArrayList<String> readLineCommands(String line) {
         ArrayList<String> commands = new ArrayList<String>();
@@ -148,22 +191,13 @@ public class FileIO {
         }
         return commands;
     }
-    
-    public ArrayList<String> readLineCommandsOrig(String line) {
-        ArrayList<String> commands = new ArrayList<String>();
-        int index = 3;
-        index = findComma(index, line);
-        index++;
-        int startIndex = index;
-        while (index < line.length()) {
-            index = findComma(index, line);
-            commands.add(line.substring(startIndex, index));
-            index++;
-        }
-        return commands;
-    }
+
     /**
      * Palauttaa seuraavan ; merkin sijainnin rivillä.
+     *
+     * @param index Indeksi josta merkkijonon läpikäynti alkaa.
+     * @param line Rivi komentoja merkkijono muodossa.
+     * @return Indeksi, josta löytyi merkki ';'.
      */
     public int findComma(int index, String line) {
         while (index < line.length() && line.charAt(index) != ';') {

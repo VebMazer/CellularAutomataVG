@@ -11,13 +11,13 @@ import vm.emergencevg.logic.GenerativeSpace;
 /**
  * Logiikka valinta laatikon kuuntelija.
  */
-public class LogicSelectListener implements ActionListener {
+public class ParticleTypeSelectListener implements ActionListener {
 
     JFrame frame;
     GenerativeSpace space;
     JComboBox<ParticleType> box;
 
-    public LogicSelectListener(JFrame frame, GenerativeSpace space, JComboBox<ParticleType> box) {
+    public ParticleTypeSelectListener(JFrame frame, GenerativeSpace space, JComboBox<ParticleType> box) {
         this.frame = frame;
         this.space = space;
         this.box = box;

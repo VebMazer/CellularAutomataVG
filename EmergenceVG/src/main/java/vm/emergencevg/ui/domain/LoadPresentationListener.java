@@ -14,9 +14,9 @@ public class LoadPresentationListener implements ActionListener {
     GenerativeSpace space;
     JFrame frame;
     JTextField tField;
-    LogicSelectListener lsListener;
+    ParticleTypeSelectListener lsListener;
 
-    public LoadPresentationListener(GenerativeSpace space, JFrame frame, JTextField tField, LogicSelectListener lsListener) {
+    public LoadPresentationListener(GenerativeSpace space, JFrame frame, JTextField tField, ParticleTypeSelectListener lsListener) {
         this.space = space;
         this.frame = frame;
         this.tField = tField;

@@ -17,6 +17,11 @@ public class MouseController {
 
     GenerativeSpace space;
 
+    /**
+     * Konstruktori.
+     *
+     * @param space Logiikka-avaruus ja taustalooppi.
+     */
     public MouseController(GenerativeSpace space) {
         this.space = space;
         spotsPressed = new ArrayList<int[]>();
@@ -29,6 +34,9 @@ public class MouseController {
 
     /**
      * Päivittä edeltäneen ja tämänhetkisen sijainnin.
+     *
+     * @param xx koordinaatin x arvo.
+     * @param yy koordinaatin y arvo.
      */
     public void updateSpot(int xx, int yy) {
         this.lastX = this.x;
@@ -50,11 +58,13 @@ public class MouseController {
     }
 
     /**
-     * Lisää partikkelit listassa listaan kerättyihin koordinaatteihin. (Kun
-     * käyttäjä päästää hiiren painikkeesta irti.)
+     * Lisää partikkelit listaan kerättyihin koordinaatteihin(Kun käyttäjä
+     * päästää hiiren painikkeesta irti.).
      */
     public void cast() {
-        if(!space.particleTypes.containsKey(pKey)) pKey = 0;
+        if (!space.particleTypes.containsKey(pKey)) {
+            pKey = 0;
+        }
         for (int[] spot : spotsPressed) {
             space.functions.placeParticle(pKey, spot[0], spot[1]);
             addPlacementCommand(pKey, spot[0], spot[1]);
@@ -62,6 +72,13 @@ public class MouseController {
         spotsPressed = new ArrayList<int[]>();
     }
 
+    /**
+     * Lisää komento mappiin partikkelin sijoitus komennon.
+     *
+     * @param key Sijoitettavan partikkelin avain.
+     * @param x Sijoitettavan partikkelin koordinaatin x akselin arvo.
+     * @param y Sijoitettavan partikkelin koordinaatin y akselin arvo
+     */
     public void addPlacementCommand(int key, int x, int y) {
         space.uFunctions.addCommand("(" + key + "," + x + "," + y + ")");
     }

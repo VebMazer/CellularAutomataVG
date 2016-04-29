@@ -26,8 +26,8 @@ import vm.emergencevg.ui.domain.FormListener;
 import vm.emergencevg.ui.domain.IterationsListener;
 import vm.emergencevg.ui.domain.LoadParticleTypesListener;
 import vm.emergencevg.ui.domain.LoadPresentationListener;
-import vm.emergencevg.ui.domain.LogicInputListener;
-import vm.emergencevg.ui.domain.LogicSelectListener;
+import vm.emergencevg.ui.domain.ParticleTypeInputListener;
+import vm.emergencevg.ui.domain.ParticleTypeSelectListener;
 import vm.emergencevg.ui.domain.SaveListener;
 import vm.emergencevg.ui.domain.SpeedInputListener;
 import vm.emergencevg.ui.domain.StartListener;
@@ -159,7 +159,7 @@ public class GUI implements Runnable {
         colorList.addActionListener(cListener);
         formList.addActionListener(fListener);
         
-        LogicSelectListener listener = new LogicSelectListener(frame, space, particleList);
+        ParticleTypeSelectListener listener = new ParticleTypeSelectListener(frame, space, particleList);
         particleList.addActionListener(listener);
         listener.initialize();
         
@@ -171,7 +171,7 @@ public class GUI implements Runnable {
         itTracker = new IterationsListener(space, frame, iterationField);
         scaleUpdater = new ScaleListener(this, particleScaleTField, space.functions);
         iterationField.addActionListener(itTracker);
-        tField1.addActionListener(new LogicInputListener(frame, space, listener, cListener, fListener, tField1));
+        tField1.addActionListener(new ParticleTypeInputListener(frame, space, listener, cListener, fListener, tField1));
         speedTfield.addActionListener(new SpeedInputListener(frame, space, speedTfield));
         particleScaleTField.addActionListener(scaleUpdater);
         

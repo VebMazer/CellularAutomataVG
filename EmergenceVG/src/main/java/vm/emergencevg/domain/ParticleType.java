@@ -14,16 +14,19 @@ public class ParticleType {
     public int key;
     public ArrayList<Integer> amountsForNew;
     public ArrayList<Integer> amountsToLive;
-    public ArrayList<Integer> displayAttributes;    //i0:Color i1:Form
+    public ArrayList<Integer> displayAttributes;
 
     /**
-     *
+     * Luokan konstruktori.
      * @param name Partikkelityypin nimi.
      * @param key Partikkelityyppiä vastaava luku.
      * @param amountsForNew Lista sopivista ympäröivien partikkelien määristä,
      * uuden tämän tyypin partikkelin syntymiselle.
      * @param amountsToLive Lista sopivista ympäröivien partikkelien määristä
      * tämän tyypin partikkelin elossa pysymiseksi.
+     * @param displayAttributes Lista Integer muuttujia, joilla voi määrittää
+     * partikkelin piirtotyyliä käyttöliittymässä. Ensimmäinen muuttuja kuvaa
+     * väriä ja toinen muotoa.
      */
     public ParticleType(String name, int key, ArrayList<Integer> amountsForNew, ArrayList<Integer> amountsToLive, ArrayList<Integer> displayAttributes) {
         this.name = name;
@@ -34,8 +37,10 @@ public class ParticleType {
     }
 
     /**
-     * predikaatti palauttaa true, jos ympäröivien partikkelien määrä on sopiva
+     * Predikaatti palauttaa true, jos ympäröivien partikkelien määrä on sopiva
      * uudelle tämän tyypin partikkelin synnylle.
+     * @param neighbors Ympäröivien partikkelien määrä.
+     * @return Totuusarvo joka vastaa yllämainittuun kysymykseen.
      */
     public boolean generate(int neighbors) {
         for (Integer i : amountsForNew) {
@@ -49,6 +54,9 @@ public class ParticleType {
     /**
      * predikaatti palauttaa true, jos ympäröivien partikkelien määrä on sopiva
      * tämän tyypin partikkelin elossa pysymiseksi.
+     *
+     * @param neighbors Ympäröivien partikkelien määrä.
+     * @return Totuusarvo joka vastaa yllämainittuun kysymykseen.
      */
     public boolean live(int neighbors) {
         for (Integer i : amountsToLive) {

@@ -1,10 +1,12 @@
 package vm.emergencevg.ui;
 
 /**
- * Rajapinta, jonka metodin update() kautta käsketään käyttöliittymän objektien
- * päivittyä.
+ * Rajapinta päivittämistä vaativille käyttöliittymä olioille.
  */
 public interface Updatable {
-
+    
+    /**
+     * Päivittää käyttöliittymä olion tilan.
+     */
     void update();
 }

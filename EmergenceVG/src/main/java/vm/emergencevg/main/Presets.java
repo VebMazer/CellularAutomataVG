@@ -58,5 +58,10 @@ public class Presets {
         displayAttributes.add(10);
         displayAttributes.add(1);
         space.functions.processVariablesToParticleType("wall,  , 1 2 3 4 5 6 7 8", displayAttributes);
+    
+        displayAttributes = new ArrayList<Integer>();
+        displayAttributes.add(8);
+        displayAttributes.add(1);
+        space.functions.processVariablesToParticleType("gem, 1 2 3 4, 3 4 5", displayAttributes);
     }
 }

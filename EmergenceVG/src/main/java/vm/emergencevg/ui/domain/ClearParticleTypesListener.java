@@ -12,9 +12,9 @@ public class ClearParticleTypesListener implements ActionListener {
 
     GenerativeSpace space;
     JFrame frame;
-    LogicSelectListener lsListener;
+    ParticleTypeSelectListener lsListener;
 
-    public ClearParticleTypesListener(GenerativeSpace space, JFrame frame, LogicSelectListener lsListener) {
+    public ClearParticleTypesListener(GenerativeSpace space, JFrame frame, ParticleTypeSelectListener lsListener) {
         this.space = space;
         this.frame = frame;
         this.lsListener = lsListener;

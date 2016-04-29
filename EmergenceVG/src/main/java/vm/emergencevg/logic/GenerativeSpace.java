@@ -26,7 +26,12 @@ public class GenerativeSpace implements Runnable {
     Updatable uiDrawBoard;
     public double speedModifier;
     boolean running;
-
+    
+    /**
+     * Konstruktori, joka alustaa oliomuuttujat.
+     * @param x Logiikka-avaruuden x akselin koko.
+     * @param y Logiikka-avaruuden x akselin koko.
+     */
     public GenerativeSpace(int x, int y) {
         xlength = x;
         ylength = y;
@@ -85,7 +90,7 @@ public class GenerativeSpace implements Runnable {
 
     /**
      * Suorittaa logiikka-avaruuden seuraavan iteraation määrittämisen jos
-     * simulaatio on päällä.
+     * simulaatio on käynnissä.
      */
     public void iterate() {
         if (running) {
@@ -161,7 +166,17 @@ public class GenerativeSpace implements Runnable {
     }
 
     /**
-     * Asettaa uuden partikkelin jos data täyttää halutut ehdot.
+     * Asettaa uuden partikkelin logiikka-avaruuteen jos data täyttää halutut ehdot.
+     * @param x x akselin arvo koordinaatissa.
+     * @param y x akselin arvo koordinaatissa.
+     * @param spotKey logiikka-avaruuden sijainnin avain 
+     * arvo(kuvaa partikkelityyppiä tai tyhjää jos 0).
+     * @param neighbors Sijaintia ympäröivien partikkelien määrä(0-8).
+     * [0, 4, 0]
+     * [1, spotKey, 0]
+     * [0, 0, 1] <==> neighbors == 3
+     * @param neighborTypes Taulukko, joka sisältää ympäröivien partikkelien tyyppi
+     * avaimet(Ylemmässä esimerkissä sisältäisi arvot(0, 4, 0, 1, 0, 0, 0, 1)).
      */
     public void particleProcess(int x, int y, int spotKey, int neighbors, int[] neighborTypes) {
         if (spotKey == 0) {

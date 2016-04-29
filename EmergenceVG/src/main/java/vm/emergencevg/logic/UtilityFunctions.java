@@ -13,6 +13,11 @@ public class UtilityFunctions {
     GenerativeSpace space;
     public CommandRecordRunner coReRunner;
 
+    /**
+     * Konstruktori.
+     *
+     * @param space logiikka-avaruus ja taustalooppi.
+     */
     public UtilityFunctions(GenerativeSpace space) {
         this.space = space;
         this.coReRunner = space.coReRunner;
@@ -21,6 +26,8 @@ public class UtilityFunctions {
     /**
      * Etsii viimeisenä particleTypes listaan laitetun olion avaimen, joka on
      * siis aina suurin avainten joukossa oleva luku.
+     *
+     * @return Palauttaa suurimman partikkelityyppimapin avaimen.
      */
     public int findLatestKey() {
         int lastKey = 1;
@@ -32,11 +39,26 @@ public class UtilityFunctions {
         return lastKey;
     }
 
+    /**
+     * Tarkistaa onko merkki numero.
+     *
+     * @param c merkki
+     * @return totuusarvo
+     */
     public boolean checkIfNumber(char c) {
         return (c >= '0' && c <= '9');
     }
-    
-        public int parseNextNumber(int index, String str, ArrayList<Integer> list) {
+
+    /**
+     * Parseroi merkkijonosta indeksin jälkeen seuraavan numeron ja liittää sen
+     * listaan ja palauttaa numeron jälkeen seuraavan indeksin.
+     *
+     * @param index Indeksi josta merkkijonon läpikäynti alkaa.
+     * @param str Merkkijono jota käydään läpi-
+     * @param list Lista johon löydetty numero listään.
+     * @return Numeroa seuraavan indeksin, tai merkkijonon pituuden.
+     */
+    public int parseNextNumber(int index, String str, ArrayList<Integer> list) {
         while (index < str.length()) {
             if (space.uFunctions.checkIfNumber(str.charAt(index))) {
                 break;
@@ -44,7 +66,7 @@ public class UtilityFunctions {
             index++;
         }
         int beginIndex = index;
-        while(index < str.length()) {
+        while (index < str.length()) {
             index++;
             if (!space.uFunctions.checkIfNumber(str.charAt(index))) {
                 break;
@@ -54,6 +76,13 @@ public class UtilityFunctions {
         return index;
     }
 
+    /**
+     * Parseroi merkkijonosta numeron.
+     *
+     * @param str merkkijono
+     * @param index numeron alkuun viittaava indeksi.
+     * @return int arvo
+     */
     public int parseNumber(String str, int index) {
         int startIndex = index;
         while (index < str.length() && str.charAt(index) != ',' && str.charAt(index) != ')' && str.charAt(index) != ' ') {
@@ -61,7 +90,13 @@ public class UtilityFunctions {
         }
         return Integer.parseInt(str.substring(startIndex, index));
     }
-    
+
+    /**
+     * Luo komentojen lisäys mappiin tämän hetkisen iteraation paikalle uuden
+     * ArrayListin komentoja varten ja palauttaa kyseisen iteraation arvon.
+     *
+     * @return Kyseiseen listaan viittaava avain.
+     */
     public int initializeCommandArrayList() {
         int iteration = coReRunner.iterations;
         if (!coReRunner.commandsToBeAdded.containsKey(iteration)) {
@@ -70,16 +105,26 @@ public class UtilityFunctions {
         return iteration;
     }
 
+    /**
+     * Lisää komennon komento mappiin.
+     *
+     * @param command komento tekstimuodossa
+     */
     public void addCommand(String command) {
         coReRunner.commandsToBeAdded.get(initializeCommandArrayList()).add(command);
     }
-    
+
+    /**
+     * Lisää preset komennon listaan.
+     *
+     * @param command preset komento tekstimuodossa
+     */
     public void addPreset(String command) {
         coReRunner.presetsToBeAdded.add(command);
     }
 
     /**
-     * Lisää lisätyt komennot komento listaan.
+     * Lisää lisätyt komennot komento mappiin.
      */
     public void uniteCommandMaps() {
         for (int key : coReRunner.commandsToBeAdded.keySet()) {
@@ -106,8 +151,13 @@ public class UtilityFunctions {
     }
 
     /**
-     * Laskee ympäröivistä partikkeleistä yleisimmän ja palauttaa sen avaimen.
-     * Palauttaa 0 jos yhtäkään partikkelia ei löydy.
+     * Laskee yleisimmän int arvon, joka ei ole nolla ja palauttaa sen avaimen.
+     * Palauttaa 0 jos yhtäkään partikkelia ei löydy. Metodi suosii yhtä monen
+     * arvon tilanteissa pienintä arvoa(Listan ensimmäinen partikkeli.)
+     *
+     * @param keys Taulukko, joka sisältää int muuttujia.
+     * @return Taulukon yleisin int arvo, joka ei ole nolla, tai nolla jos muita
+     * arvoja ei ole.
      */
     public int mostCommonKey(int[] keys) {
         Arrays.sort(keys);

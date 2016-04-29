@@ -11,16 +11,16 @@ import vm.emergencevg.logic.GenerativeSpace;
 /**
  * Logiikka syötelaatikon kuuntelija.
  */
-public class LogicInputListener implements ActionListener {
+public class ParticleTypeInputListener implements ActionListener {
 
     JFrame frame;
     GenerativeSpace space;
-    LogicSelectListener listener;
+    ParticleTypeSelectListener listener;
     JTextField tField;
     ColorListener cListener;
     FormListener fListener;
 
-    public LogicInputListener(JFrame frame, GenerativeSpace space, LogicSelectListener listener, ColorListener cListener, FormListener fListener, JTextField tField) {
+    public ParticleTypeInputListener(JFrame frame, GenerativeSpace space, ParticleTypeSelectListener listener, ColorListener cListener, FormListener fListener, JTextField tField) {
         this.frame = frame;
         this.space = space;
         this.tField = tField;
