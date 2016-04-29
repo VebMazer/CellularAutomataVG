@@ -17,5 +17,5 @@ Päivä | Tunnit | Kuvaus
 22.4.2016 | 4h | Javadoc, Luokka-kaavion päivitys, aihemäärittelyn päivitys, sekvenssikaaviot, Checkstyle, pit ja palautus.
 25.4.2016 | 4h | Koodaamista ja debuggaamista.
 26.4.2016 | 4h | Koodaamista ja debuggaamista.
-27.4.2016 | 4h | Koodaamista, debuggaamista jar tiedoston testaus.
-25.4.2016 | 4h | Javadoc,palautus.
+27.4.2016 | 4h | Koodaamista, debuggaamista ja jar testaus laitoksen koneella.
+29.4.2016 | 4h | Javadoc,palautus.
