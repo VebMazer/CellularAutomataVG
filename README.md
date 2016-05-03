@@ -7,9 +7,9 @@ Dokumentaatio:
 
 [tuntikirjanpito](dokumentointi/tuntikirjanpito.md)
 
-[MäärittelytasonLuokkakaavio](dokumentointi/MäärittelytasonLuokkakaavio.jpg)
-
 [Luokkakaavio](dokumentointi/Luokkakaavio.png)
+
+[Rakennekuvaus](dokumentointi/Rakennekuvaus.md)
 
 [pitRaportti](https://htmlpreview.github.io/?https://github.com/VebMazer/EmergenceVG/blob/master/dokumentointi/pit/201604291843/index.html)
 
