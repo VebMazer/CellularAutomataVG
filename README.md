@@ -5,6 +5,8 @@ Dokumentaatio:
 
 [aihemäärittely](dokumentointi/aiheenKuvausJaRakenne.md)
 
+[käyttöohje](dokumentointi/Käyttöohje.md)
+
 [tuntikirjanpito](dokumentointi/tuntikirjanpito.md)
 
 [Luokkakaavio](dokumentointi/Luokkakaavio.png)
