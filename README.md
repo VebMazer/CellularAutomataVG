@@ -5,7 +5,7 @@ Dokumentaatio:
 
 [aihemäärittely](dokumentointi/aiheenKuvausJaRakenne.md)
 
-[käyttöohje](dokumentointi/Käyttöohje.md)
+[käyttöohje](dokumentointi/Käyttöohjeet.md)
 
 [tuntikirjanpito](dokumentointi/tuntikirjanpito.md)
 
