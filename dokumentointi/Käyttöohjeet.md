@@ -2,7 +2,7 @@ Käyttöohjeet
 
 Kaiken kattava esityksen luonti opastus:
 
-1.Määrittele partikkelit joita aiot käyttää(vapaaehtoista): 
+1.Määrittele partikkelit joita aiot käyttää: 
 - Tämä tapahtuu tekstinsyöttökentässä, joka sijaitsee Tagin "Describe particleType:" ja 
 sitä seuraavien esimerkki tagien alla. Partikkelin määrittelyn tulisi olla formaattia: 
 (nimi, 2 3, 3 4)  (Sulkeet eivät kuulu määrittelyyn.) Määrittelyyn kuuluu siis nimi ja 
