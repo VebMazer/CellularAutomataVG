@@ -1,0 +1,22 @@
+-encoding
+'UTF-8'
+-protected
+-sourcepath
+'/home/xenron/NetBeansProjects/EmergenceVG/EmergenceVG/src/main/java'
+-author
+-bottom
+'Copyright &#169; 2016. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'/home/xenron/NetBeansProjects/EmergenceVG/EmergenceVG/target/site/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'EmergenceVG 0.1.0 API'
+-linkoffline
+'http://docs.oracle.com/javase/8/docs/api' '/home/xenron/NetBeansProjects/EmergenceVG/EmergenceVG/target/javadoc-bundle-options'
+-use
+-version
+-windowtitle
+'EmergenceVG 0.1.0 API'
