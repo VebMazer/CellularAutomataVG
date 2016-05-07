@@ -5,12 +5,16 @@ Dokumentaatio:
 
 [aihemäärittely](dokumentointi/aiheenKuvausJaRakenne.md)
 
-[tuntikirjanpito](dokumentointi/tuntikirjanpito.md)
+[käyttöohje](dokumentointi/Käyttöohjeet.md)
 
-[MäärittelytasonLuokkakaavio](dokumentointi/MäärittelytasonLuokkakaavio.jpg)
+[tuntikirjanpito](dokumentointi/tuntikirjanpito.md)
 
 [Luokkakaavio](dokumentointi/Luokkakaavio.png)
 
-[pitRaportti](https://htmlpreview.github.io/?https://github.com/VebMazer/EmergenceVG/blob/master/dokumentointi/pit/201604222115/index.html)
+[Rakennekuvaus](dokumentointi/Rakennekuvaus.md)
 
-[CheckstyleRaportti](https://htmlpreview.github.io/?https://github.com/VebMazer/EmergenceVG/blob/master/dokumentointi/Checkstyle/22.04.2016/site/checkstyle.html)
+[Javadoc](https://htmlpreview.github.io/?https://github.com/VebMazer/EmergenceVG/blob/master/dokumentointi/apidocs/index.html)
+
+[pitRaportti](https://htmlpreview.github.io/?https://github.com/VebMazer/EmergenceVG/blob/master/dokumentointi/pit/201605072058/index.html)
+
+[CheckstyleRaportti](https://htmlpreview.github.io/?https://github.com/VebMazer/EmergenceVG/blob/master/dokumentointi/Checkstyle/07.05.16/target/checkstyle.html)
