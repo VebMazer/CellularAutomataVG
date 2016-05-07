@@ -12,11 +12,11 @@ import vm.emergencevg.ui.GUI;
 public class Main {
 
     public static void main(String[] args) {
-        GenerativeSpace space = new GenerativeSpace(180, 130);  //100, 100
+        GenerativeSpace space = new GenerativeSpace(180, 130);
         Presets presets = new Presets(space);
         presets.initialTestSetup();
         //space.functions.start();
-        GUI ui = new GUI(space, 5);        //10
+        GUI ui = new GUI(space, 5);
         SwingUtilities.invokeLater(ui);
 
         while (ui.drawboard == null || ui.itTracker == null) {

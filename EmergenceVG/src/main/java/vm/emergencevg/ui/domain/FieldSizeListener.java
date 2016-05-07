@@ -7,7 +7,9 @@ import javax.swing.JTextField;
 import vm.emergencevg.logic.ControlFunctions;
 import vm.emergencevg.ui.GUI;
 
-
+/**
+ * setFieldSize nappulan kuuntelija.
+ */
 public class FieldSizeListener implements ActionListener{
 
     GUI ui;

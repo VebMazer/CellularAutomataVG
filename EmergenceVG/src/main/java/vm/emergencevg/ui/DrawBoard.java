@@ -80,8 +80,7 @@ public class DrawBoard extends JPanel implements Updatable {
         } else if (colorKey == 10) {
             g.setColor(Color.gray);
         } else {
-            g.setColor(Color.white);
-            //g.setColor(new Color(101, 21, 121));
+            g.setColor(Color.lightGray);
         }
     }
 
@@ -92,22 +91,18 @@ public class DrawBoard extends JPanel implements Updatable {
         if (formKey == 1) {
             g.fill3DRect(x * sideLength, y * sideLength, sideLength, sideLength, true);
         } else if (formKey == 2) {
-            g.fillOval(x * sideLength, y * sideLength, sideLength, sideLength);
+            g.drawOval(x*sideLength, y*sideLength, sideLength, sideLength);
         } else if (formKey == 3) {
-            g.fillArc(x * sideLength, y * sideLength, sideLength, sideLength, 30, 30);
+            g.fillOval(x*sideLength, y*sideLength, sideLength, sideLength);
         } else if (formKey == 4) {
-            g.fill3DRect(x * sideLength, y * sideLength, sideLength * 2, sideLength * 2, true);
+            g.fillArc(x * sideLength, y * sideLength, sideLength, sideLength, 30, 30);
         } else if (formKey == 5) {
-            if(sideLength > 1) {
-                g.fill3DRect(x * sideLength, y * sideLength, sideLength-1 , sideLength-1, true);
-            } else {
-                g.fill3DRect(x * sideLength, y * sideLength, sideLength , sideLength, true);
-            }
+            g.fill3DRect(x * sideLength, y * sideLength, sideLength * 2, sideLength * 2, true);
         } else {
             g.fillRect(x * sideLength, y * sideLength, sideLength, sideLength);
         }
     }
-
+    
     /**
      * Päivittää piirtoalustan.
      */

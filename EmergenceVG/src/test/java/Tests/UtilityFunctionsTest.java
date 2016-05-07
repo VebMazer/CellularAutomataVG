@@ -84,4 +84,55 @@ public class UtilityFunctionsTest {
         
         assertEquals(true, (firstFound && secondFound));
     }
+    
+    @Test
+    public void testCheckIfNumber1() {
+        assertEquals(true, uFunctions.checkIfNumber('5'));
+    }
+    
+    @Test
+    public void testCheckIfNumber2() {
+        assertEquals(false, uFunctions.checkIfNumber('y'));
+    }
+    
+    @Test
+    public void testParseNumber() {
+        assertEquals(25, uFunctions.parseNumber("25 12", 0));
+    }
+    
+    @Test
+    public void testInitializeCommandArrayList() {
+        space.coReRunner.iterations = 1;
+        uFunctions.initializeCommandArrayList();
+        boolean test = space.coReRunner.commandsToBeAdded.containsKey(1);
+        space.coReRunner.iterations = 0;
+        assertEquals(true, test);
+    }
+    
+    @Test
+    public void testParseNextNumber() {
+        ArrayList<Integer> numbers = new ArrayList<Integer>();
+        int index = uFunctions.parseNextNumber(0, "fg we 231, we2", numbers);
+        int number = numbers.get(0);
+        assertEquals(true, 9 == index && 231 == number);
+    }
+    
+    @Test
+    public void testCommandAddingAndIntegration() {
+        space.coReRunner.iterations = 2;
+        uFunctions.addCommand("clear");
+        uFunctions.uniteCommandMaps();
+        boolean test = space.coReRunner.commands.get(2).get(0).equals("clear");
+        space.coReRunner.iterations = 0;
+        assertEquals(true, test);
+    }
+    
+    @Test
+    public void testPresetAddingAndIntegration() {
+        uFunctions.addPreset("l(life, 3, 2 3,,1 1)");
+        uFunctions.unitePresetLists();
+        boolean test = space.coReRunner.presets.get(0).equals("l(life, 3, 2 3,,1 1)");
+        space.coReRunner.reInitializePresets();
+        assertEquals(true, test);
+    }
 }

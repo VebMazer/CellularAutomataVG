@@ -19,25 +19,25 @@ public class FormListener implements ActionListener {
         this.box = box;
         this.frame = frame;
         box.addItem("3dRectangle");
-        box.addItem("Circle");
+        box.addItem("Circle1");
+        box.addItem("Circle2");
         box.addItem("Arc");
         box.addItem("BigRectangle");
-        //box.addItem("SmallRectangle");
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (box.getSelectedItem().equals("3dRectangle")) {
             formKey = 1;
-        } else if (box.getSelectedItem().equals("Circle")) {
+        } else if (box.getSelectedItem().equals("Circle1")) {
             formKey = 2;
-        } else if (box.getSelectedItem().equals("Arc")) {
+        } else if (box.getSelectedItem().equals("Circle2")) {
             formKey = 3;
-        } else if (box.getSelectedItem().equals("BigRectangle")) {
+        } else if (box.getSelectedItem().equals("Arc")) {
             formKey = 4;
-        } //else if (box.getSelectedItem().equals("SmallRectangle")) {
-//            formKey = 5;
-//        }
+        } else if (box.getSelectedItem().equals("BigRectangle")) {
+            formKey = 5;
+        }
         frame.requestFocus();
     }
 

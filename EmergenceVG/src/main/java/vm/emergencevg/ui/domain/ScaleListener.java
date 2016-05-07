@@ -8,6 +8,9 @@ import vm.emergencevg.logic.ControlFunctions;
 import vm.emergencevg.ui.GUI;
 import vm.emergencevg.ui.Updatable;
 
+/**
+ * particleScale kentän kuuntelija.
+ */
 public class ScaleListener implements ActionListener, Updatable{
 
     GUI ui;
