@@ -1,5 +1,5 @@
 # CellularAutomataVG
-Program for generating visual effect shows with customized cellular automata logic.(Javalabra2016-4 course project)
+Program for generating visual effect shows with customized cellular automata logic. (Javalabra2016-4 course project)
 
 Documentation:
 
