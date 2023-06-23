@@ -1,7 +1,9 @@
-# EmergenceVG
-Small platform for generating visual effect shows.(Javalabra2016-4 course project)
+# CellularAutomataVG
+Program for generating visual effect shows with customized cellular automata logic.(Javalabra2016-4 course project)
 
-Dokumentaatio:
+Documentation:
+
+(Note: Some of the documentation is not up to date with the current version of the program and the UI.)
 
 [aihemäärittely](dokumentointi/aiheenKuvausJaRakenne.md)
 
