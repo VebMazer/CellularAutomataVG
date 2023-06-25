@@ -133,72 +133,25 @@ public class ControlFunctions {
         }
     }
 
-    /**
-     * Määrittää uuden, logiikka-avaruuden ja lisää komennon sen luomiseksi.
-     *
-     * @param xlength Määrittää logiikka-avaruuden x koordinaatin pituuden.
-     * @param ylength Määrittää logiikka-avaruuden y koordinaatin pituuden.
-     */
-    public void resetFieldCommand(int xlength, int ylength) {
-        resetField(xlength, ylength);
-        uFunctions.addCommand("fieldSize(" + space.xlength + "," + space.ylength + ")");
-    }
-
-    /**
-     * Määrittää uuden, logiikka-avaruuden.
-     *
-     * @param xlength Määrittää logiikka-avaruuden x koordinaatin pituuden.
-     * @param ylength Määrittää logiikka-avaruuden y koordinaatin pituuden.
-     */
-    public void resetField(int xlength, int ylength) {
-        boolean wasRunning = space.running;
-        if (wasRunning) {
-            stop();
-            try {
-                Thread.sleep(10);
-            } catch (Exception e) {
-                System.out.println("Slowing thread did not succeed...");
-            }
-        }
-        space.xlength = xlength;
-        space.ylength = ylength;
-        space.field = new int[xlength][ylength];
-        space.resultField = new int[xlength][ylength];
-        if (wasRunning) {
-            start();
-        }
-    }
-
     public void setBoardWidthCommand(int width) {
-        setBoardWidth(width);
+        resizeBoard(width, space.ylength);
+        
         uFunctions.addCommand("fieldSize(" + space.xlength + "," + space.ylength + ")");
-    }
-
-    public void setBoardWidth(int width) {
-        boolean wasRunning = space.running;
-        if (wasRunning) {
-            stop();
-            try {
-                Thread.sleep(10);
-            } catch (Exception e) {
-                System.out.println("Slowing thread did not succeed...");
-            }
-        }
-        space.xlength = width;
-        int height = space.ylength;
-        space.field = new int[width][height];
-        space.resultField = new int[width][height];
-        if (wasRunning) {
-            start();
-        }
     }
 
     public void setBoardHeightCommand(int height) {
-        setBoardHeight(height);
+        resizeBoard(space.xlength, height);
+        
         uFunctions.addCommand("fieldSize(" + space.xlength + "," + space.ylength + ")");
     }
 
-    public void setBoardHeight(int height) {
+    /*
+     * Creates a new resized board and copies the content from the old
+     * board to the new board.
+     */
+    public void resizeBoard(int width, int height) {
+        
+        // Halt iterations if they are running.
         boolean wasRunning = space.running;
         if (wasRunning) {
             stop();
@@ -208,13 +161,29 @@ public class ControlFunctions {
                 System.out.println("Slowing thread did not succeed...");
             }
         }
-        space.ylength = height;
-        int width = space.xlength;
-        space.field = new int[width][height];
-        space.resultField = new int[width][height];
-        if (wasRunning) {
-            start();
+        
+        // Create new boards.
+        int[][] board       = new int[width][height];
+        int[][] resultBoard = new int[width][height];
+        
+        // Copy the content from the old boards to the new boards.
+        for (int y = 0; y < Math.min(height, space.ylength); y++) {
+            for (int x = 0; x < Math.min(width, space.xlength); x++) {
+                
+                board[x][y]       = space.field[x][y];
+                resultBoard[x][y] = space.resultField[x][y];
+            }
         }
+
+        // Replace the old boards with the new ones.
+        space.field       = board;
+        space.resultField = resultBoard;
+
+        // Reset the board size variables.
+        space.xlength = width;
+        space.ylength = height;
+
+        if (wasRunning) start();
     }
 
     /**

@@ -66,9 +66,9 @@ public class CommandRecordRunner {
     }
 
     /**
-     * Suorittaa preset komennon.
+     * Runs the preset command.
      *
-     * @param command Komento tekstimuodossa.
+     * @param command String containing the command.
      */
     public void runPresetCommand(String command) {
         if (command.charAt(0) == 'l') {
@@ -79,15 +79,17 @@ public class CommandRecordRunner {
     }
 
     /**
-     * Parseroi ja suorittaa fieldSize komennon.
+     * Parse and run fieldSize command.
      *
-     * @param command Komento tekstimuodossa.
+     * @param command String containing the command.
      */
     public void parseAndSetFieldSize(String command) {
         ArrayList<Integer> coordinates = new ArrayList<Integer>();
+        
         int index = space.uFunctions.parseNextNumber(10, command, coordinates);
         space.uFunctions.parseNextNumber(index + 1, command, coordinates);
-        space.functions.resetField(coordinates.get(0), coordinates.get(1));
+        
+        space.functions.resizeBoard(coordinates.get(0), coordinates.get(1));
     }
 
     /**
