@@ -72,7 +72,7 @@ public class CommandRecordRunner {
      */
     public void runPresetCommand(String command) {
         if (command.charAt(0) == 'l') {
-            environment.functions.processVariablesToParticleType(command.substring(2, findDoubleComma(2, command)), parseDisplayAttributes(command));
+            environment.functions.processVariablesToParticle(command.substring(2, findDoubleComma(2, command)), parseDisplayAttributes(command));
         } else if (command.charAt(0) == 'f') {
             parseAndSetFieldSize(command);
         }
@@ -166,7 +166,7 @@ public class CommandRecordRunner {
     public void parsePlacementStringToPlaceIt(String command) {
         int index = 1;
         Integer particleKey = environment.uFunctions.parseNumber(command, index);
-        if (environment.particleTypes.containsKey(particleKey)) {
+        if (environment.particles.containsKey(particleKey)) {
             index += particleKey.toString().length() + 1;
             Integer x = environment.uFunctions.parseNumber(command, index);
             index += x.toString().length() + 1;

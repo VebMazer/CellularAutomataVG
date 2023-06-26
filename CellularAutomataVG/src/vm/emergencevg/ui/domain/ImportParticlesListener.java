@@ -8,15 +8,15 @@ import javax.swing.JFrame;
 
 import vm.emergencevg.logic.Environment;
 
-public class ImportParticleTypesListener implements ActionListener {
+public class ImportParticlesListener implements ActionListener {
     
     Environment environment;
     JFrame frame;
-    ParticleTypeSelectListener particleTypeSelectListener;
+    ParticleSelectListener particleTypeSelectListener;
 
-    public ImportParticleTypesListener(
+    public ImportParticlesListener(
         Environment environment, JFrame frame,
-        ParticleTypeSelectListener particleTypeSelectListener
+        ParticleSelectListener particleTypeSelectListener
     ) {
         this.environment = environment;
         this.frame = frame;

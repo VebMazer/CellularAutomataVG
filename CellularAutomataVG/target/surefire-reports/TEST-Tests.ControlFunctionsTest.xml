@@ -61,6 +61,6 @@
   </properties>
   <testcase classname="Tests.ControlFunctionsTest" name="testParsingIntegersToList" time="0.002"/>
   <testcase classname="Tests.ControlFunctionsTest" name="testStringProcessing" time="0"/>
-  <testcase classname="Tests.ControlFunctionsTest" name="testParticleTypeAdding" time="0"/>
+  <testcase classname="Tests.ControlFunctionsTest" name="testParticleAdding" time="0"/>
   <testcase classname="Tests.ControlFunctionsTest" name="testParticlePlacement" time="0.001"/>
 </testsuite>

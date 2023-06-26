@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import vm.emergencevg.domain.ParticleType;
+import vm.emergencevg.domain.Particle;
 
 import vm.emergencevg.logic.ControlFunctions;
 import vm.emergencevg.logic.Environment;
@@ -39,7 +39,7 @@ public class ControlFunctionsTest {
     }
 
     @Test
-    public void testParticleTypeAdding() {
+    public void testParticleAdding() {
         ArrayList<Integer> forNew = new ArrayList<Integer>();
         forNew.add(3);
         ArrayList<Integer> toLive = new ArrayList<Integer>();
@@ -48,9 +48,9 @@ public class ControlFunctionsTest {
         ArrayList<Integer> displayAttributes = new ArrayList<Integer>();
         displayAttributes.add(1);
         displayAttributes.add(1);
-        functions.addParticleType("life", forNew, toLive, displayAttributes);
+        functions.addParticle("life", forNew, toLive, displayAttributes);
 
-        int testInt = environment.particleTypes.get(1).amountsToLive.get(1);
+        int testInt = environment.particles.get(1).amountsToLive.get(1);
         assertEquals(testInt, 3);
     }
 
@@ -66,8 +66,8 @@ public class ControlFunctionsTest {
         ArrayList<Integer> displayAttributes = new ArrayList<Integer>();
         displayAttributes.add(1);
         displayAttributes.add(1);
-        functions.processVariablesToParticleType("name, 3, 2 1,,", displayAttributes);
-        ParticleType pType = environment.particleTypes.get(1);
+        functions.processVariablesToParticle("name, 3, 2 1,,", displayAttributes);
+        Particle pType = environment.particles.get(1);
 
         assertEquals(true, (pType.name.equals("name") && pType.amountsForNew.get(0) == 3 && pType.amountsToLive.get(0) == 2 && pType.amountsToLive.get(1) == 1));
     }

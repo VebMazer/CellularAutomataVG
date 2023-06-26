@@ -26,7 +26,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
-import vm.emergencevg.domain.ParticleType;
+import vm.emergencevg.domain.Particle;
 import vm.emergencevg.logic.ControlFunctions;
 import vm.emergencevg.logic.Environment;
 import vm.emergencevg.ui.domain.*;
@@ -50,7 +50,7 @@ public class GUI implements Runnable {
     ModeListener modeListener;
     public IterationsListener itTracker;
     public ScaleListener scaleUpdater;
-    public ParticleTypeSelectListener particleTypeListener;
+    public ParticleSelectListener particleTypeListener;
 
     /**
      * Konstruktori.
@@ -141,13 +141,13 @@ public class GUI implements Runnable {
         
         fileMenu.add(openFileItem);
 
-        JMenuItem ImportParticleTypesItem = new JMenuItem("Import Particle Types...");
+        JMenuItem ImportParticlesItem = new JMenuItem("Import Particle Types...");
         
-        ImportParticleTypesItem.addActionListener(
-            new ImportParticleTypesListener(environment, frame, particleTypeListener)
+        ImportParticlesItem.addActionListener(
+            new ImportParticlesListener(environment, frame, particleTypeListener)
         );
         
-        fileMenu.add(ImportParticleTypesItem);
+        fileMenu.add(ImportParticlesItem);
     }
 
     public void createParticleMenu() {
@@ -165,7 +165,7 @@ public class GUI implements Runnable {
         JMenuItem deleteParticles = new JMenuItem("Delete all Particles");
         
         deleteParticles.addActionListener(
-            new ClearParticleTypesListener(environment, frame, particleTypeListener)
+            new ClearParticlesListener(environment, frame, particleTypeListener)
         );
         
         particleMenu.add(deleteParticles);
@@ -243,7 +243,7 @@ public class GUI implements Runnable {
         JButton clearButton = new JButton("Clear");
         JButton clearCommandRecordButton = new JButton("Clear Command Record");
 
-        JComboBox<ParticleType> particleList = new JComboBox<ParticleType>();
+        JComboBox<Particle> particleList = new JComboBox<Particle>();
 
         boardWidthTextField.addActionListener(
             new BoardWidthListener(this, boardWidthTextField, environment.functions)
@@ -270,7 +270,7 @@ public class GUI implements Runnable {
         itTracker = new IterationsListener(environment, frame, iterationTextField);
         iterationTextField.addActionListener(itTracker);
 
-        particleTypeListener = new ParticleTypeSelectListener(frame, environment, particleList);
+        particleTypeListener = new ParticleSelectListener(frame, environment, particleList);
         
         particleList.addActionListener(particleTypeListener);
         particleTypeListener.initialize();

@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * numeroina, mutta nämä numerot viittaavat samalla partikkelin tyyppiin, jonka
  * arvot määrittävät miten eteneminen seuraavaan iteraatioon tapahtuu.
  */
-public class ParticleType {
+public class Particle {
 
     public String name;
     public int key;
@@ -28,7 +28,7 @@ public class ParticleType {
      * partikkelin piirtotyyliä käyttöliittymässä. Ensimmäinen muuttuja kuvaa
      * väriä ja toinen muotoa.
      */
-    public ParticleType(String name, int key, ArrayList<Integer> amountsForNew, ArrayList<Integer> amountsToLive, ArrayList<Integer> displayAttributes) {
+    public Particle(String name, int key, ArrayList<Integer> amountsForNew, ArrayList<Integer> amountsToLive, ArrayList<Integer> displayAttributes) {
         this.name = name;
         this.key = key;
         this.amountsForNew = amountsForNew;

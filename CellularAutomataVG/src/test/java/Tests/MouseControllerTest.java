@@ -21,7 +21,7 @@ public class MouseControllerTest {
         ArrayList<Integer> list = new ArrayList<Integer>();
         list.add(2);
         list.add(1);
-        environment.functions.addParticleType("testType", list, list, list);
+        environment.functions.addParticle("testType", list, list, list);
     }
 
     @BeforeClass

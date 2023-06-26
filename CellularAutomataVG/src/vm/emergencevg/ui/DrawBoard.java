@@ -68,7 +68,7 @@ public class DrawBoard extends JPanel implements Updatable {
      * Määrittää objektin piirtotyylin.
      */
     public void draw(Graphics g, int key, int x, int y) {
-        ArrayList<Integer> keys = environment.particleTypes.get(key).displayAttributes;
+        ArrayList<Integer> keys = environment.particles.get(key).displayAttributes;
         setColor(g, keys.get(0));           //color key is at index 0
         drawForm(g, keys.get(1), x, y);     //form key is at index 1
     }

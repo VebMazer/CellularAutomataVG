@@ -10,12 +10,12 @@ import vm.emergencevg.ui.Updatable;
  */
 public class Environment implements Runnable {
 
-    public int width;
-    public int height;
+    public int     width;
+    public int     height;
     public int[][] field;
     public int[][] resultField;
 
-    public HashMap<Integer, ParticleType> particleTypes;
+    public HashMap<Integer, Particle> particles;
 
     public ControlFunctions functions;
     public MouseController mController;
@@ -40,15 +40,15 @@ public class Environment implements Runnable {
         this.height   = height;
         field         = new int[width][height];
         resultField   = new int[width][height];
-        particleTypes = new HashMap<Integer, ParticleType>();
+        particles     = new HashMap<Integer, Particle>();
 
         running = false;
         trigger = true;
         triggering = false;
         speedModifier = 0.20;
 
-        coReRunner = new CommandRecordRunner(this);
-        bot = new Bot(this);
+        coReRunner   = new CommandRecordRunner(this);
+        bot          = new Bot(this);
         communicator = new Communicator(this);
         communicator.connect("localhost", 7799);
 
@@ -62,28 +62,35 @@ public class Environment implements Runnable {
      * suhteessa aikaan.
      */
     public synchronized void run() {
-        long lastTime = System.nanoTime();
+        long   lastTime = System.nanoTime();
         double amountOfTicks = 60.0;
         double ns = 1000000000 / amountOfTicks;
         double delta = 0;
         long timer = System.currentTimeMillis();
+        
         int updates = 0;
         int cycles = 0;
+        
         while (true) {
             long now = System.nanoTime();
             delta += (now - lastTime) * speedModifier / ns;
             lastTime = now;
+            
             while (delta >= 1) {
                 iterate();
                 uiDrawBoard.update();
+                
                 updates++;
                 delta--;
             }
+            
             cycles++;
 
             if (System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
+                
                 System.out.println("CyclesPS: " + cycles + " TICKS: " + updates);
+                
                 cycles = 0;
                 updates = 0;
             }
@@ -103,13 +110,25 @@ public class Environment implements Runnable {
      */
     public void iterate() {
         if (running && trigger) {
-            communicator.sendCommands();
-            communicator.readCommands();
+            
+            // send or read commands if the user is in "network sender mode"
+            // or "network receiver mode".
+            if      (bot.mode == -1) communicator.sendCommands();
+            else if (bot.mode == -2) communicator.readCommands();
+            
+            // Calculate next iteration.
             nextIteration();
+            
+            // Run commands marked for the current iteration.
             coReRunner.runCommands();
+            
+            // Update the mode bot.
             bot.update();
+            
+            // Update iteration counter and the component displaying it.
             coReRunner.iterations++;
             coReRunner.uiIterationDisplayer.update();
+            
             if(triggering) trigger = false;
         }
     }
@@ -194,7 +213,7 @@ public class Environment implements Runnable {
         if (spotKey == 0) {
             int mostCommonKey = uFunctions.mostCommonKey(neighborTypes);
             if (mostCommonKey != 0) {
-                if (particleTypes.get(mostCommonKey).generate(neighbors)) {
+                if (particles.get(mostCommonKey).generate(neighbors)) {
                     resultField[x][y] = mostCommonKey;
                 } else {
                     resultField[x][y] = 0;
@@ -202,7 +221,7 @@ public class Environment implements Runnable {
             } else {
                 resultField[x][y] = 0;
             }
-        } else if (particleTypes.get(spotKey).live(neighbors)) {
+        } else if (particles.get(spotKey).live(neighbors)) {
             resultField[x][y] = spotKey;
         } else {
             resultField[x][y] = 0;

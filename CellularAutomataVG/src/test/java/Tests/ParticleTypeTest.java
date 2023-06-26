@@ -7,13 +7,13 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import vm.emergencevg.domain.ParticleType;
+import vm.emergencevg.domain.Particle;
 
-public class ParticleTypeTest {
+public class ParticleTest {
 
-    ParticleType type;
+    Particle type;
 
-    public ParticleTypeTest() {
+    public ParticleTest() {
         ArrayList<Integer> forNew = new ArrayList<Integer>();
         ArrayList<Integer> toLive = new ArrayList<Integer>();
         ArrayList<Integer> displayAttributes = new ArrayList<Integer>();
@@ -25,7 +25,7 @@ public class ParticleTypeTest {
         displayAttributes.add(1);
         displayAttributes.add(1);
         
-        type = new ParticleType("something", 2, forNew, toLive, displayAttributes);
+        type = new Particle("something", 2, forNew, toLive, displayAttributes);
         
         
     }
@@ -63,7 +63,7 @@ public class ParticleTypeTest {
         ArrayList<Integer> displayAttributes = new ArrayList<Integer>();
         forNew.add(6);
         //toLive.add(3);
-        ParticleType particle = new ParticleType("somethingElse", 3, forNew, toLive, displayAttributes);
+        Particle particle = new Particle("somethingElse", 3, forNew, toLive, displayAttributes);
         assertEquals(particle.live(3) || particle.generate(7), false);
     }
 }

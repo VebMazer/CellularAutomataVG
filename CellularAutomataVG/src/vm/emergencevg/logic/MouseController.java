@@ -62,7 +62,7 @@ public class MouseController {
      * päästää hiiren painikkeesta irti.).
      */
     public void cast() {
-        if (!environment.particleTypes.containsKey(pKey)) {
+        if (!environment.particles.containsKey(pKey)) {
             pKey = 0;
         }
         for (int[] spot : spotsPressed) {

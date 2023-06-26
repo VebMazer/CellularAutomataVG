@@ -2,7 +2,7 @@ package vm.emergencevg.logic;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import vm.emergencevg.domain.ParticleType;
+import vm.emergencevg.domain.Particle;
 import vm.emergencevg.ui.Updatable;
 
 /**
@@ -34,14 +34,14 @@ public class ControlFunctions {
     }
 
     /**
-     * Metodi muuntaa käyttöliittymältä saatuja String olioita. ParticleType
+     * Metodi muuntaa käyttöliittymältä saatuja String olioita. Particle
      * olion haluamaan malliin.
      *
      * @param input Käyttöliittymältä saatu käyttäjän syöttämä merkkijono.
      * @param displayAttributes Lista Integer muuttujia, joilla määritetään
      * partikkelin piirtotyyliä.
      */
-    public void processVariablesToParticleType(String input, ArrayList<Integer> displayAttributes) {
+    public void processVariablesToParticle(String input, ArrayList<Integer> displayAttributes) {
         uFunctions.addPreset("l(" + input + ",," + displayAttributes.get(0) + " " + displayAttributes.get(1) + ")");
         String name = "";
         ArrayList<Integer> amountsForNew = new ArrayList<Integer>();
@@ -55,17 +55,17 @@ public class ControlFunctions {
         index = addIntegersToList(index, input, amountsForNew);
         index++;
         addIntegersToList(index, input, amountsToLive);
-        addParticleType(name, amountsForNew, amountsToLive, displayAttributes);
+        addParticle(name, amountsForNew, amountsToLive, displayAttributes);
     }
 
-    public void processVariablesToParticleType(
+    public void processVariablesToParticle(
         String name,
         ArrayList<Integer> amountsForNew,
         ArrayList<Integer> amountsToLive,
         ArrayList<Integer> displayAttributes
     ) {
 
-        addParticleType(name, amountsForNew, amountsToLive, displayAttributes);
+        addParticle(name, amountsForNew, amountsToLive, displayAttributes);
         
         // Create a string representation and add it to the presets.
         String amountsForNewString = "";
@@ -108,8 +108,8 @@ public class ControlFunctions {
     }
 
     /**
-     * Etsii ensimmäisen käyttämättömän avaimen logiikka-avaruuden particleTypes
-     * HashMapistä ja lisää uuden particleTypes olion samaan mappiin
+     * Etsii ensimmäisen käyttämättömän avaimen logiikka-avaruuden particles
+     * HashMapistä ja lisää uuden particles olion samaan mappiin
      * löydettäväksi tällä avaimella.
      *
      * @param name Partikkelityypin nimi.
@@ -120,16 +120,16 @@ public class ControlFunctions {
      * @param displayAttributes Lista numeroita, jotka määrittävät partikkelin
      * piirtotyyliä.
      */
-    public void addParticleType(String name, ArrayList<Integer> amountsForNew, ArrayList<Integer> amountsToLive, ArrayList<Integer> displayAttributes) {
+    public void addParticle(String name, ArrayList<Integer> amountsForNew, ArrayList<Integer> amountsToLive, ArrayList<Integer> displayAttributes) {
         int key = 0;
         for (int i = 1; i < 100; i++) {
-            if (environment.particleTypes.get(i) == null) {
+            if (environment.particles.get(i) == null) {
                 key = i;
                 break;
             }
         }
         if (key != 0) {
-            environment.particleTypes.put(key, new ParticleType(name, key, amountsForNew, amountsToLive, displayAttributes));
+            environment.particles.put(key, new Particle(name, key, amountsForNew, amountsToLive, displayAttributes));
         }
     }
 
@@ -202,9 +202,9 @@ public class ControlFunctions {
     /**
      * Tyhjentää partikkelityyppilistan ja uudelleen alustaa preset komennot.
      */
-    public void clearParticleTypes() {
+    public void clearParticles() {
         stop();
-        environment.particleTypes = new HashMap<Integer, ParticleType>();
+        environment.particles = new HashMap<Integer, Particle>();
         coReRunner.reInitializePresets();
     }
 
@@ -260,7 +260,7 @@ public class ControlFunctions {
     public void loadPresentation(String filename) {
         clearCommand();
         clearRecord();
-        clearParticleTypes();
+        clearParticles();
         fileIo.load(filename);
         coReRunner.runPresets();
     }
@@ -273,7 +273,7 @@ public class ControlFunctions {
      * ilmaista ennen nimeä tarvittaessa.
      */
     public void addPresets(String filename) {
-        environment.particleTypes = new HashMap<Integer, ParticleType>();
+        environment.particles = new HashMap<Integer, Particle>();
         fileIo.addPresets(filename);
         coReRunner.runPresets();
     }

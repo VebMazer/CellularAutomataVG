@@ -10,12 +10,15 @@ import java.util.ArrayDeque;
 import vm.emergencevg.logic.Environment;
 
 public class Communicator {
-    public Environment environment;
-    public ArrayDeque<String> outCommands;
-    public DataOutputStream out;
-    BufferedReader in;
-    public int groupID;
-    public boolean sending;
+    public  Environment        environment;
+    public  ArrayDeque<String> outCommands;
+    
+    private Socket             echoSocket;
+    public  DataOutputStream   out;
+    public  BufferedReader     in;
+    
+    public  int                groupID;
+    public  boolean            sending;
     
     public Communicator(Environment environment) {
         this.environment = environment;
@@ -26,7 +29,7 @@ public class Communicator {
     
     public void connect(String hostName, int portNumber) {
         try {
-            Socket echoSocket = new Socket(hostName, portNumber);
+            echoSocket = new Socket(hostName, portNumber);
             out =
                 new DataOutputStream(echoSocket.getOutputStream());
             in = new BufferedReader(

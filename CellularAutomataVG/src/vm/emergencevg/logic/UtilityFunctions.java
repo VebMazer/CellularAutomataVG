@@ -24,14 +24,14 @@ public class UtilityFunctions {
     }
 
     /**
-     * Etsii viimeisenä particleTypes listaan laitetun olion avaimen, joka on
+     * Etsii viimeisenä particles listaan laitetun olion avaimen, joka on
      * siis aina suurin avainten joukossa oleva luku.
      *
      * @return Palauttaa suurimman partikkelityyppimapin avaimen.
      */
     public int findLatestKey() {
         int lastKey = 1;
-        for (int key : environment.particleTypes.keySet()) {
+        for (int key : environment.particles.keySet()) {
             if (key > lastKey) {
                 lastKey = key;
             }

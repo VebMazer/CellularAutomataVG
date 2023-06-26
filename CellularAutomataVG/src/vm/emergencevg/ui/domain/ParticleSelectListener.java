@@ -4,19 +4,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import vm.emergencevg.domain.ParticleType;
+import vm.emergencevg.domain.Particle;
 import vm.emergencevg.logic.Environment;
 
 /**
  * Listener of the "particle" selection box.
  */
-public class ParticleTypeSelectListener implements ActionListener {
+public class ParticleSelectListener implements ActionListener {
 
     JFrame frame;
     Environment environment;
-    JComboBox<ParticleType> box;
+    JComboBox<Particle> box;
 
-    public ParticleTypeSelectListener(JFrame frame, Environment environment, JComboBox<ParticleType> box) {
+    public ParticleSelectListener(JFrame frame, Environment environment, JComboBox<Particle> box) {
         this.frame = frame;
         this.environment = environment;
         this.box = box;
@@ -28,7 +28,7 @@ public class ParticleTypeSelectListener implements ActionListener {
         if(box.getSelectedItem() != null) {
             String selected = box.getSelectedItem().toString();
             
-            for (ParticleType particleType : environment.particleTypes.values()) {
+            for (Particle particleType : environment.particles.values()) {
                 
                 if (selected.equals(particleType.toString())) {
                     environment.mController.pKey = particleType.key;
@@ -39,7 +39,7 @@ public class ParticleTypeSelectListener implements ActionListener {
     }
 
     public void update() {
-        box.addItem(environment.particleTypes.get(environment.uFunctions.findLatestKey()));
+        box.addItem(environment.particles.get(environment.uFunctions.findLatestKey()));
     }
 
     public void empty() {
@@ -47,7 +47,7 @@ public class ParticleTypeSelectListener implements ActionListener {
     }
 
     public void initialize() {
-        for (ParticleType particleType : environment.particleTypes.values()) {
+        for (Particle particleType : environment.particles.values()) {
             box.addItem(particleType);
         }
     }

@@ -21,12 +21,12 @@ public class CreateParticleListener implements ActionListener {
 
     JFrame frame;
     Environment environment;
-    ParticleTypeSelectListener particleTypeListener;
+    ParticleSelectListener particleTypeListener;
 
     public CreateParticleListener(
         JFrame frame,
         Environment environment,
-        ParticleTypeSelectListener particleTypeListener
+        ParticleSelectListener particleTypeListener
     ) {
         this.frame = frame;
         this.environment = environment;
@@ -126,7 +126,7 @@ public class CreateParticleListener implements ActionListener {
         displayAttributes.add(color);
         displayAttributes.add(shape);
         
-        environment.functions.processVariablesToParticleType(
+        environment.functions.processVariablesToParticle(
             name, amountsForNew, amountsToLive, displayAttributes
         );
         

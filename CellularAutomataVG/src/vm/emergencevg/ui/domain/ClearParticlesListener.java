@@ -10,13 +10,13 @@ import vm.emergencevg.logic.Environment;
 /**
  * Listener for the "Delete all Particles" option in the particle menu.
  */
-public class ClearParticleTypesListener implements ActionListener {
+public class ClearParticlesListener implements ActionListener {
 
     Environment environment;
     JFrame frame;
-    ParticleTypeSelectListener lsListener;
+    ParticleSelectListener lsListener;
 
-    public ClearParticleTypesListener(Environment environment, JFrame frame, ParticleTypeSelectListener lsListener) {
+    public ClearParticlesListener(Environment environment, JFrame frame, ParticleSelectListener lsListener) {
         this.environment = environment;
         this.frame = frame;
         this.lsListener = lsListener;
@@ -40,7 +40,7 @@ public class ClearParticleTypesListener implements ActionListener {
 
     public void removeAll() {
         environment.functions.clearCommand();
-        environment.functions.clearParticleTypes();
+        environment.functions.clearParticles();
         lsListener.empty();
         frame.requestFocus();
     }

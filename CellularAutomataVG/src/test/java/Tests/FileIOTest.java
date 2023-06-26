@@ -65,7 +65,7 @@ public class FileIOTest {
         environment.setUiDrawBoard(ui.drawboard);
         
         environment.functions.loadPresentation("testsave.evg");
-        boolean test1 = environment.particleTypes.get(3).name.equals("remenant");
+        boolean test1 = environment.particles.get(3).name.equals("remenant");
         boolean test2 = environment.coReRunner.commands.get(0).get(0).equals("clear");
          
         assertEquals(true, test1 && test2);

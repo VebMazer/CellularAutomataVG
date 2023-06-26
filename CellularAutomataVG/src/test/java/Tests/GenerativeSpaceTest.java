@@ -61,7 +61,7 @@ public class EnvironmentTest {
         ArrayList<Integer> displayAttributes = new ArrayList<Integer>();
         displayAttributes.add(1);
         displayAttributes.add(1);
-        functions.addParticleType("life", forNew, toLive, displayAttributes);
+        functions.addParticle("life", forNew, toLive, displayAttributes);
 
         forNew = new ArrayList<Integer>();
         forNew.add(3);
@@ -72,7 +72,7 @@ public class EnvironmentTest {
         displayAttributes = new ArrayList<Integer>();
         displayAttributes.add(1);
         displayAttributes.add(1);
-        functions.addParticleType("remenant", forNew, toLive, displayAttributes);
+        functions.addParticle("remenant", forNew, toLive, displayAttributes);
     }
 
     //Testataan syntyykö uusi partikkeli, kun määritellyt ehdot on täytetty.

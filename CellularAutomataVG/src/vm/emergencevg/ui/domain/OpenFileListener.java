@@ -11,11 +11,11 @@ import vm.emergencevg.logic.Environment;
 public class OpenFileListener implements ActionListener {
     Environment environment;
     JFrame frame;
-    ParticleTypeSelectListener particleTypeSelectListener;
+    ParticleSelectListener particleTypeSelectListener;
 
     public OpenFileListener(
         Environment environment, JFrame frame,
-        ParticleTypeSelectListener particleTypeSelectListener
+        ParticleSelectListener particleTypeSelectListener
     ) {
         this.environment = environment;
         this.frame = frame;
