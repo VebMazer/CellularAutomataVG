@@ -5,15 +5,15 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import vm.emergencevg.logic.GenerativeSpace;
+import vm.emergencevg.logic.Environment;
 
 public class SaveAsListener implements ActionListener {
     
-    GenerativeSpace space;
+    Environment environment;
     JFrame frame;
 
-    public SaveAsListener(GenerativeSpace space, JFrame frame) {
-        this.space = space;
+    public SaveAsListener(Environment environment, JFrame frame) {
+        this.environment = environment;
         this.frame = frame;
     }
 
@@ -28,7 +28,7 @@ public class SaveAsListener implements ActionListener {
         
         if (returnValue == JFileChooser.APPROVE_OPTION) {
 
-            space.functions.save(
+            environment.functions.save(
                 fileChooser.getCurrentDirectory().toString()
                 + "/" + fileChooser.getSelectedFile().getName()
             );

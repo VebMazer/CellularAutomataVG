@@ -18,7 +18,7 @@ public class BoardWidthListener implements ActionListener, Updatable {
         this.ui = ui;
         this.tField = tField;
         this.functions = functions;
-        tField.setText("" + ui.space.xlength);
+        tField.setText("" + ui.environment.width);
     }
 
     @Override
@@ -34,6 +34,6 @@ public class BoardWidthListener implements ActionListener, Updatable {
 
     @Override
     public void update() {
-        tField.setText("" + ui.space.xlength);
+        tField.setText("" + ui.environment.width);
     }
 }

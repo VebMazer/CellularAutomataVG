@@ -23,7 +23,7 @@ public class PlaySwitchListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         functions.playSwitch();
-        button.setText(functions.space.running ? "Stop" : "Play");
+        button.setText(functions.environment.running ? "Stop" : "Play");
         frame.requestFocus();
     }
     

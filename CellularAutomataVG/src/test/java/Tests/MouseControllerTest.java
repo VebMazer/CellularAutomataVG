@@ -7,21 +7,21 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import vm.emergencevg.logic.GenerativeSpace;
+import vm.emergencevg.logic.Environment;
 import vm.emergencevg.logic.MouseController;
 
 public class MouseControllerTest {
 
-    GenerativeSpace space;
+    Environment environment;
     MouseController mController;
 
     public MouseControllerTest() {
-        space = new GenerativeSpace(100, 100);
-        this.mController = space.mController;
+        environment = new Environment(100, 100);
+        this.mController = environment.mController;
         ArrayList<Integer> list = new ArrayList<Integer>();
         list.add(2);
         list.add(1);
-        space.functions.addParticleType("testType", list, list, list);
+        environment.functions.addParticleType("testType", list, list, list);
     }
 
     @BeforeClass
@@ -55,6 +55,6 @@ public class MouseControllerTest {
         mController.updateSpot(5, 2);
         mController.updateSpot(1, 5);
         mController.cast();
-        assertEquals(true, (space.resultField[5][5] == 1 && space.resultField[7][5] == 1 && space.resultField[5][2] == 1 && space.resultField[1][5] == 1));
+        assertEquals(true, (environment.resultField[5][5] == 1 && environment.resultField[7][5] == 1 && environment.resultField[5][2] == 1 && environment.resultField[1][5] == 1));
     }
 }

@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 
-import vm.emergencevg.logic.GenerativeSpace;
+import vm.emergencevg.logic.Environment;
 import vm.emergencevg.logic.MouseController;
 
 /**
@@ -13,16 +13,16 @@ import vm.emergencevg.logic.MouseController;
  */
 public class DrawBoard extends JPanel implements Updatable {
 
-    GenerativeSpace space;
+    Environment environment;
     MouseController mController;
     GUI ui;
     int sideLength;
 
-    public DrawBoard(GenerativeSpace space, GUI ui) {
-        this.space = space;
+    public DrawBoard(Environment environment, GUI ui) {
+        this.environment = environment;
         this.ui = ui;
         this.sideLength = ui.scale;
-        this.mController = space.mController;
+        this.mController = environment.mController;
 
     }
 
@@ -43,10 +43,10 @@ public class DrawBoard extends JPanel implements Updatable {
         
         g.setColor(Color.ORANGE);
         
-        for (int j = 0; j < space.ylength; j++) {
-            for (int i = 0; i < space.xlength; i++) {
-                if (space.field[i][j] != 0) {
-                    draw(g, space.field[i][j], i, j);
+        for (int j = 0; j < environment.height; j++) {
+            for (int i = 0; i < environment.width; i++) {
+                if (environment.field[i][j] != 0) {
+                    draw(g, environment.field[i][j], i, j);
                 }
             }
 
@@ -54,8 +54,8 @@ public class DrawBoard extends JPanel implements Updatable {
     }
 
     public void drawBorders(Graphics g) {
-        int width  = space.xlength * sideLength;
-        int height = space.ylength * sideLength;
+        int width  = environment.width * sideLength;
+        int height = environment.height * sideLength;
         
         // Draw right side border line.
         g.drawLine(width, 0, width, height);
@@ -68,7 +68,7 @@ public class DrawBoard extends JPanel implements Updatable {
      * Määrittää objektin piirtotyylin.
      */
     public void draw(Graphics g, int key, int x, int y) {
-        ArrayList<Integer> keys = space.particleTypes.get(key).displayAttributes;
+        ArrayList<Integer> keys = environment.particleTypes.get(key).displayAttributes;
         setColor(g, keys.get(0));           //color key is at index 0
         drawForm(g, keys.get(1), x, y);     //form key is at index 1
     }

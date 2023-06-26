@@ -13,7 +13,7 @@ vm/emergencevg/ui/domain/ParticleTypeInputListener.class
 vm/emergencevg/main/Main.class
 vm/emergencevg/domain/ParticleType.class
 vm/emergencevg/ui/domain/LoadPresentationListener.class
-vm/emergencevg/logic/GenerativeSpace.class
+vm/emergencevg/logic/Environment.class
 vm/emergencevg/ui/DrawBoard.class
 vm/emergencevg/logic/MouseController.class
 vm/emergencevg/ui/domain/SaveListener.class

@@ -15,17 +15,17 @@ public class FileIO {
 
     ArrayList<String> presets;
     HashMap<Integer, ArrayList<String>> commands;
-    GenerativeSpace space;
+    Environment environment;
     public CommandRecordRunner coReRunner;
 
     /**
      * Konstruktoi.
      *
-     * @param space logiikka-avaruus ja taustalooppi
+     * @param environment logiikka-avaruus ja taustalooppi
      */
-    public FileIO(GenerativeSpace space) {
-        this.space = space;
-        this.coReRunner = space.coReRunner;
+    public FileIO(Environment environment) {
+        this.environment = environment;
+        this.coReRunner = environment.coReRunner;
         presets = new ArrayList<String>();
         commands = new HashMap<Integer, ArrayList<String>>();
     }
@@ -87,7 +87,7 @@ public class FileIO {
      * @param filename Tiedoston nimi.
      */
     public void addPresets(String filename) {
-        space.functions.stop();
+        environment.functions.stop();
         try {
             readFile(filename);
             updatePresets();
@@ -113,7 +113,7 @@ public class FileIO {
      * @param filename Tiedoston nimi.
      */
     public void load(String filename) {
-        space.functions.stop();
+        environment.functions.stop();
         try {
             readFile(filename);
             replacePresets();

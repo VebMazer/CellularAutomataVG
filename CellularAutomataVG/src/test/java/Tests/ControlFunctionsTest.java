@@ -10,16 +10,16 @@ import static org.junit.Assert.*;
 import vm.emergencevg.domain.ParticleType;
 
 import vm.emergencevg.logic.ControlFunctions;
-import vm.emergencevg.logic.GenerativeSpace;
+import vm.emergencevg.logic.Environment;
 
 public class ControlFunctionsTest {
 
-    GenerativeSpace space;
+    Environment environment;
     ControlFunctions functions;
 
     public ControlFunctionsTest() {
-        space = new GenerativeSpace(100, 100);
-        this.functions = space.functions;
+        environment = new Environment(100, 100);
+        this.functions = environment.functions;
     }
 
     @BeforeClass
@@ -50,7 +50,7 @@ public class ControlFunctionsTest {
         displayAttributes.add(1);
         functions.addParticleType("life", forNew, toLive, displayAttributes);
 
-        int testInt = space.particleTypes.get(1).amountsToLive.get(1);
+        int testInt = environment.particleTypes.get(1).amountsToLive.get(1);
         assertEquals(testInt, 3);
     }
 
@@ -67,7 +67,7 @@ public class ControlFunctionsTest {
         displayAttributes.add(1);
         displayAttributes.add(1);
         functions.processVariablesToParticleType("name, 3, 2 1,,", displayAttributes);
-        ParticleType pType = space.particleTypes.get(1);
+        ParticleType pType = environment.particleTypes.get(1);
 
         assertEquals(true, (pType.name.equals("name") && pType.amountsForNew.get(0) == 3 && pType.amountsToLive.get(0) == 2 && pType.amountsToLive.get(1) == 1));
     }
@@ -75,6 +75,6 @@ public class ControlFunctionsTest {
     @Test
     public void testParticlePlacement() {
         functions.placeParticle(3, 6, 7);
-        assertEquals(space.field[6][7], space.resultField[6][7]);
+        assertEquals(environment.field[6][7], environment.resultField[6][7]);
     }
 }

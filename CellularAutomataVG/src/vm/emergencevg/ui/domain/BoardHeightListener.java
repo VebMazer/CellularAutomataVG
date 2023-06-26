@@ -18,7 +18,7 @@ public class BoardHeightListener implements ActionListener, Updatable {
         this.ui = ui;
         this.tField = tField;
         this.functions = functions;
-        tField.setText("" + ui.space.ylength);
+        tField.setText("" + ui.environment.height);
     }
 
     @Override
@@ -34,6 +34,6 @@ public class BoardHeightListener implements ActionListener, Updatable {
 
     @Override
     public void update() {
-        tField.setText("" + ui.space.ylength);
+        tField.setText("" + ui.environment.height);
     }
 }

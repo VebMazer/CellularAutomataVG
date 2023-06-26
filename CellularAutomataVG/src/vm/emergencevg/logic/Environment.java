@@ -8,10 +8,10 @@ import vm.emergencevg.ui.Updatable;
 /**
  * Ohjelman taustalooppi ja logiikka-avaruuden ylläpitäjä.
  */
-public class GenerativeSpace implements Runnable {
+public class Environment implements Runnable {
 
-    public int xlength;
-    public int ylength;
+    public int width;
+    public int height;
     public int[][] field;
     public int[][] resultField;
 
@@ -35,12 +35,12 @@ public class GenerativeSpace implements Runnable {
      * @param x Logiikka-avaruuden x akselin koko.
      * @param y Logiikka-avaruuden x akselin koko.
      */
-    public GenerativeSpace(int x, int y) {
-        xlength = x;
-        ylength = y;
-        field = new int[x][y];
-        resultField = new int[x][y];
-        this.particleTypes = new HashMap<Integer, ParticleType>();
+    public Environment(int width, int height) {
+        this.width    = width;
+        this.height   = height;
+        field         = new int[width][height];
+        resultField   = new int[width][height];
+        particleTypes = new HashMap<Integer, ParticleType>();
 
         running = false;
         trigger = true;
@@ -128,8 +128,8 @@ public class GenerativeSpace implements Runnable {
      * muuttujaan.
      */
     public void computeNextIteration() {
-        for (int j = 0; j < ylength; j++) {
-            for (int i = 0; i < xlength; i++) {
+        for (int j = 0; j < height; j++) {
+            for (int i = 0; i < width; i++) {
                 int neighbors = 0;
                 int[] neighborTypes = new int[8];
                 int index = 0;
@@ -143,7 +143,7 @@ public class GenerativeSpace implements Runnable {
                     neighborTypes[index] = field[i][j - 1];
                     index++;
                 }
-                if (j - 1 >= 0 && i + 1 < xlength && field[i + 1][j - 1] != 0) {
+                if (j - 1 >= 0 && i + 1 < width && field[i + 1][j - 1] != 0) {
                     neighbors++;
                     neighborTypes[index] = field[i + 1][j - 1];
                     index++;
@@ -153,22 +153,22 @@ public class GenerativeSpace implements Runnable {
                     neighborTypes[index] = field[i - 1][j];
                     index++;
                 }
-                if (i + 1 < xlength && field[i + 1][j] != 0) {
+                if (i + 1 < width && field[i + 1][j] != 0) {
                     neighbors++;
                     neighborTypes[index] = field[i + 1][j];
                     index++;
                 }
-                if (i - 1 >= 0 && j + 1 < ylength && field[i - 1][j + 1] != 0) {
+                if (i - 1 >= 0 && j + 1 < height && field[i - 1][j + 1] != 0) {
                     neighbors++;
                     neighborTypes[index] = field[i - 1][j + 1];
                     index++;
                 }
-                if (j + 1 < ylength && field[i][j + 1] != 0) {
+                if (j + 1 < height && field[i][j + 1] != 0) {
                     neighbors++;
                     neighborTypes[index] = field[i][j + 1];
                     index++;
                 }
-                if (i + 1 < xlength && j + 1 < ylength && field[i + 1][j + 1] != 0) {
+                if (i + 1 < width && j + 1 < height && field[i + 1][j + 1] != 0) {
                     neighbors++;
                     neighborTypes[index] = field[i + 1][j + 1];
                 }
@@ -215,7 +215,7 @@ public class GenerativeSpace implements Runnable {
      */
     public void updateField() {
         field = resultField;
-        resultField = new int[xlength][ylength];
+        resultField = new int[width][height];
     }
 
     public void setUiDrawBoard(Updatable uiDrawBoard) {

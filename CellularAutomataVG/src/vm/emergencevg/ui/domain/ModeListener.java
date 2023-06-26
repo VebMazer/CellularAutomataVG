@@ -7,10 +7,10 @@ import java.awt.event.ActionListener;
 import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
 import javax.swing.JRadioButtonMenuItem;
-import vm.emergencevg.logic.GenerativeSpace;
+import vm.emergencevg.logic.Environment;
 
 public class ModeListener implements ActionListener {
-    GenerativeSpace      space;
+    Environment      environment;
     JFrame               frame;
     JRadioButtonMenuItem normalModeOption;
     JRadioButtonMenuItem receiverModeOption;
@@ -23,7 +23,7 @@ public class ModeListener implements ActionListener {
     ButtonGroup          modeButtonGroup;
 
     public ModeListener(
-        GenerativeSpace      space,
+        Environment      environment,
         JFrame               frame,
         JRadioButtonMenuItem normalModeOption,
         JRadioButtonMenuItem receiverModeOption,
@@ -33,7 +33,7 @@ public class ModeListener implements ActionListener {
         JRadioButtonMenuItem randomSpawnCycleModeOption1,
         JRadioButtonMenuItem randomSpawnCycleModeOption2
     ) {
-        this.space                       = space;
+        this.environment                       = environment;
         this.frame                       = frame;
         this.normalModeOption            = normalModeOption;
         this.receiverModeOption          = receiverModeOption;
@@ -65,25 +65,25 @@ public class ModeListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         switch(e.getActionCommand()) {
             case "normal mode":
-                space.bot.mode = 0;
+                environment.bot.mode = 0;
                 break;
             case "network receiver mode":
-                space.bot.mode = -2;
+                environment.bot.mode = -2;
                 break;
             case "network sender mode":
-                space.bot.mode = -1;
+                environment.bot.mode = -1;
                 break;
             case "dot grid mode":
-                space.bot.mode = 1;
+                environment.bot.mode = 1;
                 break;
             case "line grid mode":
-                space.bot.mode = 2;
+                environment.bot.mode = 2;
                 break;
             case "random spawn mode 1":
-                space.bot.mode = 3;
+                environment.bot.mode = 3;
                 break;
             case "random spawn mode 2":
-                space.bot.mode = 4;
+                environment.bot.mode = 4;
                 break;
             default:
                 System.out.println("ModeListener: unknown action command");

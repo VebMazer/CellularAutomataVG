@@ -12,42 +12,30 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import vm.emergencevg.logic.GenerativeSpace;
+import vm.emergencevg.logic.Environment;
 
 /**
- * Listener for the create particle option in the particle menu.
+ * Listener for the "Create Particle" option in the particle menu.
  */
 public class CreateParticleListener implements ActionListener {
 
     JFrame frame;
-    GenerativeSpace space;
+    Environment environment;
     ParticleTypeSelectListener particleTypeListener;
-    // ParticleTypeSelectListener listener;
-    // JTextField tField;
-    // ColorListener cListener;
-    // FormListener fListener;
 
     public CreateParticleListener(
         JFrame frame,
-        GenerativeSpace space,
+        Environment environment,
         ParticleTypeSelectListener particleTypeListener
-        // ParticleTypeSelectListener listener,  ColorListener cListener,
-        // FormListener               fListener, JTextField    tField
     ) {
         this.frame = frame;
-        this.space = space;
+        this.environment = environment;
         this.particleTypeListener = particleTypeListener;
-        // this.tField = tField;
-        // this.listener = listener;
-        // this.cListener = cListener;
-        // this.fListener = fListener;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         requestParticleParameters();
-
-        
     }
 
     private void requestParticleParameters() {
@@ -138,7 +126,7 @@ public class CreateParticleListener implements ActionListener {
         displayAttributes.add(color);
         displayAttributes.add(shape);
         
-        space.functions.processVariablesToParticleType(
+        environment.functions.processVariablesToParticleType(
             name, amountsForNew, amountsToLive, displayAttributes
         );
         

@@ -4,34 +4,34 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
-import vm.emergencevg.logic.GenerativeSpace;
+import vm.emergencevg.logic.Environment;
 import vm.emergencevg.ui.Updatable;
 
 /**
- * Speed kentän kuuntelija.
+ * "speed" text field listener.
  */
 public class SpeedInputListener implements ActionListener, Updatable {
 
     JFrame frame;
-    GenerativeSpace space;
-    JTextField tField;
+    Environment environment;
+    JTextField textField;
 
-    public SpeedInputListener(JFrame frame, GenerativeSpace space, JTextField tField) {
+    public SpeedInputListener(JFrame frame, Environment environment, JTextField textField) {
         this.frame = frame;
-        this.space = space;
-        this.tField = tField;
-        tField.setText("" + space.speedModifier);
+        this.environment = environment;
+        this.textField = textField;
+        textField.setText("" + environment.speedModifier);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        space.functions.setSpeedCommand(tField.getText());
+        environment.functions.setSpeedCommand(textField.getText());
         frame.requestFocus();
     }
 
     @Override
     public void update() {
-        tField.setText("" + space.speedModifier);
+        textField.setText("" + environment.speedModifier);
     }
 
 }

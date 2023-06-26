@@ -10,17 +10,17 @@ import java.util.HashMap;
  */
 public class UtilityFunctions {
 
-    GenerativeSpace space;
+    Environment environment;
     public CommandRecordRunner coReRunner;
 
     /**
      * Konstruktori.
      *
-     * @param space logiikka-avaruus ja taustalooppi.
+     * @param environment logiikka-avaruus ja taustalooppi.
      */
-    public UtilityFunctions(GenerativeSpace space) {
-        this.space = space;
-        this.coReRunner = space.coReRunner;
+    public UtilityFunctions(Environment environment) {
+        this.environment = environment;
+        this.coReRunner = environment.coReRunner;
     }
 
     /**
@@ -31,7 +31,7 @@ public class UtilityFunctions {
      */
     public int findLatestKey() {
         int lastKey = 1;
-        for (int key : space.particleTypes.keySet()) {
+        for (int key : environment.particleTypes.keySet()) {
             if (key > lastKey) {
                 lastKey = key;
             }
@@ -60,7 +60,7 @@ public class UtilityFunctions {
      */
     public int parseNextNumber(int index, String str, ArrayList<Integer> list) {
         while (index < str.length()) {
-            if (space.uFunctions.checkIfNumber(str.charAt(index))) {
+            if (environment.uFunctions.checkIfNumber(str.charAt(index))) {
                 break;
             }
             index++;
@@ -68,7 +68,7 @@ public class UtilityFunctions {
         int beginIndex = index;
         while (index < str.length()) {
             index++;
-            if (!space.uFunctions.checkIfNumber(str.charAt(index))) {
+            if (!environment.uFunctions.checkIfNumber(str.charAt(index))) {
                 break;
             }
         }
@@ -111,7 +111,7 @@ public class UtilityFunctions {
      * @param command komento tekstimuodossa
      */
     public void addCommand(String command) {
-        space.communicator.addOutputCommand(command); //For communicator class..
+        environment.communicator.addOutputCommand(command); //For communicator class..
         coReRunner.commandsToBeAdded.get(initializeCommandArrayList()).add(command);
     }
 
@@ -121,7 +121,7 @@ public class UtilityFunctions {
      * @param command preset komento tekstimuodossa
      */
     public void addPreset(String command) {
-        space.communicator.addOutputCommand(command);
+        environment.communicator.addOutputCommand(command);
         coReRunner.presetsToBeAdded.add(command);
     }
 

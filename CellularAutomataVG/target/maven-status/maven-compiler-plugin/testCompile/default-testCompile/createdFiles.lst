@@ -1,7 +1,7 @@
 Tests/ParticleTypeTest.class
 Tests/CommandRecordRunnerTest.class
 Tests/ControlFunctionsTest.class
-Tests/GenerativeSpaceTest.class
+Tests/EnvironmentTest.class
 Tests/UtilityFunctionsTest.class
 Tests/FileIOTest.class
 Tests/MouseControllerTest.class

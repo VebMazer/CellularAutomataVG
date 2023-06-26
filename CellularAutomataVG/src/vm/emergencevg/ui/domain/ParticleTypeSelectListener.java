@@ -5,31 +5,33 @@ import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import vm.emergencevg.domain.ParticleType;
-import vm.emergencevg.logic.GenerativeSpace;
+import vm.emergencevg.logic.Environment;
 
 /**
- * Logiikka valinta laatikon kuuntelija.
+ * Listener of the "particle" selection box.
  */
 public class ParticleTypeSelectListener implements ActionListener {
 
     JFrame frame;
-    GenerativeSpace space;
+    Environment environment;
     JComboBox<ParticleType> box;
 
-    public ParticleTypeSelectListener(JFrame frame, GenerativeSpace space, JComboBox<ParticleType> box) {
+    public ParticleTypeSelectListener(JFrame frame, Environment environment, JComboBox<ParticleType> box) {
         this.frame = frame;
-        this.space = space;
+        this.environment = environment;
         this.box = box;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        //update();
+        
         if(box.getSelectedItem() != null) {
             String selected = box.getSelectedItem().toString();
-            for (ParticleType particleType : space.particleTypes.values()) {
+            
+            for (ParticleType particleType : environment.particleTypes.values()) {
+                
                 if (selected.equals(particleType.toString())) {
-                    space.mController.pKey = particleType.key;
+                    environment.mController.pKey = particleType.key;
                 }
             }
         }
@@ -37,11 +39,7 @@ public class ParticleTypeSelectListener implements ActionListener {
     }
 
     public void update() {
-    //    box.removeAllItems();
-    //    for (ParticleType particleType : space.particleTypes.values()) {
-    //        box.addItem(particleType);
-    //    }
-        box.addItem(space.particleTypes.get(space.uFunctions.findLatestKey()));
+        box.addItem(environment.particleTypes.get(environment.uFunctions.findLatestKey()));
     }
 
     public void empty() {
@@ -49,8 +47,7 @@ public class ParticleTypeSelectListener implements ActionListener {
     }
 
     public void initialize() {
-//        box.removeAllItems();
-        for (ParticleType particleType : space.particleTypes.values()) {
+        for (ParticleType particleType : environment.particleTypes.values()) {
             box.addItem(particleType);
         }
     }

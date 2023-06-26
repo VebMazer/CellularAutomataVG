@@ -11,7 +11,7 @@ import vm.emergencevg.ui.Updatable;
  */
 public class ControlFunctions {
 
-    public GenerativeSpace space;
+    public Environment environment;
     public CommandRecordRunner coReRunner;
     public UtilityFunctions uFunctions;
     public FileIO fileIo;
@@ -19,17 +19,17 @@ public class ControlFunctions {
     public int scale;
 
     /**
-     * Konstruktori saa GenerativeSpace olion, jonka kautta se saa, muut
+     * Konstruktori saa Environment olion, jonka kautta se saa, muut
      * arvonsa.
      *
-     * @param space Ohjelman logiikka-avaruutta ja taustalooppia ylläpitävä
+     * @param environment Ohjelman logiikka-avaruutta ja taustalooppia ylläpitävä
      * muuttuja.
      */
-    public ControlFunctions(GenerativeSpace space) {
-        this.space = space;
-        this.coReRunner = space.coReRunner;
-        this.uFunctions = space.uFunctions;
-        this.fileIo = new FileIO(space);
+    public ControlFunctions(Environment environment) {
+        this.environment = environment;
+        this.coReRunner  = environment.coReRunner;
+        this.uFunctions  = environment.uFunctions;
+        this.fileIo      = new FileIO(environment);
         scale = 5;
     }
 
@@ -123,26 +123,26 @@ public class ControlFunctions {
     public void addParticleType(String name, ArrayList<Integer> amountsForNew, ArrayList<Integer> amountsToLive, ArrayList<Integer> displayAttributes) {
         int key = 0;
         for (int i = 1; i < 100; i++) {
-            if (space.particleTypes.get(i) == null) {
+            if (environment.particleTypes.get(i) == null) {
                 key = i;
                 break;
             }
         }
         if (key != 0) {
-            space.particleTypes.put(key, new ParticleType(name, key, amountsForNew, amountsToLive, displayAttributes));
+            environment.particleTypes.put(key, new ParticleType(name, key, amountsForNew, amountsToLive, displayAttributes));
         }
     }
 
     public void setBoardWidthCommand(int width) {
-        resizeBoard(width, space.ylength);
+        resizeBoard(width, environment.height);
         
-        uFunctions.addCommand("fieldSize(" + space.xlength + "," + space.ylength + ")");
+        uFunctions.addCommand("fieldSize(" + environment.width + "," + environment.height + ")");
     }
 
     public void setBoardHeightCommand(int height) {
-        resizeBoard(space.xlength, height);
+        resizeBoard(environment.width, height);
         
-        uFunctions.addCommand("fieldSize(" + space.xlength + "," + space.ylength + ")");
+        uFunctions.addCommand("fieldSize(" + environment.width + "," + environment.height + ")");
     }
 
     /*
@@ -152,7 +152,7 @@ public class ControlFunctions {
     public void resizeBoard(int width, int height) {
         
         // Halt iterations if they are running.
-        boolean wasRunning = space.running;
+        boolean wasRunning = environment.running;
         if (wasRunning) {
             stop();
             try {
@@ -167,21 +167,21 @@ public class ControlFunctions {
         int[][] resultBoard = new int[width][height];
         
         // Copy the content from the old boards to the new boards.
-        for (int y = 0; y < Math.min(height, space.ylength); y++) {
-            for (int x = 0; x < Math.min(width, space.xlength); x++) {
+        for (int y = 0; y < Math.min(height, environment.height); y++) {
+            for (int x = 0; x < Math.min(width, environment.width); x++) {
                 
-                board[x][y]       = space.field[x][y];
-                resultBoard[x][y] = space.resultField[x][y];
+                board[x][y]       = environment.field[x][y];
+                resultBoard[x][y] = environment.resultField[x][y];
             }
         }
 
         // Replace the old boards with the new ones.
-        space.field       = board;
-        space.resultField = resultBoard;
+        environment.field       = board;
+        environment.resultField = resultBoard;
 
         // Reset the board size variables.
-        space.xlength = width;
-        space.ylength = height;
+        environment.width = width;
+        environment.height = height;
 
         if (wasRunning) start();
     }
@@ -204,7 +204,7 @@ public class ControlFunctions {
      */
     public void clearParticleTypes() {
         stop();
-        space.particleTypes = new HashMap<Integer, ParticleType>();
+        environment.particleTypes = new HashMap<Integer, ParticleType>();
         coReRunner.reInitializePresets();
     }
 
@@ -273,22 +273,22 @@ public class ControlFunctions {
      * ilmaista ennen nimeä tarvittaessa.
      */
     public void addPresets(String filename) {
-        space.particleTypes = new HashMap<Integer, ParticleType>();
+        environment.particleTypes = new HashMap<Integer, ParticleType>();
         fileIo.addPresets(filename);
         coReRunner.runPresets();
     }
 
     public void playSwitch() {
-        if (space.running) stop();
+        if (environment.running) stop();
         
-        else space.running = true;
+        else environment.running = true;
     }
 
     /**
      * Käynnistää logiikka-avaruuden iteraatioiden suorituksen.
      */
     public void start() {
-        space.running = true;
+        environment.running = true;
     }
 
     /**
@@ -296,7 +296,7 @@ public class ControlFunctions {
      * määritellyt komennot aikajanaan.
      */
     public void stop() {
-        space.running = false;
+        environment.running = false;
         uFunctions.uniteCommandMaps();
         uFunctions.unitePresetLists();
     }
@@ -307,7 +307,7 @@ public class ControlFunctions {
      * hetkellä).
      */
     public void pause() {
-        if (space.running = false) {
+        if (environment.running = false) {
             start();
         } else {
             stop();
@@ -315,16 +315,16 @@ public class ControlFunctions {
     }
     
     public void startTriggering() {
-        space.triggering = true;
+        environment.triggering = true;
     }
     
     public void stopTriggering() {
-        space.triggering = false;
-        space.trigger = true;
+        environment.triggering = false;
+        environment.trigger = true;
     }
     
     public void trigger() {
-        space.trigger = true;
+        environment.trigger = true;
     }
 
     /**
@@ -348,7 +348,7 @@ public class ControlFunctions {
      * @param speed Syöte merkkijono nopeuden määrittämiseen.
      */
     public void setSpeed(String speed) {
-        space.speedModifier = Double.parseDouble(speed);
+        environment.speedModifier = Double.parseDouble(speed);
     }
 
     /**
@@ -364,8 +364,8 @@ public class ControlFunctions {
      * Tyhjentää logiikka-avaruuden partikkeleista.
      */
     public void clear() {
-        space.field = new int[space.xlength][space.ylength];
-        space.resultField = new int[space.xlength][space.ylength];
+        environment.field = new int[environment.width][environment.height];
+        environment.resultField = new int[environment.width][environment.height];
     }
 
     /**
@@ -376,13 +376,13 @@ public class ControlFunctions {
      * @param y y akselin koordinaatti johon sijoitus tehdään.
      */
     public void placeParticle(int pKey, int x, int y) {
-        if (x >= 0 && y >= 0 && x < space.xlength && y < space.ylength) {
-            if (space.field[x][y] != 0) {
-                space.field[x][y] = 0;
-                space.resultField[x][y] = 0;
+        if (x >= 0 && y >= 0 && x < environment.width && y < environment.height) {
+            if (environment.field[x][y] != 0) {
+                environment.field[x][y] = 0;
+                environment.resultField[x][y] = 0;
             } else {
-                space.field[x][y] = pKey;
-                space.resultField[x][y] = pKey;
+                environment.field[x][y] = pKey;
+                environment.resultField[x][y] = pKey;
             }
         }
     }
@@ -394,22 +394,22 @@ public class ControlFunctions {
     public void execCommand(String command) {
         if(command == null || command.length() < 2) {
             return;
-        } else if (space.uFunctions.checkIfNumber(command.charAt(1))) {
-            space.coReRunner.parsePlacementStringToPlaceIt(command);
-            space.uFunctions.addCommand(command);
+        } else if (environment.uFunctions.checkIfNumber(command.charAt(1))) {
+            environment.coReRunner.parsePlacementStringToPlaceIt(command);
+            environment.uFunctions.addCommand(command);
         } else if (command.equals("clear")) {
-            space.functions.clearCommand();
+            environment.functions.clearCommand();
         } else if (command.substring(0, 5).equals("speed")) {
-            space.functions.setSpeed(command.substring(6, command.length() - 1));
-            space.uFunctions.addCommand(command);
+            environment.functions.setSpeed(command.substring(6, command.length() - 1));
+            environment.uFunctions.addCommand(command);
         } else if (command.substring(0, 2).equals("sc")) {
-            space.functions.setScale(Integer.parseInt(command.substring(6, command.length() - 1)));
-            space.uFunctions.addCommand(command);
+            environment.functions.setScale(Integer.parseInt(command.substring(6, command.length() - 1)));
+            environment.uFunctions.addCommand(command);
         } else if (command.charAt(0) == 'f') {
-            space.coReRunner.parseAndSetFieldSize(command);
-            space.uFunctions.addCommand(command);
+            environment.coReRunner.parseAndSetFieldSize(command);
+            environment.uFunctions.addCommand(command);
         } else if (command.charAt(0) == 'l') {
-            space.coReRunner.runPresetCommand(command);
+            environment.coReRunner.runPresetCommand(command);
             
         }
     }

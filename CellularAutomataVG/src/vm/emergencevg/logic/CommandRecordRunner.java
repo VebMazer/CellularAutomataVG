@@ -10,7 +10,7 @@ import vm.emergencevg.ui.Updatable;
  */
 public class CommandRecordRunner {
 
-    GenerativeSpace space;
+    Environment environment;
     public int iterations;
     public HashMap<Integer, ArrayList<String>> commands;
     public HashMap<Integer, ArrayList<String>> commandsToBeAdded;
@@ -19,17 +19,17 @@ public class CommandRecordRunner {
     Updatable uiIterationDisplayer;
 
     /**
-     * Konstruktori joka vastaanottaa GenerativeSpace tyypin olion, jonka kautta
+     * Konstruktori joka vastaanottaa Environment tyypin olion, jonka kautta
      * luokka saa muut arvonsa. Komentojoukot(commands, presets) vaativat
      * apukomento joukon(commandsToBeAdded, presetsToBeAdded) ylläptioon siksi
      * ettei komentojen lisääminen suorituksen aikana, häiritse ohjelman
      * suoritusta.
      *
-     * @param space Ohjelman logiikka-avaruutta ja taustalooppia ylläpitävä
+     * @param environment Ohjelman logiikka-avaruutta ja taustalooppia ylläpitävä
      * muuttuja.
      */
-    public CommandRecordRunner(GenerativeSpace space) {
-        this.space = space;
+    public CommandRecordRunner(Environment environment) {
+        this.environment = environment;
         iterations = 0;
         commands = new HashMap<Integer, ArrayList<String>>();
         commandsToBeAdded = new HashMap<Integer, ArrayList<String>>();
@@ -72,7 +72,7 @@ public class CommandRecordRunner {
      */
     public void runPresetCommand(String command) {
         if (command.charAt(0) == 'l') {
-            space.functions.processVariablesToParticleType(command.substring(2, findDoubleComma(2, command)), parseDisplayAttributes(command));
+            environment.functions.processVariablesToParticleType(command.substring(2, findDoubleComma(2, command)), parseDisplayAttributes(command));
         } else if (command.charAt(0) == 'f') {
             parseAndSetFieldSize(command);
         }
@@ -86,10 +86,10 @@ public class CommandRecordRunner {
     public void parseAndSetFieldSize(String command) {
         ArrayList<Integer> coordinates = new ArrayList<Integer>();
         
-        int index = space.uFunctions.parseNextNumber(10, command, coordinates);
-        space.uFunctions.parseNextNumber(index + 1, command, coordinates);
+        int index = environment.uFunctions.parseNextNumber(10, command, coordinates);
+        environment.uFunctions.parseNextNumber(index + 1, command, coordinates);
         
-        space.functions.resizeBoard(coordinates.get(0), coordinates.get(1));
+        environment.functions.resizeBoard(coordinates.get(0), coordinates.get(1));
     }
 
     /**
@@ -103,8 +103,8 @@ public class CommandRecordRunner {
         ArrayList<Integer> displayAttributes = new ArrayList<Integer>();
         int index = findDoubleComma(0, command);
         index += 2;
-        index = space.uFunctions.parseNextNumber(index, command, displayAttributes);
-        space.uFunctions.parseNextNumber(index, command, displayAttributes);
+        index = environment.uFunctions.parseNextNumber(index, command, displayAttributes);
+        environment.uFunctions.parseNextNumber(index, command, displayAttributes);
         return displayAttributes;
     }
 
@@ -144,14 +144,14 @@ public class CommandRecordRunner {
      * @param command Suoritettava komento String muodossa.
      */
     public void runCommand(String command) {
-        if (space.uFunctions.checkIfNumber(command.charAt(1))) {
+        if (environment.uFunctions.checkIfNumber(command.charAt(1))) {
             parsePlacementStringToPlaceIt(command);
         } else if (command.equals("clear")) {
-            space.functions.clear();
+            environment.functions.clear();
         } else if (command.substring(0, 5).equals("speed")) {
-            space.functions.setSpeed(command.substring(6, command.length() - 1));
+            environment.functions.setSpeed(command.substring(6, command.length() - 1));
         } else if (command.substring(0, 2).equals("sc")) {
-            space.functions.setScale(Integer.parseInt(command.substring(6, command.length() - 1)));
+            environment.functions.setScale(Integer.parseInt(command.substring(6, command.length() - 1)));
         } else if (command.charAt(0) == 'f') {
             parseAndSetFieldSize(command);
         }
@@ -165,14 +165,14 @@ public class CommandRecordRunner {
      */
     public void parsePlacementStringToPlaceIt(String command) {
         int index = 1;
-        Integer particleKey = space.uFunctions.parseNumber(command, index);
-        if (space.particleTypes.containsKey(particleKey)) {
+        Integer particleKey = environment.uFunctions.parseNumber(command, index);
+        if (environment.particleTypes.containsKey(particleKey)) {
             index += particleKey.toString().length() + 1;
-            Integer x = space.uFunctions.parseNumber(command, index);
+            Integer x = environment.uFunctions.parseNumber(command, index);
             index += x.toString().length() + 1;
-            int y = space.uFunctions.parseNumber(command, index);
-            if (x < space.xlength && y < space.ylength) {
-                space.functions.placeParticle(particleKey, x, y);
+            int y = environment.uFunctions.parseNumber(command, index);
+            if (x < environment.width && y < environment.height) {
+                environment.functions.placeParticle(particleKey, x, y);
             }
         }
     }

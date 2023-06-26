@@ -4,22 +4,21 @@ package vm.emergencevg.control;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.DataOutputStream;
-import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayDeque;
-import vm.emergencevg.logic.GenerativeSpace;
+
+import vm.emergencevg.logic.Environment;
 
 public class Communicator {
-    public GenerativeSpace space;
+    public Environment environment;
     public ArrayDeque<String> outCommands;
-//    public PrintWriter out;
     public DataOutputStream out;
     BufferedReader in;
     public int groupID;
     public boolean sending;
     
-    public Communicator(GenerativeSpace space) {
-        this.space = space;
+    public Communicator(Environment environment) {
+        this.environment = environment;
         outCommands = new ArrayDeque<>();
         groupID = 0;
         sending = true;
@@ -28,8 +27,6 @@ public class Communicator {
     public void connect(String hostName, int portNumber) {
         try {
             Socket echoSocket = new Socket(hostName, portNumber);
-//            out = 
-//                new PrintWriter(echoSocket.getOutputStream(), true);
             out =
                 new DataOutputStream(echoSocket.getOutputStream());
             in = new BufferedReader(
@@ -57,7 +54,7 @@ public class Communicator {
         if(line == null) return false;
         else {
             System.out.println(line);
-            space.functions.execCommand(line);
+            environment.functions.execCommand(line);
         }
         return true;
     }

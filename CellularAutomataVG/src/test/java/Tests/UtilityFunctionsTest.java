@@ -9,18 +9,18 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import vm.emergencevg.logic.ControlFunctions;
-import vm.emergencevg.logic.GenerativeSpace;
+import vm.emergencevg.logic.Environment;
 import vm.emergencevg.logic.UtilityFunctions;
 
 public class UtilityFunctionsTest {
-    GenerativeSpace space;
+    Environment environment;
     ControlFunctions cFunctions; 
     UtilityFunctions uFunctions;
     
     public UtilityFunctionsTest() {
-        space = new GenerativeSpace(100, 100);
-        cFunctions = space.functions;
-        uFunctions = space.uFunctions;
+        environment = new Environment(100, 100);
+        cFunctions = environment.functions;
+        uFunctions = environment.uFunctions;
     }
     
     @BeforeClass
@@ -102,10 +102,10 @@ public class UtilityFunctionsTest {
     
     @Test
     public void testInitializeCommandArrayList() {
-        space.coReRunner.iterations = 1;
+        environment.coReRunner.iterations = 1;
         uFunctions.initializeCommandArrayList();
-        boolean test = space.coReRunner.commandsToBeAdded.containsKey(1);
-        space.coReRunner.iterations = 0;
+        boolean test = environment.coReRunner.commandsToBeAdded.containsKey(1);
+        environment.coReRunner.iterations = 0;
         assertEquals(true, test);
     }
     
@@ -119,11 +119,11 @@ public class UtilityFunctionsTest {
     
     @Test
     public void testCommandAddingAndIntegration() {
-        space.coReRunner.iterations = 2;
+        environment.coReRunner.iterations = 2;
         uFunctions.addCommand("clear");
         uFunctions.uniteCommandMaps();
-        boolean test = space.coReRunner.commands.get(2).get(0).equals("clear");
-        space.coReRunner.iterations = 0;
+        boolean test = environment.coReRunner.commands.get(2).get(0).equals("clear");
+        environment.coReRunner.iterations = 0;
         assertEquals(true, test);
     }
     
@@ -131,8 +131,8 @@ public class UtilityFunctionsTest {
     public void testPresetAddingAndIntegration() {
         uFunctions.addPreset("l(life, 3, 2 3,,1 1)");
         uFunctions.unitePresetLists();
-        boolean test = space.coReRunner.presets.get(0).equals("l(life, 3, 2 3,,1 1)");
-        space.coReRunner.reInitializePresets();
+        boolean test = environment.coReRunner.presets.get(0).equals("l(life, 3, 2 3,,1 1)");
+        environment.coReRunner.reInitializePresets();
         assertEquals(true, test);
     }
 }

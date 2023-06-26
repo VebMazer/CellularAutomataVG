@@ -28,7 +28,7 @@ import javax.swing.JMenuItem;
 
 import vm.emergencevg.domain.ParticleType;
 import vm.emergencevg.logic.ControlFunctions;
-import vm.emergencevg.logic.GenerativeSpace;
+import vm.emergencevg.logic.Environment;
 import vm.emergencevg.ui.domain.*;
 
 /**
@@ -36,7 +36,7 @@ import vm.emergencevg.ui.domain.*;
  */
 public class GUI implements Runnable {
     
-    public GenerativeSpace space;
+    public Environment environment;
     ControlFunctions       functions;
 
     public Integer scale;
@@ -55,13 +55,13 @@ public class GUI implements Runnable {
     /**
      * Konstruktori.
      *
-     * @param space Ohjelman taustalooppi.
+     * @param environment Ohjelman taustalooppi.
      * @param sidelength Muuttuja, joka määrittää piirtoalustalle piirrettävien
      * objektien oikeat mittasuhteet.
      */
-    public GUI(GenerativeSpace space, int sidelength) {
-        this.space = space;
-        functions = space.functions;
+    public GUI(Environment environment, int sidelength) {
+        this.environment = environment;
+        functions = environment.functions;
         this.scale = sidelength;
     }
 
@@ -98,13 +98,13 @@ public class GUI implements Runnable {
         topBar.setBackground(Color.LIGHT_GRAY);
         container.add(topBar, BorderLayout.NORTH);
 
-        drawboard = new DrawBoard(space, this);
+        drawboard = new DrawBoard(environment, this);
         drawboard.setBackground(Color.BLACK);
         Border border = new LineBorder(Color.LIGHT_GRAY, 3, true);
         drawboard.setBorder(border);
         container.add(drawboard);
 
-        MouseListen mListener = new MouseListen(space.mController, this);
+        MouseListen mListener = new MouseListen(environment.mController, this);
         drawboard.addMouseListener(mListener);
         drawboard.addMouseMotionListener(mListener);
 
@@ -128,7 +128,7 @@ public class GUI implements Runnable {
         JMenuItem saveAsItem = new JMenuItem("Save As...");
         
         saveAsItem.addActionListener(
-            new SaveAsListener(space, frame)
+            new SaveAsListener(environment, frame)
         );
         
         fileMenu.add(saveAsItem);
@@ -136,7 +136,7 @@ public class GUI implements Runnable {
         JMenuItem openFileItem = new JMenuItem("Open File...");
         
         openFileItem.addActionListener(
-            new OpenFileListener(space, frame, particleTypeListener)
+            new OpenFileListener(environment, frame, particleTypeListener)
         );
         
         fileMenu.add(openFileItem);
@@ -144,7 +144,7 @@ public class GUI implements Runnable {
         JMenuItem ImportParticleTypesItem = new JMenuItem("Import Particle Types...");
         
         ImportParticleTypesItem.addActionListener(
-            new ImportParticleTypesListener(space, frame, particleTypeListener)
+            new ImportParticleTypesListener(environment, frame, particleTypeListener)
         );
         
         fileMenu.add(ImportParticleTypesItem);
@@ -157,7 +157,7 @@ public class GUI implements Runnable {
         JMenuItem createParticle = new JMenuItem("Create Particle");
         
         createParticle.addActionListener(
-            new CreateParticleListener(frame, space, particleTypeListener)
+            new CreateParticleListener(frame, environment, particleTypeListener)
         );
         
         particleMenu.add(createParticle);
@@ -165,7 +165,7 @@ public class GUI implements Runnable {
         JMenuItem deleteParticles = new JMenuItem("Delete all Particles");
         
         deleteParticles.addActionListener(
-            new ClearParticleTypesListener(space, frame, particleTypeListener)
+            new ClearParticleTypesListener(environment, frame, particleTypeListener)
         );
         
         particleMenu.add(deleteParticles);
@@ -203,7 +203,7 @@ public class GUI implements Runnable {
         modeMenu.add(randomSpawnCycleModeOption2);
         
         modeListener = new ModeListener(
-            space,
+            environment,
             frame,
             normalModeOption,
             receiverModeOption,
@@ -246,31 +246,31 @@ public class GUI implements Runnable {
         JComboBox<ParticleType> particleList = new JComboBox<ParticleType>();
 
         boardWidthTextField.addActionListener(
-            new BoardWidthListener(this, boardWidthTextField, space.functions)
+            new BoardWidthListener(this, boardWidthTextField, environment.functions)
         );
 
         boardHeightTextField.addActionListener(
-            new BoardHeightListener(this, boardHeightTextField, space.functions)
+            new BoardHeightListener(this, boardHeightTextField, environment.functions)
         );
 
         speedTextField.addActionListener(
-            new SpeedInputListener(frame, space, speedTextField)
+            new SpeedInputListener(frame, environment, speedTextField)
         );
 
-        scaleUpdater = new ScaleListener(this, particleScaleTField, space.functions);
+        scaleUpdater = new ScaleListener(this, particleScaleTField, environment.functions);
         particleScaleTField.addActionListener(scaleUpdater);
 
         playSwitch.addActionListener(
-            new PlaySwitchListener(playSwitch, frame, space.functions)
+            new PlaySwitchListener(playSwitch, frame, environment.functions)
         );
 
         clearButton.addActionListener(new ClearListener(frame, functions));
-        clearCommandRecordButton.addActionListener(new ClearRecordListener(space, frame));
+        clearCommandRecordButton.addActionListener(new ClearRecordListener(environment, frame));
 
-        itTracker = new IterationsListener(space, frame, iterationTextField);
+        itTracker = new IterationsListener(environment, frame, iterationTextField);
         iterationTextField.addActionListener(itTracker);
 
-        particleTypeListener = new ParticleTypeSelectListener(frame, space, particleList);
+        particleTypeListener = new ParticleTypeSelectListener(frame, environment, particleList);
         
         particleList.addActionListener(particleTypeListener);
         particleTypeListener.initialize();

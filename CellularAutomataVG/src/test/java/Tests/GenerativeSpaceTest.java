@@ -9,16 +9,16 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import vm.emergencevg.logic.ControlFunctions;
-import vm.emergencevg.logic.GenerativeSpace;
+import vm.emergencevg.logic.Environment;
 
-public class GenerativeSpaceTest {
+public class EnvironmentTest {
 
-    GenerativeSpace space;
+    Environment environment;
     ControlFunctions functions;
 
-    public GenerativeSpaceTest() {
-        space = new GenerativeSpace(100, 100);
-        functions = space.functions;
+    public EnvironmentTest() {
+        environment = new Environment(100, 100);
+        functions = environment.functions;
         particleTestInitialization();
     }
 
@@ -42,14 +42,14 @@ public class GenerativeSpaceTest {
     @Test
     public void testFields1() {
 
-        assertEquals(space.field.length, space.resultField.length);
+        assertEquals(environment.field.length, environment.resultField.length);
     }
 
     //Testataan taulukoiden y akselien kokojen samuus.
     @Test
     public void testFields2() {
 
-        assertEquals(space.field[0].length, space.resultField[0].length);
+        assertEquals(environment.field[0].length, environment.resultField[0].length);
     }
     
     public void particleTestInitialization() {
@@ -83,23 +83,23 @@ public class GenerativeSpaceTest {
         neighborTypes[2] = 1;
         neighborTypes[5] = 1;
 
-        space.particleProcess(5, 5, 0, 3, neighborTypes);
-        space.updateField();
-        assertEquals(1, space.field[5][5]);
+        environment.particleProcess(5, 5, 0, 3, neighborTypes);
+        environment.updateField();
+        assertEquals(1, environment.field[5][5]);
     }
 
     //Testataan selviääkö partikkeli seuraavaan iteraatioon, kun määritellyt ehdot on täytetty.
     @Test
     public void testParticleProcessing2() {
-        space.resultField[5][5] = 2;
+        environment.resultField[5][5] = 2;
         int[] neighborTypes = new int[8];
         neighborTypes[0] = 2;
         neighborTypes[2] = 2;
         neighborTypes[5] = 2;
 
-        space.particleProcess(5, 5, 2, 3, neighborTypes);
-        space.updateField();
-        assertEquals(2, space.field[5][5]);
+        environment.particleProcess(5, 5, 2, 3, neighborTypes);
+        environment.updateField();
+        assertEquals(2, environment.field[5][5]);
     }
 
     //Testataan Jääkö partikkeli syntymättä, kun määritellyt ehdot on täytetty.
@@ -109,9 +109,9 @@ public class GenerativeSpaceTest {
         neighborTypes[0] = 2;
         neighborTypes[2] = 2;
 
-        space.particleProcess(5, 5, 0, 2, neighborTypes);
-        space.updateField();
-        assertEquals(0, space.field[5][5]);
+        environment.particleProcess(5, 5, 0, 2, neighborTypes);
+        environment.updateField();
+        assertEquals(0, environment.field[5][5]);
     }
 
     //Testataan katoaako partikkeli, kun määritellyt ehdot on täytetty.
@@ -120,9 +120,9 @@ public class GenerativeSpaceTest {
         int[] neighborTypes = new int[8];
         neighborTypes[0] = 1;
 
-        space.particleProcess(5, 5, 1, 1, neighborTypes);
-        space.updateField();
-        assertEquals(0, space.field[5][5]);
+        environment.particleProcess(5, 5, 1, 1, neighborTypes);
+        environment.updateField();
+        assertEquals(0, environment.field[5][5]);
     }
 
 }

@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 import vm.emergencevg.logic.ControlFunctions;
 
 /**
- * Clear nappulan kuuntelija.
+ * "Clear" button listener.
  */
 public class ClearListener implements ActionListener {
 

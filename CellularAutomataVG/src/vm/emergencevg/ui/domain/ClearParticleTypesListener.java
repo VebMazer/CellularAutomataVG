@@ -5,19 +5,19 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import vm.emergencevg.logic.GenerativeSpace;
+import vm.emergencevg.logic.Environment;
 
 /**
- * ClearParticleTypes nappulan kuuntelija.
+ * Listener for the "Delete all Particles" option in the particle menu.
  */
 public class ClearParticleTypesListener implements ActionListener {
 
-    GenerativeSpace space;
+    Environment environment;
     JFrame frame;
     ParticleTypeSelectListener lsListener;
 
-    public ClearParticleTypesListener(GenerativeSpace space, JFrame frame, ParticleTypeSelectListener lsListener) {
-        this.space = space;
+    public ClearParticleTypesListener(Environment environment, JFrame frame, ParticleTypeSelectListener lsListener) {
+        this.environment = environment;
         this.frame = frame;
         this.lsListener = lsListener;
     }
@@ -39,8 +39,8 @@ public class ClearParticleTypesListener implements ActionListener {
     }
 
     public void removeAll() {
-        space.functions.clearCommand();
-        space.functions.clearParticleTypes();
+        environment.functions.clearCommand();
+        environment.functions.clearParticleTypes();
         lsListener.empty();
         frame.requestFocus();
     }

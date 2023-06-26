@@ -10,25 +10,25 @@ import vm.emergencevg.ui.GUI;
 import vm.emergencevg.ui.Updatable;
 
 /**
- * particleScale kentän kuuntelija.
+ * "particle scale" text field listener.
  */
 public class ScaleListener implements ActionListener, Updatable {
 
     GUI ui;
-    JTextField tField;
+    JTextField textField;
     ControlFunctions functions;
     
-    public ScaleListener(GUI ui, JTextField tField, ControlFunctions functions) {
+    public ScaleListener(GUI ui, JTextField textField, ControlFunctions functions) {
         this.ui = ui;
-        this.tField = tField;
+        this.textField = textField;
         this.functions = functions;
-        tField.setText("" + ui.scale);
+        textField.setText("" + ui.scale);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
-            ui.scale = Integer.parseInt(tField.getText());
+            ui.scale = Integer.parseInt(textField.getText());
             functions.setScaleCommand(ui.scale);
         } catch(Exception ex) {
             System.out.println("Bad input!");

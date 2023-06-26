@@ -1,7 +1,7 @@
 package vm.emergencevg.main;
 
 import javax.swing.SwingUtilities;
-import vm.emergencevg.logic.GenerativeSpace;
+import vm.emergencevg.logic.Environment;
 import vm.emergencevg.ui.GUI;
 
 /**
@@ -12,11 +12,11 @@ import vm.emergencevg.ui.GUI;
 public class Main {
 
     public static void main(String[] args) {
-        GenerativeSpace space = new GenerativeSpace(250, 130);
-        Presets presets = new Presets(space);
+        Environment environment = new Environment(250, 130);
+        Presets presets = new Presets(environment);
         presets.initialTestSetup();
         
-        GUI ui = new GUI(space, 5);
+        GUI ui = new GUI(environment, 5);
         SwingUtilities.invokeLater(ui);
 
         while (ui.drawboard == null || ui.itTracker == null) {
@@ -27,10 +27,10 @@ public class Main {
             }
         }
 
-        space.coReRunner.setIterationDisplayer(ui.itTracker);
-        space.functions.setScaleUpdater(ui.scaleUpdater);
-        space.setUiDrawBoard(ui.drawboard);
-        space.run();
+        environment.coReRunner.setIterationDisplayer(ui.itTracker);
+        environment.functions.setScaleUpdater(ui.scaleUpdater);
+        environment.setUiDrawBoard(ui.drawboard);
+        environment.run();
     }
 
 }

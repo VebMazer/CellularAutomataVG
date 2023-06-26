@@ -6,18 +6,18 @@ import java.awt.event.ActionListener;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 
-import vm.emergencevg.logic.GenerativeSpace;
+import vm.emergencevg.logic.Environment;
 
 public class OpenFileListener implements ActionListener {
-    GenerativeSpace space;
+    Environment environment;
     JFrame frame;
     ParticleTypeSelectListener particleTypeSelectListener;
 
     public OpenFileListener(
-        GenerativeSpace space, JFrame frame,
+        Environment environment, JFrame frame,
         ParticleTypeSelectListener particleTypeSelectListener
     ) {
-        this.space = space;
+        this.environment = environment;
         this.frame = frame;
         this.particleTypeSelectListener = particleTypeSelectListener;
     }
@@ -34,7 +34,7 @@ public class OpenFileListener implements ActionListener {
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             particleTypeSelectListener.empty();
 
-            space.functions.loadPresentation(
+            environment.functions.loadPresentation(
                 fileChooser.getCurrentDirectory().toString()
                 + "/" + fileChooser.getSelectedFile().getName()
             );

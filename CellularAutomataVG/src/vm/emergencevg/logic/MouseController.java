@@ -15,15 +15,15 @@ public class MouseController {
     public int pKey;
     public ArrayList<int[]> spotsPressed;
 
-    GenerativeSpace space;
+    Environment environment;
 
     /**
      * Konstruktori.
      *
-     * @param space Logiikka-avaruus ja taustalooppi.
+     * @param environment Logiikka-avaruus ja taustalooppi.
      */
-    public MouseController(GenerativeSpace space) {
-        this.space = space;
+    public MouseController(Environment environment) {
+        this.environment = environment;
         spotsPressed = new ArrayList<int[]>();
         this.x = 0;
         this.y = 0;
@@ -62,11 +62,11 @@ public class MouseController {
      * päästää hiiren painikkeesta irti.).
      */
     public void cast() {
-        if (!space.particleTypes.containsKey(pKey)) {
+        if (!environment.particleTypes.containsKey(pKey)) {
             pKey = 0;
         }
         for (int[] spot : spotsPressed) {
-            space.functions.placeParticle(pKey, spot[0], spot[1]);
+            environment.functions.placeParticle(pKey, spot[0], spot[1]);
             addPlacementCommand(pKey, spot[0], spot[1]);
         }
         spotsPressed = new ArrayList<int[]>();
@@ -80,6 +80,6 @@ public class MouseController {
      * @param y Sijoitettavan partikkelin koordinaatin y akselin arvo
      */
     public void addPlacementCommand(int key, int x, int y) {
-        space.uFunctions.addCommand("(" + key + "," + x + "," + y + ")");
+        environment.uFunctions.addCommand("(" + key + "," + x + "," + y + ")");
     }
 }

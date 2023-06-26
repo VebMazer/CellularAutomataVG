@@ -9,7 +9,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import vm.emergencevg.logic.FileIO;
-import vm.emergencevg.logic.GenerativeSpace;
+import vm.emergencevg.logic.Environment;
 import vm.emergencevg.main.Presets;
 import vm.emergencevg.ui.GUI;
 
@@ -18,15 +18,15 @@ import vm.emergencevg.ui.GUI;
  * @author xenron
  */
 public class FileIOTest {
-    GenerativeSpace space;
+    Environment environment;
     FileIO fileio;
     
     public FileIOTest() {
-        space = new GenerativeSpace(100, 100);
-        fileio = space.functions.fileIo;
-        Presets presets = new Presets(space);
+        environment = new Environment(100, 100);
+        fileio = environment.functions.fileIo;
+        Presets presets = new Presets(environment);
         presets.initialTestSetup();
-        space.uFunctions.unitePresetLists();
+        environment.uFunctions.unitePresetLists();
     }
     
     @BeforeClass
@@ -47,10 +47,10 @@ public class FileIOTest {
 
     @Test
     public void testSavingAndLoading() {
-        space.functions.clearCommand();
-        space.uFunctions.uniteCommandMaps();
-        space.functions.save("testsave.evg");
-        GUI ui = new GUI(space, 5);
+        environment.functions.clearCommand();
+        environment.uFunctions.uniteCommandMaps();
+        environment.functions.save("testsave.evg");
+        GUI ui = new GUI(environment, 5);
         SwingUtilities.invokeLater(ui);
 
         while (ui.drawboard == null || ui.itTracker == null) {
@@ -60,13 +60,13 @@ public class FileIOTest {
                 System.out.println("The drawboard has not been created yet.");
             }
         }
-        space.coReRunner.setIterationDisplayer(ui.itTracker);
-        space.functions.setScaleUpdater(ui.scaleUpdater);
-        space.setUiDrawBoard(ui.drawboard);
+        environment.coReRunner.setIterationDisplayer(ui.itTracker);
+        environment.functions.setScaleUpdater(ui.scaleUpdater);
+        environment.setUiDrawBoard(ui.drawboard);
         
-        space.functions.loadPresentation("testsave.evg");
-        boolean test1 = space.particleTypes.get(3).name.equals("remenant");
-        boolean test2 = space.coReRunner.commands.get(0).get(0).equals("clear");
+        environment.functions.loadPresentation("testsave.evg");
+        boolean test1 = environment.particleTypes.get(3).name.equals("remenant");
+        boolean test2 = environment.coReRunner.commands.get(0).get(0).equals("clear");
          
         assertEquals(true, test1 && test2);
      }
