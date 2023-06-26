@@ -26,9 +26,9 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
-import vm.emergencevg.domain.Particle;
 import vm.emergencevg.logic.ControlFunctions;
 import vm.emergencevg.logic.Environment;
+import vm.emergencevg.logic.Particle;
 import vm.emergencevg.ui.domain.*;
 
 /**

@@ -1,4 +1,4 @@
-package vm.emergencevg.domain;
+package vm.emergencevg.logic;
 
 import java.util.ArrayList;
 

@@ -6,8 +6,10 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import vm.emergencevg.logic.Particle;
+
 import static org.junit.Assert.*;
-import vm.emergencevg.domain.Particle;
 
 public class ParticleTest {
 

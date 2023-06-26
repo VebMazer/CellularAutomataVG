@@ -1,6 +1,5 @@
 package vm.emergencevg.logic;
 
-import vm.emergencevg.domain.*;
 import java.util.HashMap;
 import vm.emergencevg.control.*;
 import vm.emergencevg.ui.Updatable;

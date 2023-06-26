@@ -4,8 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import vm.emergencevg.domain.Particle;
+
 import vm.emergencevg.logic.Environment;
+import vm.emergencevg.logic.Particle;
 
 /**
  * Listener of the "particle" selection box.

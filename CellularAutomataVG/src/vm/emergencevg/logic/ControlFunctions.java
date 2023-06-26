@@ -2,7 +2,7 @@ package vm.emergencevg.logic;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import vm.emergencevg.domain.Particle;
+
 import vm.emergencevg.ui.Updatable;
 
 /**
