@@ -201,7 +201,12 @@ public class GUI implements Runnable {
 
         JRadioButtonMenuItem randomSpawnCycleModeOption2 = new JRadioButtonMenuItem("random spawn mode 2");
         modeMenu.add(randomSpawnCycleModeOption2);
-        
+
+        modeMenu.addSeparator();
+
+        JRadioButtonMenuItem randomParticleTypeSpawnModeOption = new JRadioButtonMenuItem("random type spawn mode");
+        modeMenu.add(randomParticleTypeSpawnModeOption);
+
         modeListener = new ModeListener(
             environment,
             frame,
@@ -211,7 +216,8 @@ public class GUI implements Runnable {
             dotGridModeOption,
             lineGridModeOption,
             randomSpawnCycleModeOption1,
-            randomSpawnCycleModeOption2
+            randomSpawnCycleModeOption2,
+            randomParticleTypeSpawnModeOption
         );
     }
 

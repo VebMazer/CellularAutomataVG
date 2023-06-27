@@ -19,6 +19,7 @@ public class ModeListener implements ActionListener {
     JRadioButtonMenuItem lineGridModeOption;
     JRadioButtonMenuItem randomSpawnCycleModeOption1;
     JRadioButtonMenuItem randomSpawnCycleModeOption2;
+    JRadioButtonMenuItem randomParticleTypeSpawnModeOption;
 
     ButtonGroup          modeButtonGroup;
 
@@ -31,17 +32,19 @@ public class ModeListener implements ActionListener {
         JRadioButtonMenuItem dotGridModeOption,
         JRadioButtonMenuItem lineGridModeOption,
         JRadioButtonMenuItem randomSpawnCycleModeOption1,
-        JRadioButtonMenuItem randomSpawnCycleModeOption2
+        JRadioButtonMenuItem randomSpawnCycleModeOption2,
+        JRadioButtonMenuItem randomParticleTypeSpawnModeOption
     ) {
         this.environment                       = environment;
-        this.frame                       = frame;
-        this.normalModeOption            = normalModeOption;
-        this.receiverModeOption          = receiverModeOption;
-        this.senderModeOption            = senderModeOption;
-        this.dotGridModeOption           = dotGridModeOption;
-        this.lineGridModeOption          = lineGridModeOption;
-        this.randomSpawnCycleModeOption1 = randomSpawnCycleModeOption1;
-        this.randomSpawnCycleModeOption2 = randomSpawnCycleModeOption2;
+        this.frame                             = frame;
+        this.normalModeOption                  = normalModeOption;
+        this.receiverModeOption                = receiverModeOption;
+        this.senderModeOption                  = senderModeOption;
+        this.dotGridModeOption                 = dotGridModeOption;
+        this.lineGridModeOption                = lineGridModeOption;
+        this.randomSpawnCycleModeOption1       = randomSpawnCycleModeOption1;
+        this.randomSpawnCycleModeOption2       = randomSpawnCycleModeOption2;
+        this.randomParticleTypeSpawnModeOption = randomParticleTypeSpawnModeOption;
 
         this.modeButtonGroup = new ButtonGroup();
         this.modeButtonGroup.add(this.normalModeOption);
@@ -51,6 +54,7 @@ public class ModeListener implements ActionListener {
         this.modeButtonGroup.add(this.lineGridModeOption);
         this.modeButtonGroup.add(this.randomSpawnCycleModeOption1);
         this.modeButtonGroup.add(this.randomSpawnCycleModeOption2);
+        this.modeButtonGroup.add(this.randomParticleTypeSpawnModeOption);
 
         this.normalModeOption.addActionListener(this);
         this.receiverModeOption.addActionListener(this);
@@ -59,6 +63,7 @@ public class ModeListener implements ActionListener {
         this.lineGridModeOption.addActionListener(this);
         this.randomSpawnCycleModeOption1.addActionListener(this);
         this.randomSpawnCycleModeOption2.addActionListener(this);
+        this.randomParticleTypeSpawnModeOption.addActionListener(this);
     }
 
     @Override
@@ -84,6 +89,9 @@ public class ModeListener implements ActionListener {
                 break;
             case "random spawn mode 2":
                 environment.bot.mode = 4;
+                break;
+            case "random type spawn mode":
+                environment.bot.mode = 5;
                 break;
             default:
                 System.out.println("ModeListener: unknown action command");
