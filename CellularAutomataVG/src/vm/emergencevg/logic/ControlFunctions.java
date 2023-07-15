@@ -6,24 +6,28 @@ import java.util.HashMap;
 import vm.emergencevg.ui.Updatable;
 
 /**
- * Luokka tarjoaa metodeita joita käytetään, kun halutaan määrittää ohjelman
- * taustaloopin toimintaa, tai syöttää sille dataa.
+ * Offers functions for controlling the state of the environment.
  */
 public class ControlFunctions {
 
     public Environment environment;
+
+    // Used in keeping record of the users commands, so that they can be repeated if
+    // the board iterations are replayed and also saved should the user wish to do so.
     public CommandRecordRunner coReRunner;
+    
     public UtilityFunctions uFunctions;
+    
     public FileIO fileIo;
+    
     public Updatable scaleUpdater;
     public int scale;
 
     /**
-     * Konstruktori saa Environment olion, jonka kautta se saa, muut
-     * arvonsa.
+     * The required values all come from the environment object.
      *
-     * @param environment Ohjelman logiikka-avaruutta ja taustalooppia ylläpitävä
-     * muuttuja.
+     * @param environment Contains the environment of the program, including
+     * the main loop, the particle board and other objects used in the program.
      */
     public ControlFunctions(Environment environment) {
         this.environment = environment;
@@ -34,30 +38,38 @@ public class ControlFunctions {
     }
 
     /**
-     * Metodi muuntaa käyttöliittymältä saatuja String olioita. Particle
-     * olion haluamaan malliin.
+     * Makes a Particle object out of an input string and a list of display attributes.
      *
-     * @param input Käyttöliittymältä saatu käyttäjän syöttämä merkkijono.
-     * @param displayAttributes Lista Integer muuttujia, joilla määritetään
-     * partikkelin piirtotyyliä.
+     * @param input A string that contains the name, amountsForNew and amountsToLive values
+     * required to define a particle.
+     * @param displayAttributes List of integers that define the visual appearance of the particle.
      */
     public void processVariablesToParticle(String input, ArrayList<Integer> displayAttributes) {
         uFunctions.addPreset("l(" + input + ",," + displayAttributes.get(0) + " " + displayAttributes.get(1) + ")");
+        
         String name = "";
         ArrayList<Integer> amountsForNew = new ArrayList<Integer>();
         ArrayList<Integer> amountsToLive = new ArrayList<Integer>();
         int index = 0;
+        
         while (index < input.length() && input.charAt(index) != ',') {
             index++;
         }
         name = input.substring(0, index);
+        
         index++;
         index = addIntegersToList(index, input, amountsForNew);
         index++;
+        
         addIntegersToList(index, input, amountsToLive);
         addParticle(name, amountsForNew, amountsToLive, displayAttributes);
     }
 
+    /**
+     * Processes values gained from the UI to a particle.
+     * 
+     * @param displayAttributes List of integers that define the visual appearance of the particle.
+     */
     public void processVariablesToParticle(
         String name,
         ArrayList<Integer> amountsForNew,
@@ -65,6 +77,7 @@ public class ControlFunctions {
         ArrayList<Integer> displayAttributes
     ) {
 
+        // Create a particle objet and add it to the list of particles.
         addParticle(name, amountsForNew, amountsToLive, displayAttributes);
         
         // Create a string representation and add it to the presets.
@@ -99,11 +112,14 @@ public class ControlFunctions {
      */
     public int addIntegersToList(int index, String input, ArrayList<Integer> list) {
         while (index < input.length() && input.charAt(index) != ',') {
+            
             if (uFunctions.checkIfNumber(input.charAt(index))) {
                 list.add(Integer.parseInt(input.substring(index, index + 1)));
             }
+            
             index++;
         }
+        
         return index;
     }
 
@@ -122,14 +138,20 @@ public class ControlFunctions {
      */
     public void addParticle(String name, ArrayList<Integer> amountsForNew, ArrayList<Integer> amountsToLive, ArrayList<Integer> displayAttributes) {
         int key = 0;
+        
         for (int i = 1; i < 100; i++) {
+            
             if (environment.particles.get(i) == null) {
                 key = i;
                 break;
             }
         }
         if (key != 0) {
-            environment.particles.put(key, new Particle(name, key, amountsForNew, amountsToLive, displayAttributes));
+            
+            environment.particles.put(
+                key,
+                new Particle(name, key, amountsForNew, amountsToLive, displayAttributes)
+            );
         }
     }
 
@@ -194,6 +216,7 @@ public class ControlFunctions {
     public void setIterations(String iterations) {
         try {
             coReRunner.iterations = Integer.parseInt(iterations);
+        
         } catch (Exception e) {
             System.out.println("Bad input to iterations field!");
         }
@@ -204,7 +227,9 @@ public class ControlFunctions {
      */
     public void clearParticles() {
         stop();
+        
         environment.particles = new HashMap<Integer, Particle>();
+        
         coReRunner.reInitializePresets();
     }
 
@@ -214,6 +239,7 @@ public class ControlFunctions {
      */
     public void clearRecord() {
         stop();
+        
         coReRunner.reInitializeCommands();
         coReRunner.iterations = 0;
         coReRunner.uiIterationDisplayer.update();
@@ -227,6 +253,7 @@ public class ControlFunctions {
      */
     public void setScaleCommand(int scale) {
         setScale(scale);
+        
         uFunctions.addCommand("scale(" + scale + ")");
     }
 
@@ -261,6 +288,7 @@ public class ControlFunctions {
         clearCommand();
         clearRecord();
         clearParticles();
+        
         fileIo.load(filename);
         coReRunner.runPresets();
     }
@@ -274,6 +302,7 @@ public class ControlFunctions {
      */
     public void addPresets(String filename) {
         environment.particles = new HashMap<Integer, Particle>();
+        
         fileIo.addPresets(filename);
         coReRunner.runPresets();
     }
@@ -285,7 +314,7 @@ public class ControlFunctions {
     }
 
     /**
-     * Käynnistää logiikka-avaruuden iteraatioiden suorituksen.
+     * Starts running the board iterations.
      */
     public void start() {
         environment.running = true;
@@ -297,34 +326,9 @@ public class ControlFunctions {
      */
     public void stop() {
         environment.running = false;
+        
         uFunctions.uniteCommandMaps();
         uFunctions.unitePresetLists();
-    }
-
-    /**
-     * Käynnistää, tai pysäyttää logiikka-avaruuden iteraatioiden suorituksen
-     * riippuen siitä onko se jo käynnissä, vai ei(Metodi ei ole käytössä tällä
-     * hetkellä).
-     */
-    public void pause() {
-        if (environment.running = false) {
-            start();
-        } else {
-            stop();
-        }
-    }
-    
-    public void startTriggering() {
-        environment.triggering = true;
-    }
-    
-    public void stopTriggering() {
-        environment.triggering = false;
-        environment.trigger = true;
-    }
-    
-    public void trigger() {
-        environment.trigger = true;
     }
 
     /**
@@ -337,6 +341,7 @@ public class ControlFunctions {
         try {
             setSpeed(speed);
             uFunctions.addCommand("speed(" + speed + ")");
+        
         } catch (Exception e) {
             System.out.println("Bad input!!");
         }
@@ -364,7 +369,8 @@ public class ControlFunctions {
      * Tyhjentää logiikka-avaruuden partikkeleista.
      */
     public void clear() {
-        environment.field = new int[environment.width][environment.height];
+        
+        environment.field       = new int[environment.width][environment.height];
         environment.resultField = new int[environment.width][environment.height];
     }
 
@@ -376,10 +382,13 @@ public class ControlFunctions {
      * @param y y akselin koordinaatti johon sijoitus tehdään.
      */
     public void placeParticle(int pKey, int x, int y) {
+        
         if (x >= 0 && y >= 0 && x < environment.width && y < environment.height) {
+            
             if (environment.field[x][y] != 0) {
                 environment.field[x][y] = 0;
                 environment.resultField[x][y] = 0;
+            
             } else {
                 environment.field[x][y] = pKey;
                 environment.resultField[x][y] = pKey;
@@ -394,20 +403,27 @@ public class ControlFunctions {
     public void execCommand(String command) {
         if(command == null || command.length() < 2) {
             return;
+        
         } else if (environment.uFunctions.checkIfNumber(command.charAt(1))) {
+            
             environment.coReRunner.parsePlacementStringToPlaceIt(command);
             environment.uFunctions.addCommand(command);
+        
         } else if (command.equals("clear")) {
             environment.functions.clearCommand();
+        
         } else if (command.substring(0, 5).equals("speed")) {
             environment.functions.setSpeed(command.substring(6, command.length() - 1));
             environment.uFunctions.addCommand(command);
+        
         } else if (command.substring(0, 2).equals("sc")) {
             environment.functions.setScale(Integer.parseInt(command.substring(6, command.length() - 1)));
             environment.uFunctions.addCommand(command);
+        
         } else if (command.charAt(0) == 'f') {
             environment.coReRunner.parseAndSetFieldSize(command);
             environment.uFunctions.addCommand(command);
+        
         } else if (command.charAt(0) == 'l') {
             environment.coReRunner.runPresetCommand(command);
             
